@@ -1,7 +1,6 @@
 ﻿using Parcel.Neo.Base.Framework.ViewModels;
 using System;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace Parcel.Neo
 {
@@ -24,11 +23,11 @@ namespace Parcel.Neo
         public static void Main(string[] args)
         {
             // charles-z 20220726: Quick hack to get around dependancy
-            CommandManagerWrapper wrapper = new CommandManagerWrapper();
+            CommandManagerWrapper wrapper = new();
             RequeryCommand.CommandManager = wrapper;
             RequeryCommand.CommandManager = wrapper;
 
-            var app = new Parcel.Neo.App();
+            var app = new App();
             app.InitializeComponent();
             app.Run();
         }
