@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using Parcel.Neo.Shared.Framework;
+using Parcel.Neo.Base.Framework;
 using Parcel.Toolbox.Math.Nodes;
 
 namespace Parcel.Toolbox.Math

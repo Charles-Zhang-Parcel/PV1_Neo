@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using Parcel.Neo.Shared.DataTypes;
-using Parcel.Neo.Shared.Framework;
+using Parcel.Neo.Base.DataTypes;
+using Parcel.Neo.Base.Framework;
 using RandomNameGeneratorNG;
 
 namespace Parcel.Toolbox.Generator

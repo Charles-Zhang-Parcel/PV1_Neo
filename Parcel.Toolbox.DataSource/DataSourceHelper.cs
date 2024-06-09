@@ -6,7 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Csv;
-using Parcel.Neo.Shared.DataTypes;
+using Parcel.Neo.Base.DataTypes;
 
 namespace Parcel.Toolbox.DataSource
 {

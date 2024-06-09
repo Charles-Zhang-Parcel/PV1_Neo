@@ -5,7 +5,7 @@
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                   xmlns:local="clr-namespace:Parcel.Neo"
                   xmlns:converters="clr-namespace:Parcel.Neo.Converters"
-                  xmlns:framework="clr-namespace:Parcel.Neo.Shared.Framework;assembly=Parcel.Neo.Shared"
+                  xmlns:framework="clr-namespace:Parcel.Neo.Base.Framework;assembly=Parcel.Neo.Base"
                   mc:Ignorable="d"
                   Title="Comment" 
                   MinHeight="100" MinWidth="300" SizeToContent="WidthAndHeight"

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Parcel.Neo.Shared.Framework;
-using Parcel.Neo.Shared.Framework.ViewModels.BaseNodes;
+using Parcel.Neo.Base.Framework;
+using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 
 namespace Parcel.Toolbox.Special.Nodes
 {

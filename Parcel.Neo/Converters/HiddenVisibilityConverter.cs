@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 using Nodify;
-using Parcel.Neo.Shared.Framework.ViewModels;
+using Parcel.Neo.Base.Framework.ViewModels;
 
 namespace Parcel.Neo.Converters
 {

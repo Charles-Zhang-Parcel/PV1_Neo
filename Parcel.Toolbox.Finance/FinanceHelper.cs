@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Parcel.Neo.Shared.DataTypes;
+using Parcel.Neo.Base.DataTypes;
 
 namespace Parcel.Toolbox.Finance
 {

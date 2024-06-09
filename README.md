@@ -39,7 +39,7 @@ Below is an overview of earlier versions:
 
 ## Setup
 
-All key components are implemented inside `Parcel.Neo.Shared` assembly, the front end is implemented in `Parcel.Neo`, and all functional components are implemented in various **Toolboxes**.
+All key components are implemented inside `Parcel.Neo.Base` assembly, the front end is implemented in `Parcel.Neo`, and all functional components are implemented in various **Toolboxes**.
 
 1. Simply open `.sln` solution
 2. Run `Parcel.Neo` project

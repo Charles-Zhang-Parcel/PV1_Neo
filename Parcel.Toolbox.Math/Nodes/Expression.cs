@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Parcel.Neo.Shared.DataTypes;
-using Parcel.Neo.Shared.Framework;
-using Parcel.Neo.Shared.Framework.ViewModels;
-using Parcel.Neo.Shared.Framework.ViewModels.BaseNodes;
-using Parcel.Neo.Shared.Framework.ViewModels.Primitives;
-using Parcel.Neo.Shared.Serialization;
+using Parcel.Neo.Base.DataTypes;
+using Parcel.Neo.Base.Framework;
+using Parcel.Neo.Base.Framework.ViewModels;
+using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
+using Parcel.Neo.Base.Framework.ViewModels.Primitives;
+using Parcel.Neo.Base.Serialization;
 
 namespace Parcel.Toolbox.Math.Nodes
 {

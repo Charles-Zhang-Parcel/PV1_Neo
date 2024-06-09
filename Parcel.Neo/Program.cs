@@ -1,4 +1,4 @@
-﻿using Parcel.Neo.Shared.Framework.ViewModels;
+﻿using Parcel.Neo.Base.Framework.ViewModels;
 using System;
 using System.Windows.Input;
 using System.Windows.Threading;

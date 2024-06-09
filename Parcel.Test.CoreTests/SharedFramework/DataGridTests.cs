@@ -1,6 +1,6 @@
 using System;
 using NUnit.Framework;
-using Parcel.Neo.Shared.DataTypes;
+using Parcel.Neo.Base.DataTypes;
 
 namespace Parcel.Test.CoreTests.SharedFramework
 {

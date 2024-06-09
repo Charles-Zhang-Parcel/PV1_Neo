@@ -4,9 +4,9 @@ using System.Linq;
 using System.Windows;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Highlighting;
-using Parcel.Neo.Shared.DataTypes;
-using Parcel.Neo.Shared.Framework;
-using Parcel.Neo.Shared.Framework.ViewModels.BaseNodes;
+using Parcel.Neo.Base.DataTypes;
+using Parcel.Neo.Base.Framework;
+using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 using Parcel.Toolbox.DataProcessing.Nodes;
 
 namespace Parcel.Neo

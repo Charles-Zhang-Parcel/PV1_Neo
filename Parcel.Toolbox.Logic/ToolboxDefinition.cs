@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
-using Parcel.Neo.Shared.DataTypes;
-using Parcel.Neo.Shared.Framework;
+using Parcel.Neo.Base.DataTypes;
+using Parcel.Neo.Base.Framework;
 using Parcel.Toolbox.Logic.Nodes;
 
 namespace Parcel.Toolbox.Logic

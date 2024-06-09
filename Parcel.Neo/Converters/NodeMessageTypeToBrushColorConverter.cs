@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using Parcel.Neo.Shared.Framework;
+using Parcel.Neo.Base.Framework;
 
 namespace Parcel.Neo.Converters
 {

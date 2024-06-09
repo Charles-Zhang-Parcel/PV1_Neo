@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Parcel.Neo.Shared.Algorithms;
-using Parcel.Neo.Shared.Framework;
-using Parcel.Neo.Shared.Framework.ViewModels;
-using Parcel.Neo.Shared.Framework.ViewModels.BaseNodes;
-using Parcel.Neo.Shared.Serialization;
+using Parcel.Neo.Base.Algorithms;
+using Parcel.Neo.Base.Framework;
+using Parcel.Neo.Base.Framework.ViewModels;
+using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
+using Parcel.Neo.Base.Serialization;
 
 namespace Parcel.Toolbox.Basic
 {
