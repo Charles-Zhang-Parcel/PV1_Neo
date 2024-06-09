@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Text.RegularExpressions;
-using Parcel.Shared.DataTypes;
-using Parcel.Shared.Framework;
+using Parcel.Neo.Shared.DataTypes;
+using Parcel.Neo.Shared.Framework;
 
 namespace Parcel.Toolbox.String
 {

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Windows;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Highlighting;
-using Parcel.Shared.Framework;
-using Parcel.Shared.Framework.ViewModels.BaseNodes;
+using Parcel.Neo.Shared.Framework;
+using Parcel.Neo.Shared.Framework.ViewModels.BaseNodes;
 
 namespace Parcel.Neo
 {

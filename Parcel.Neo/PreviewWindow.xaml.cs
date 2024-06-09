@@ -5,12 +5,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using Parcel.Shared.DataTypes;
-using Parcel.Shared.Framework;
-using Parcel.Shared.Framework.ViewModels;
-using Parcel.Shared.Framework.ViewModels.BaseNodes;
+using Parcel.Neo.Shared.DataTypes;
+using Parcel.Neo.Shared.Framework;
+using Parcel.Neo.Shared.Framework.ViewModels;
+using Parcel.Neo.Shared.Framework.ViewModels.BaseNodes;
 using Parcel.Toolbox.DataProcessing.Nodes;
-using DataGrid = Parcel.Shared.DataTypes.DataGrid;
+using DataGrid = Parcel.Neo.Shared.DataTypes.DataGrid;
 
 namespace Parcel.Neo
 {

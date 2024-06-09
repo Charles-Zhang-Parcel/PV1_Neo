@@ -2,8 +2,8 @@
 using System.Globalization;
 using System.Windows.Data;
 using Nodify;
-using Parcel.Shared.DataTypes;
-using Parcel.Shared.Framework.ViewModels;
+using Parcel.Neo.Shared.DataTypes;
+using Parcel.Neo.Shared.Framework.ViewModels;
 
 namespace Parcel.Neo.Converters
 {

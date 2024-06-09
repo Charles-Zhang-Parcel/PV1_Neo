@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Parcel.Shared\Parcel.Shared.csproj" />
+        <ProjectReference Include="..\Parcel.Neo.Shared\Parcel.Neo.Shared.csproj" />
     </ItemGroup>
 
 </Project>

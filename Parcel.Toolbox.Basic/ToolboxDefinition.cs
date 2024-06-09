@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
-using Parcel.Shared.Framework;
-using Parcel.Shared.Framework.Advanced;
-using Parcel.Shared.Framework.ViewModels.BaseNodes;
-using Parcel.Shared.Framework.ViewModels.Primitives;
+using Parcel.Neo.Shared.Framework;
+using Parcel.Neo.Shared.Framework.Advanced;
+using Parcel.Neo.Shared.Framework.ViewModels.BaseNodes;
+using Parcel.Neo.Shared.Framework.ViewModels.Primitives;
 using Parcel.Toolbox.Basic.Nodes;
 
 namespace Parcel.Toolbox.Basic

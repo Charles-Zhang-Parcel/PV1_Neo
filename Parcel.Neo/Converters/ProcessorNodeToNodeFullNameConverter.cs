@@ -3,8 +3,8 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 using Nodify;
-using Parcel.Shared.Framework.ViewModels;
-using Parcel.Shared.Framework.ViewModels.BaseNodes;
+using Parcel.Neo.Shared.Framework.ViewModels;
+using Parcel.Neo.Shared.Framework.ViewModels.BaseNodes;
 
 namespace Parcel.Neo.Converters
 {

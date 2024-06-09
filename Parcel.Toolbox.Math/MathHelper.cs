@@ -5,8 +5,8 @@ using System.Dynamic;
 using System.IO;
 using System.Linq;
 using Csv;
-using Parcel.Shared.DataTypes;
-using DataColumn = Parcel.Shared.DataTypes.DataColumn;
+using Parcel.Neo.Shared.DataTypes;
+using DataColumn = Parcel.Neo.Shared.DataTypes.DataColumn;
 using DataTable = System.Data.DataTable;
 
 namespace Parcel.Toolbox.Math

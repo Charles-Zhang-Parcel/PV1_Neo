@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Parcel.Shared.DataTypes;
-using Parcel.Shared.Framework;
-using Parcel.Shared.Framework.ViewModels;
-using Parcel.Shared.Framework.ViewModels.BaseNodes;
-using Parcel.Shared.Serialization;
+using Parcel.Neo.Shared.DataTypes;
+using Parcel.Neo.Shared.Framework;
+using Parcel.Neo.Shared.Framework.ViewModels;
+using Parcel.Neo.Shared.Framework.ViewModels.BaseNodes;
+using Parcel.Neo.Shared.Serialization;
 
 namespace Parcel.Toolbox.DataProcessing.Nodes
 {

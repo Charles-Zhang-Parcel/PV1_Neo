@@ -21,13 +21,13 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
 using Nodify;
-using Parcel.Shared;
-using Parcel.Shared.Algorithms;
-using Parcel.Shared.DataTypes;
-using Parcel.Shared.Framework;
-using Parcel.Shared.Framework.ViewModels;
-using Parcel.Shared.Framework.ViewModels.BaseNodes;
-using Parcel.Shared.Framework.ViewModels.Primitives;
+using Parcel.Neo.Shared;
+using Parcel.Neo.Shared.Algorithms;
+using Parcel.Neo.Shared.DataTypes;
+using Parcel.Neo.Shared.Framework;
+using Parcel.Neo.Shared.Framework.ViewModels;
+using Parcel.Neo.Shared.Framework.ViewModels.BaseNodes;
+using Parcel.Neo.Shared.Framework.ViewModels.Primitives;
 using Parcel.Toolbox.Basic;
 using Parcel.Toolbox.Basic.Nodes;
 using Parcel.Toolbox.ControlFlow;
@@ -36,8 +36,8 @@ using Parcel.Toolbox.DataProcessing.Nodes;
 using Parcel.Toolbox.FileSystem;
 using Parcel.Toolbox.FileSystem.Nodes;
 using Parcel.Toolbox.Finance;
-using BaseConnection = Parcel.Shared.Framework.ViewModels.BaseConnection;
-using PendingConnection = Parcel.Shared.Framework.ViewModels.PendingConnection;
+using BaseConnection = Parcel.Neo.Shared.Framework.ViewModels.BaseConnection;
+using PendingConnection = Parcel.Neo.Shared.Framework.ViewModels.PendingConnection;
 
 namespace Parcel.Neo
 {

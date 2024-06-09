@@ -5,7 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using Parcel.Shared;
+using Parcel.Neo.Shared;
 // using Parcel.WebHost;
 
 namespace Parcel.Neo

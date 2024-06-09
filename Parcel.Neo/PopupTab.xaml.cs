@@ -6,9 +6,9 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Parcel.Shared;
-using Parcel.Shared.Framework;
-using Parcel.Shared.Framework.ViewModels.BaseNodes;
+using Parcel.Neo.Shared;
+using Parcel.Neo.Shared.Framework;
+using Parcel.Neo.Shared.Framework.ViewModels.BaseNodes;
 
 namespace Parcel.Neo
 {
