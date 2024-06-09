@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -28,12 +29,33 @@ namespace Parcel.Neo
             _registry.RegisterToolbox("String", Assembly.GetAssembly(typeof(Toolbox.String.ToolboxDefinition)));
             _registry.RegisterToolbox("Special", Assembly.GetAssembly(typeof(Toolbox.Special.ToolboxDefinition)));
 
+            // Register packages
+            foreach (var package in GetPackages())
+                _registry.RegisterToolbox(package.Name, Assembly.LoadFrom(package.Path));
+
             Owner = owner;
             InitializeComponent();
 
             // Additional setup
             PopulateToolboxItems();
             SearchTextBox.Focus();
+
+            static (string Name, string Path)[] GetPackages()
+            {
+                string packageImportPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Parcel NExT", "Packages");
+
+                string? environmentOverride = Environment.GetEnvironmentVariable("PARCEL_PACKAGES");
+                if (environmentOverride != null && Directory.Exists(environmentOverride))
+                    packageImportPath = environmentOverride;
+
+                if (Directory.Exists(packageImportPath))
+                    return Directory
+                        .EnumerateFiles(packageImportPath)
+                        .Where(file => Path.GetExtension(file).ToLower() == ".dll")
+                        .Select(file => (Path.GetFileNameWithoutExtension(file), file))
+                        .ToArray();
+                return [];
+            }
         }
 
         #region States
@@ -112,28 +134,25 @@ namespace Parcel.Neo
         }
         private void PopulateToolboxItems()
         {
-            _availableNodes = new List<ToolboxNodeExport>();
+            // TODO: The setup here need complete changes to conform to POS assembly formats
+            _availableNodes = [];
                 
             foreach (string name in _registry.Toolboxes.Keys.OrderBy(k => k))
             {
-                Menu menu = new Menu
+                Menu menu = new();
+                MenuItem topMenu = new()
                 {
-                    // Margin = new Thickness(1)
-                };
-                MenuItem topMenu = new MenuItem
-                {
-                    // Padding = new Thickness(4),
                     Header = name, 
-                    Width = this.Width * 0.8,
+                    Width = Width * 0.8,
                 };
                 menu.Items.Add(topMenu);
                 
-                string formalName = $"{name.Replace(" ", String.Empty)}"; 
+                string formalName = $"{name.Replace(" ", string.Empty)}"; 
                 string toolboxHelperTypeName = $"Parcel.Toolbox.{formalName}.{formalName}Helper";
                 foreach (Type type in _registry.Toolboxes[name]
                     .GetTypes().Where(p => typeof(IToolboxEntry).IsAssignableFrom(p)))
                 {
-                    IToolboxEntry toolbox = (IToolboxEntry)Activator.CreateInstance(type);
+                    IToolboxEntry? toolbox = (IToolboxEntry?)Activator.CreateInstance(type);
                     if (toolbox == null) continue;
 
                     foreach (ToolboxNodeExport nodeExport in toolbox.ExportNodes)
@@ -158,24 +177,21 @@ namespace Parcel.Neo
         public Action<ToolboxNodeExport> ItemSelectedAdditionalCallback { get; set; }
         #endregion
 
-        #region View Properties
-        #endregion
-
         #region GUI Events
         private void PopupTab_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            this.DragMove();
+            DragMove();
         }
         private void PopupTab_OnPreviewKeyDown(object sender, KeyEventArgs e)
         {
             if(e.Key == Key.Escape)
-                this.Close();
+                Close();
         }
         private void NodeMenuItemOnClick(object sender, RoutedEventArgs e)
         {
-            if (!(e.Source is MenuItem item) || item.Tag == null) return;
+            if (e.Source is not MenuItem item || item.Tag == null) return;
             
-            ToolboxNodeExport toolSelection = item.Tag as ToolboxNodeExport;
+            ToolboxNodeExport? toolSelection = item.Tag as ToolboxNodeExport;
             ItemSelectedAdditionalCallback(toolSelection);
             Close();
         }
