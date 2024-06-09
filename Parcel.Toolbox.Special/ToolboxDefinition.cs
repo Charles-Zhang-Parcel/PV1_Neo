@@ -12,26 +12,25 @@ namespace Parcel.Toolbox.Special
         public ToolboxNodeExport[] ExportNodes => new ToolboxNodeExport[] 
         {
             // Special - Specialized Graph Visualization
-            new ToolboxNodeExport("Graph Stats", typeof(GraphStats)),
-            new ToolboxNodeExport("Console Output", typeof(object)), // With options to specify how many lines to show
-            new ToolboxNodeExport("Python Snippet", typeof(object)), // With auto binding inputs and outputs
-            new ToolboxNodeExport("Host Address", typeof(HostAddress)),
+            new("Graph Stats", typeof(GraphStats)),
+            new("Console Output", typeof(object)), // With options to specify how many lines to show
+            new("Python Snippet", typeof(object)), // With auto binding inputs and outputs
             null, // Divisor line // Utility
-            new ToolboxNodeExport("Graph Attributes", typeof(object)),
+            new("Graph Attributes", typeof(object)),
             null, // Divisor line // Decoration
-            new ToolboxNodeExport("Header", typeof(object)),
-            new ToolboxNodeExport("Text", typeof(object)),
-            new ToolboxNodeExport("URL", typeof(object)),
-            new ToolboxNodeExport("Image", typeof(object)),
-            new ToolboxNodeExport("Markdown", typeof(object)),
-            new ToolboxNodeExport("Audio", typeof(object)),
-            new ToolboxNodeExport("Web Page", typeof(object)),
-            new ToolboxNodeExport("Help Page", typeof(object)),
+            new("Header", typeof(object)),
+            new("Text", typeof(object)),
+            new("URL", typeof(object)),
+            new("Image", typeof(object)),
+            new("Markdown", typeof(object)),
+            new("Audio", typeof(object)),
+            new("Web Page", typeof(object)),
+            new("Help Page", typeof(object)),
             null, // Divisor line // Others
-            new ToolboxNodeExport("Contact", typeof(object)),
-            new ToolboxNodeExport("About", typeof(object)),
+            new("Contact", typeof(object)),
+            new("About", typeof(object)),
         };
-        public AutomaticNodeDescriptor[] AutomaticNodes => new AutomaticNodeDescriptor[] { };
+        public AutomaticNodeDescriptor[] AutomaticNodes => System.Array.Empty<AutomaticNodeDescriptor>();
         #endregion
     }
 }

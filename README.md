@@ -69,3 +69,6 @@ Areas:
 - Plotting
 - Workloads (pack of packages)
 - Serialization
+
+Publishing:
+- [ ] Create application icon

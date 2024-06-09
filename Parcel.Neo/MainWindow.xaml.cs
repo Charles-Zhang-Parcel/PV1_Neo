@@ -56,9 +56,6 @@ namespace Parcel.Neo
             SaveCanvasCommand = new DelegateCommand(() => SaveCanvas(false), () => true);
             NewCanvasCommand = new DelegateCommand(() => { Canvas.Nodes.Clear(); Canvas.Connections.Clear(); SaveCanvas(true);}, () => true);
             OpenCanvasCommand = new DelegateCommand(OpenCanvas, () => true);
-            OpenWebHostCommand = new DelegateCommand(() => WebHostRuntime.Singleton.Open(), () => true);
-
-            // WebAccessPointUrl = WebHostRuntime.Singleton?.BaseUrl;
             
             InitializeComponent();
             
@@ -80,7 +77,6 @@ namespace Parcel.Neo
         public ICommand OpenCanvasCommand { get; }
         
         public ICommand ShowHelpCommand { get; }
-        public ICommand OpenWebHostCommand { get; }
         #endregion
 
         #region View Properties
@@ -257,19 +253,7 @@ namespace Parcel.Neo
             node.IsPreview = true;
             if (!(node is GraphReference reference) || _graphPreviewWindows.ContainsKey(reference) || _previewWindows.ContainsKey(reference))  // For graph reference we really don't want to execute it during preview the first time
                 ExecuteAll();
-            if (!(node is IWebPreviewProcessorNode)) // IWebPreviewProcessorNode opens web preview during execution 
-                SpawnPreviewWindow(node);
 
-            e.Handled = true;
-        }
-        private void WebAccessUrlDisplayElement_OnMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            WebHostRuntime.Singleton.Open();
-            e.Handled = true;
-        }
-        private void HostAddressNodeUIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            WebHostRuntime.Singleton.Open((sender as Label).Content as string);
             e.Handled = true;
         }
         private void PrimitiveInputTextbox_OnPreviewKeyDown_CommandOverride(object sender, KeyEventArgs e)
@@ -336,7 +320,7 @@ namespace Parcel.Neo
                     graphPreview.Show();
                 }
                 
-                PreviewWindow preview = new PreviewWindow(this, node);
+                PreviewWindow preview = new(this, node);
                 _previewWindows.Add(node, preview);
                 preview.Closed += (sender, args) => _previewWindows.Remove((sender as PreviewWindow)!.Node); 
                 preview.Show();   

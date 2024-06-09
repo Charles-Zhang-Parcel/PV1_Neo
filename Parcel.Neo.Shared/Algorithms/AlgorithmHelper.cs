@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Parcel.Neo.Shared.Framework;
 using Parcel.Neo.Shared.Framework.ViewModels;
 using Parcel.Neo.Shared.Framework.ViewModels.BaseNodes;
 
@@ -41,11 +40,6 @@ namespace Parcel.Neo.Shared.Algorithms
             IExecutionGraph graph = new ExecutionQueue();
             graph.InitializeGraph(processors);
             graph.ExecuteGraph();
-
-            foreach (BaseNode webNode in canvas.Nodes.Where(n => n is IWebPreviewProcessorNode))
-            {
-                (webNode as ProcessorNode).IsPreview = false;
-            }
         }
     }
 }

@@ -28,11 +28,8 @@
     <ProjectReference Include="..\Parcel.Toolbox.FileSystem\Parcel.Toolbox.FileSystem.csproj" />
     <ProjectReference Include="..\Parcel.Toolbox.Finance\Parcel.Toolbox.Finance.csproj" />
     <ProjectReference Include="..\Parcel.Toolbox.Generator\Parcel.Toolbox.Generator.csproj" />
-    <ProjectReference Include="..\Parcel.Toolbox.Graphing\Parcel.Toolbox.Graphing.csproj" />
     <ProjectReference Include="..\Parcel.Toolbox.Logic\Parcel.Toolbox.Logic.csproj" />
     <ProjectReference Include="..\Parcel.Toolbox.Math\Parcel.Toolbox.Math.csproj" />
-    <ProjectReference Include="..\Parcel.Toolbox.Plotting\Parcel.Toolbox.Plotting.csproj" />
-    <ProjectReference Include="..\Parcel.Toolbox.Present\Parcel.Toolbox.Present.csproj" />
     <ProjectReference Include="..\Parcel.Toolbox.Scripting\Parcel.Toolbox.Scripting.csproj" />
     <ProjectReference Include="..\Parcel.Toolbox.Special\Parcel.Toolbox.Special.csproj" />
     <ProjectReference Include="..\Parcel.Toolbox.String\Parcel.Toolbox.String.csproj" />

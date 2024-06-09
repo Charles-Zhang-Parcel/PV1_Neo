@@ -16,21 +16,18 @@ namespace Parcel.Neo
     {
         public PopupTab(Window owner)
         {
-            _registry.RegisterToolbox("Basic", Assembly.GetAssembly(typeof(Parcel.Toolbox.Basic.ToolboxDefinition)));
-            _registry.RegisterToolbox("Control Flow", Assembly.GetAssembly(typeof(Parcel.Toolbox.ControlFlow.ToolboxDefinition)));
-            _registry.RegisterToolbox("Data Processing", Assembly.GetAssembly(typeof(Parcel.Toolbox.DataProcessing.ToolboxDefinition)));
-            _registry.RegisterToolbox("Data Source", Assembly.GetAssembly(typeof(Parcel.Toolbox.DataSource.ToolboxDefinition)));
-            _registry.RegisterToolbox("File System", Assembly.GetAssembly(typeof(Parcel.Toolbox.FileSystem.ToolboxDefinition)));
-            _registry.RegisterToolbox("Finance", Assembly.GetAssembly(typeof(Parcel.Toolbox.Finance.ToolboxDefinition)));
-            _registry.RegisterToolbox("Generator", Assembly.GetAssembly(typeof(Parcel.Toolbox.Generator.ToolboxDefinition)));
-            _registry.RegisterToolbox("Graphing", Assembly.GetAssembly(typeof(Parcel.Toolbox.Graphing.ToolboxDefinition)));
-            _registry.RegisterToolbox("Logic", Assembly.GetAssembly(typeof(Parcel.Toolbox.Logic.ToolboxDefinition)));
-            _registry.RegisterToolbox("Math", Assembly.GetAssembly(typeof(Parcel.Toolbox.Math.ToolboxDefinition)));
-            _registry.RegisterToolbox("Plotting", Assembly.GetAssembly(typeof(Parcel.Toolbox.Plotting.ToolboxDefinition)));
-            _registry.RegisterToolbox("Present", Assembly.GetAssembly(typeof(Parcel.Toolbox.Present.ToolboxDefinition)));
-            _registry.RegisterToolbox("Scripting", Assembly.GetAssembly(typeof(Parcel.Toolbox.Scripting.ToolboxDefinition)));
-            _registry.RegisterToolbox("String", Assembly.GetAssembly(typeof(Parcel.Toolbox.String.ToolboxDefinition)));
-            _registry.RegisterToolbox("Special", Assembly.GetAssembly(typeof(Parcel.Toolbox.Special.ToolboxDefinition)));
+            _registry.RegisterToolbox("Basic", Assembly.GetAssembly(typeof(Toolbox.Basic.ToolboxDefinition)));
+            _registry.RegisterToolbox("Control Flow", Assembly.GetAssembly(typeof(Toolbox.ControlFlow.ToolboxDefinition)));
+            _registry.RegisterToolbox("Data Processing", Assembly.GetAssembly(typeof(Toolbox.DataProcessing.ToolboxDefinition)));
+            _registry.RegisterToolbox("Data Source", Assembly.GetAssembly(typeof(Toolbox.DataSource.ToolboxDefinition)));
+            _registry.RegisterToolbox("File System", Assembly.GetAssembly(typeof(Toolbox.FileSystem.ToolboxDefinition)));
+            _registry.RegisterToolbox("Finance", Assembly.GetAssembly(typeof(Toolbox.Finance.ToolboxDefinition)));
+            _registry.RegisterToolbox("Generator", Assembly.GetAssembly(typeof(Toolbox.Generator.ToolboxDefinition)));
+            _registry.RegisterToolbox("Logic", Assembly.GetAssembly(typeof(Toolbox.Logic.ToolboxDefinition)));
+            _registry.RegisterToolbox("Math", Assembly.GetAssembly(typeof(Toolbox.Math.ToolboxDefinition)));
+            _registry.RegisterToolbox("Scripting", Assembly.GetAssembly(typeof(Toolbox.Scripting.ToolboxDefinition)));
+            _registry.RegisterToolbox("String", Assembly.GetAssembly(typeof(Toolbox.String.ToolboxDefinition)));
+            _registry.RegisterToolbox("Special", Assembly.GetAssembly(typeof(Toolbox.Special.ToolboxDefinition)));
 
             Owner = owner;
             InitializeComponent();
