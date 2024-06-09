@@ -9,14 +9,14 @@ using Parcel.Shared.Framework;
 using Parcel.Shared.Framework.ViewModels.BaseNodes;
 using Parcel.Toolbox.DataProcessing.Nodes;
 
-namespace Parcel.FrontEnd.NodifyWPF
+namespace Parcel.Neo
 {
     public partial class PropertyWindow : BaseWindow
     {
         public PropertyWindow(Window owner, ProcessorNode processor)
         {
             // Support SQL syntax highlight
-            using (var stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("Parcel.FrontEnd.NodifyWPF.PreviewWindows.sql.xshd.xml"))
+            using (var stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("Parcel.Neo.PreviewWindows.sql.xshd.xml"))
             {
                 using (var reader = new System.Xml.XmlTextReader(stream))
                 {

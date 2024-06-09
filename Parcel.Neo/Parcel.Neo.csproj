@@ -6,7 +6,7 @@
         <UseWPF>true</UseWPF>
         <Nullable>disable</Nullable>
 
-        <StartupObject>Parcel.FrontEnd.NodifyWPF.Program</StartupObject>
+        <StartupObject>Parcel.Neo.Program</StartupObject>
         <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
     </PropertyGroup>
 

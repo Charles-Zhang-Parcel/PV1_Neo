@@ -10,7 +10,7 @@ using Parcel.Shared;
 using Parcel.Shared.Framework;
 using Parcel.Shared.Framework.ViewModels.BaseNodes;
 
-namespace Parcel.FrontEnd.NodifyWPF
+namespace Parcel.Neo
 {
     public partial class PopupTab : BaseWindow
     {

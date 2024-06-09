@@ -5,7 +5,7 @@ using Nodify;
 using Parcel.Shared.DataTypes;
 using Parcel.Shared.Framework.ViewModels;
 
-namespace Parcel.FrontEnd.NodifyWPF.Converters
+namespace Parcel.Neo.Converters
 {
     public class FlowToDirectionConverter : IValueConverter
     {

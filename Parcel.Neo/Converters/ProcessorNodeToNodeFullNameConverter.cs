@@ -4,16 +4,17 @@ using System.Windows;
 using System.Windows.Data;
 using Nodify;
 using Parcel.Shared.Framework.ViewModels;
+using Parcel.Shared.Framework.ViewModels.BaseNodes;
 
-namespace Parcel.FrontEnd.NodifyWPF.Converters
+namespace Parcel.Neo.Converters
 {
-    public class HiddenVisibilityConverter : IValueConverter
+    public class ProcessorNodeToNodeFullNameConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is bool isHidden)
+            if (value is ProcessorNode node)
             {
-                return isHidden ? Visibility.Collapsed : Visibility.Visible;
+                return node.FullName;
             }
 
             return value;
@@ -21,12 +22,7 @@ namespace Parcel.FrontEnd.NodifyWPF.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is Visibility visibility)
-            {
-                return visibility == Visibility.Collapsed ? true : false;
-            }
-
-            return value;
+            throw new NotImplementedException();
         }
     }
 }

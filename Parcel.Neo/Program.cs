@@ -3,7 +3,7 @@ using System;
 using System.Windows.Input;
 using System.Windows.Threading;
 
-namespace Parcel.FrontEnd.NodifyWPF
+namespace Parcel.Neo
 {
     internal class CommandManagerWrapper : ICommandManager
     {
@@ -28,7 +28,7 @@ namespace Parcel.FrontEnd.NodifyWPF
             RequeryCommand.CommandManager = wrapper;
             RequeryCommand.CommandManager = wrapper;
 
-            var app = new Parcel.FrontEnd.NodifyWPF.App();
+            var app = new Parcel.Neo.App();
             app.InitializeComponent();
             app.Run();
         }

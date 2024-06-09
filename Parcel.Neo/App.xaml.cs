@@ -8,7 +8,7 @@ using System.Windows;
 using Parcel.Shared;
 // using Parcel.WebHost;
 
-namespace Parcel.FrontEnd.NodifyWPF
+namespace Parcel.Neo
 {
     /// <summary>
     /// Interaction logic for App.xaml

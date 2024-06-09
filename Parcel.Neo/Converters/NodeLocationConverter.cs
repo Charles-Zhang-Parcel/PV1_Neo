@@ -7,7 +7,7 @@ using System.Windows.Media;
 using Parcel.Shared.DataTypes;
 using Parcel.Shared.Framework.ViewModels.BaseNodes;
 
-namespace Parcel.FrontEnd.NodifyWPF.Converters
+namespace Parcel.Neo.Converters
 {
     public class NodeLocationConverter : IValueConverter
     {

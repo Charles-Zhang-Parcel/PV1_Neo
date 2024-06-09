@@ -12,7 +12,7 @@ using Parcel.Shared.Framework.ViewModels.BaseNodes;
 using Parcel.Toolbox.DataProcessing.Nodes;
 using DataGrid = Parcel.Shared.DataTypes.DataGrid;
 
-namespace Parcel.FrontEnd.NodifyWPF
+namespace Parcel.Neo
 {
     public partial class PreviewWindow : BaseWindow
     {

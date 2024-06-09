@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using Parcel.Shared.Framework;
 
-namespace Parcel.FrontEnd.NodifyWPF.Converters
+namespace Parcel.Neo.Converters
 {
     public class NodeMessageTypeToBrushColorConverter : IValueConverter
     {

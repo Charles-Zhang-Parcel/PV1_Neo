@@ -39,7 +39,7 @@ using Parcel.Toolbox.Finance;
 using BaseConnection = Parcel.Shared.Framework.ViewModels.BaseConnection;
 using PendingConnection = Parcel.Shared.Framework.ViewModels.PendingConnection;
 
-namespace Parcel.FrontEnd.NodifyWPF
+namespace Parcel.Neo
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace Parcel.FrontEnd.NodifyWPF.Converters
+namespace Parcel.Neo.Converters
 {
     public class BooleanToVisibilityConverter : MarkupExtension, IValueConverter
     {

@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parcel.Toolbox.Finance", "P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parcel.Test.CoreTests", "Parcel.Test.CoreTests\Parcel.Test.CoreTests.csproj", "{2091A380-446C-4F4E-B142-ABEB60321687}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parcel.FrontEnd.NodifyWPF", "Parcel.FrontEnd.NodifyWPF\Parcel.FrontEnd.NodifyWPF.csproj", "{BB8F74E6-9367-4F92-81E8-279F2E65A663}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parcel.Neo", "Parcel.Neo\Parcel.Neo.csproj", "{BB8F74E6-9367-4F92-81E8-279F2E65A663}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parcel.Toolbox.DataProcessing", "Parcel.Toolbox.DataProcessing\Parcel.Toolbox.DataProcessing.csproj", "{B5C164A6-1405-4151-A877-20D401BEF910}"
 EndProject
