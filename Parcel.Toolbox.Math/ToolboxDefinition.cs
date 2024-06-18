@@ -4,7 +4,7 @@ using Parcel.Toolbox.Math.Nodes;
 
 namespace Parcel.Toolbox.Math
 {
-    public class ToolboxDefinition: IToolboxEntry
+    public class ToolboxDefinition: IToolboxDefinition
     {
         #region Interface
         public string ToolboxName => "Math";

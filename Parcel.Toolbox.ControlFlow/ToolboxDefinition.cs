@@ -3,7 +3,7 @@ using Parcel.Neo.Base.Framework;
 
 namespace Parcel.Toolbox.ControlFlow
 {
-    public class ToolboxDefinition: IToolboxEntry
+    public class ToolboxDefinition: IToolboxDefinition
     {
         #region Interface
         public string ToolboxName => "Control Flow";

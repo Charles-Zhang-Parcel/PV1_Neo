@@ -7,7 +7,9 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Xml.Linq;
 using Parcel.Neo.Base;
+using Parcel.Neo.Base.DataTypes;
 using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 
@@ -29,7 +31,7 @@ namespace Parcel.Neo
             _registry.RegisterToolbox("String", Assembly.GetAssembly(typeof(Toolbox.String.ToolboxDefinition)));
             _registry.RegisterToolbox("Special", Assembly.GetAssembly(typeof(Toolbox.Special.ToolboxDefinition)));
 
-            // Register packages
+            // Register Parcel packages
             foreach (var package in GetPackages())
                 _registry.RegisterToolbox(package.Name, Assembly.LoadFrom(package.Path));
 
@@ -51,7 +53,7 @@ namespace Parcel.Neo
                 if (Directory.Exists(packageImportPath))
                     return Directory
                         .EnumerateFiles(packageImportPath)
-                        .Where(file => Path.GetExtension(file).ToLower() == ".dll")
+                        .Where(file => Path.GetExtension(file).Equals(".dll", StringComparison.CurrentCultureIgnoreCase))
                         .Select(file => (Path.GetFileNameWithoutExtension(file), file))
                         .ToArray();
                 return [];
@@ -96,13 +98,13 @@ namespace Parcel.Neo
         #endregion
 
         #region Routines
-        private void AddMenuItem(ToolboxNodeExport node, MenuItem topMenu)
+        private void AddMenuItem(ToolboxNodeExport? node, MenuItem topMenu)
         {
             if (node == null)
                 topMenu.Items.Add(new Separator());
             else
             {
-                MenuItem item = new MenuItem {Header = node.Name, Tag = node};
+                MenuItem item = new() { Header = node.Name, Tag = node };
                 item.Click += NodeMenuItemOnClick;
                 topMenu.Items.Add(item);
                 
@@ -111,9 +113,9 @@ namespace Parcel.Neo
         }
         private void UpdateSearch(string searchText)
         {
-            _searchResultLookup = new Dictionary<string, ToolboxNodeExport>();
+            _searchResultLookup = [];
             SearchResults = new ObservableCollection<string>(_availableNodes
-                .Where(n => n.Name.ToLower().Contains(searchText.ToLower()))
+                .Where(n => n.Name.Contains(searchText, StringComparison.CurrentCultureIgnoreCase))
                 .Select(n =>
                 {
                     string key = $"{n.Toolbox.ToolboxName} -> {n.Name}";
@@ -139,6 +141,9 @@ namespace Parcel.Neo
                 
             foreach (string name in _registry.Toolboxes.Keys.OrderBy(k => k))
             {
+                Assembly assembly = _registry.Toolboxes[name];
+
+                // Create menu instance
                 Menu menu = new();
                 MenuItem topMenu = new()
                 {
@@ -146,29 +151,94 @@ namespace Parcel.Neo
                     Width = Width * 0.8,
                 };
                 menu.Items.Add(topMenu);
-                
-                string formalName = $"{name.Replace(" ", string.Empty)}"; 
-                string toolboxHelperTypeName = $"Parcel.Toolbox.{formalName}.{formalName}Helper";
-                foreach (Type type in _registry.Toolboxes[name]
-                    .GetTypes().Where(p => typeof(IToolboxEntry).IsAssignableFrom(p)))
-                {
-                    IToolboxEntry? toolbox = (IToolboxEntry?)Activator.CreateInstance(type);
-                    if (toolbox == null) continue;
 
-                    foreach (ToolboxNodeExport nodeExport in toolbox.ExportNodes)
-                    {
-                        if (nodeExport != null) nodeExport.Toolbox = toolbox;
-                        AddMenuItem(nodeExport, topMenu);
-                    }
-                    foreach (AutomaticNodeDescriptor definition in toolbox.AutomaticNodes)
-                        AddMenuItem(definition == null ? null : new ToolboxNodeExport(definition.NodeName, typeof(AutomaticProcessorNode))
+                // Load either old PV1 toolbox or new Parcel package
+                IEnumerable<ToolboxNodeExport?>? exportedNodes = null;
+                if (assembly
+                    .GetTypes()
+                    .Any(p => typeof(IToolboxDefinition).IsAssignableFrom(p)))
+                {
+                    // Loading per old PV1 convention
+                    exportedNodes = GetExportNodesFromConvention(name, assembly);
+                }
+                else
+                {
+                    // Remark-cz: In the future we will utilize Parcel.CoreEngine.Service for this
+                    // Load generic Parcel package
+                    exportedNodes = GetExportNodesFromGenericAssembly(name, assembly);
+                }
+                // Add to menu
+                foreach (ToolboxNodeExport? export in exportedNodes!)
+                    AddMenuItem(export, topMenu);
+
+
+                // Add menu to GUI
+                ModulesListView.Items.Add(menu);
+            }
+        }
+        #endregion
+
+        #region Helpers
+        private static IEnumerable<ToolboxNodeExport?> GetExportNodesFromConvention(string name, Assembly assembly)
+        {
+            string formalName = $"{name.Replace(" ", string.Empty)}";
+            string toolboxHelperTypeName = $"Parcel.Toolbox.{formalName}.{formalName}Helper";
+            foreach (Type type in assembly
+                .GetTypes()
+                .Where(p => typeof(IToolboxDefinition).IsAssignableFrom(p)))
+            {
+                IToolboxDefinition? toolbox = (IToolboxDefinition?)Activator.CreateInstance(type);
+                if (toolbox == null) continue;
+
+                foreach (ToolboxNodeExport nodeExport in toolbox.ExportNodes)
+                {
+                    if (nodeExport != null) 
+                        nodeExport.Toolbox = toolbox;
+                    yield return nodeExport;
+                }
+                foreach (AutomaticNodeDescriptor definition in toolbox.AutomaticNodes)
+                    yield return definition == null
+                        ? null
+                        : new ToolboxNodeExport(definition.NodeName, typeof(AutomaticProcessorNode))
                         {
                             Descriptor = definition,
                             Toolbox = toolbox,
-                        }, topMenu);
-                }
+                        };
+            }
+        }
+        private static IEnumerable<ToolboxNodeExport?> GetExportNodesFromGenericAssembly(string name, Assembly assembly)
+        {
+            Type[] types = assembly.GetExportedTypes()
+                .Where(t => t.IsAbstract)
+                .Where(t => t.Name != "Object")
+                .ToArray();
+            GenericToolbox toolbox = new()
+            {
+                ToolboxName = name,
+                ToolboxAssemblyFullName = assembly.FullName,
+            };
 
-                ModulesListView.Items.Add(menu);
+            foreach (Type type in types)
+            {
+                MethodInfo[] methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static)
+                    // Every static class seems to export the methods exposed by System.Object, i.e. Object.Equal, Object.ReferenceEquals, etc. and we don't want that. // Remark-cz: Might because of BindingFlags.FlattenHierarchy, now we removed that, this shouldn't be an issue, pending verfication
+                    .Where(m => m.DeclaringType != typeof(object))
+                    .ToArray();
+
+                foreach (MethodInfo method in methods)
+                {
+                    Type[] parameterTypes = method.GetParameters().Select(p => p.GetType()).ToArray();
+                    Type returnType = method.ReturnType;
+                    yield return new ToolboxNodeExport(method.Name, typeof(AutomaticProcessorNode))
+                    {
+                        Descriptor = new AutomaticNodeDescriptor(method.Name, 
+                            parameterTypes.Select(CacheTypeHelper.ConvertToCacheDataType).ToArray(), 
+                            CacheTypeHelper.ConvertToCacheDataType(returnType), 
+                            objects => method.Invoke(null, objects)
+                        ),
+                        Toolbox = toolbox,
+                    };
+                }
             }
         }
         #endregion

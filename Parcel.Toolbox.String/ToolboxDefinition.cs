@@ -5,7 +5,7 @@ using Parcel.Neo.Base.Framework;
 
 namespace Parcel.Toolbox.String
 {
-    public class ToolboxDefinition: IToolboxEntry
+    public class ToolboxDefinition: IToolboxDefinition
     {
         #region Interface
         public string ToolboxName => "String";

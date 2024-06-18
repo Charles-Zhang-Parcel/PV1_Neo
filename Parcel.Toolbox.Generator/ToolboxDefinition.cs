@@ -7,7 +7,7 @@ using RandomNameGeneratorNG;
 
 namespace Parcel.Toolbox.Generator
 {
-    public class ToolboxDefinition: IToolboxEntry
+    public class ToolboxDefinition: IToolboxDefinition
     {
         #region Interface
         public string ToolboxName => "Generator";

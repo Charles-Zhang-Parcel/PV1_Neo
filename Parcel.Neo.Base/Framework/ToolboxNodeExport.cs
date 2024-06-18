@@ -11,7 +11,7 @@ namespace Parcel.Neo.Base.Framework
 
         #region Additional Payloads
         public AutomaticNodeDescriptor Descriptor { get; set; }
-        public IToolboxEntry Toolbox { get; set; }
+        public IToolboxDefinition Toolbox { get; set; }
         #endregion
 
         public ToolboxNodeExport(string name, Type type)

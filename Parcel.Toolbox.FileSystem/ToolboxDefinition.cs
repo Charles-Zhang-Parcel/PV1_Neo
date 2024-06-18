@@ -4,7 +4,7 @@ using Parcel.Toolbox.FileSystem.Nodes;
 
 namespace Parcel.Toolbox.FileSystem
 {
-    public class ToolboxDefinition: IToolboxEntry
+    public class ToolboxDefinition: IToolboxDefinition
     {
         #region Interface
         public string ToolboxName => "File System";

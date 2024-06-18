@@ -1,43 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Microsoft.Win32;
-using Nodify;
-using Parcel.Neo.Base;
 using Parcel.Neo.Base.Algorithms;
 using Parcel.Neo.Base.DataTypes;
 using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 using Parcel.Neo.Base.Framework.ViewModels.Primitives;
-using Parcel.Toolbox.Basic;
 using Parcel.Toolbox.Basic.Nodes;
-using Parcel.Toolbox.ControlFlow;
-using Parcel.Toolbox.DataProcessing;
 using Parcel.Toolbox.DataProcessing.Nodes;
-using Parcel.Toolbox.FileSystem;
 using Parcel.Toolbox.FileSystem.Nodes;
-using Parcel.Toolbox.Finance;
 using BaseConnection = Parcel.Neo.Base.Framework.ViewModels.BaseConnection;
-using PendingConnection = Parcel.Neo.Base.Framework.ViewModels.PendingConnection;
 
 namespace Parcel.Neo
 {
@@ -372,7 +351,7 @@ namespace Parcel.Neo
             Point cursor = GetCurosrWindowPosition();
             Point spawnLocation = Editor.MouseLocation;
 
-            PopupTab popupTab = new PopupTab(this)
+            PopupTab popupTab = new(this)
             {
                 Left = cursor.X,
                 Top = cursor.Y,

@@ -25,9 +25,13 @@ namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
                 {nameof(OutputNames), new NodeSerializationRoutine(() => SerializationHelper.Serialize(OutputNames), value => OutputNames = SerializationHelper.GetStrings(value))},
             };
         }
-        public AutomaticProcessorNode(AutomaticNodeDescriptor descriptor, IToolboxEntry toolbox)
+        private AutomaticNodeDescriptor Descriptor { get; } // Remark-cz: Hack we are saving descriptor here for easier invoking of dynamic types; However, this is not serializable at the moment! The reason we don't want it is because the descriptor itself is not serialized which means when the graph is loaded all such information is gone - and that's why we had IToolboxDefinition before.
+        public AutomaticProcessorNode(AutomaticNodeDescriptor descriptor, IToolboxDefinition toolbox)
             :this()
         {
+            // Remark-cz: Hack we are saving descriptor here for easier invoking of dynamic types; However, this is not serializable at the mometn!
+            Descriptor = descriptor;
+
             // Serialization
             AutomaticNodeType = descriptor.NodeName;
             ToolboxFullName = toolbox.GetType().AssemblyQualifiedName;
@@ -46,9 +50,18 @@ namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
         {
             try
             {
-                IToolboxEntry toolbox = (IToolboxEntry) Activator.CreateInstance(Type.GetType(ToolboxFullName));
-                AutomaticNodeDescriptor descriptor = toolbox.AutomaticNodes.Single(an => an != null && an.NodeName == AutomaticNodeType);
-                return descriptor.CallMarshal;
+                if (Descriptor != null)
+                {
+                    // This is runtime only!
+                    return Descriptor.CallMarshal;
+                }
+                else 
+                {
+                    // Remark-cz: This is more general and can handle serialization well
+                    IToolboxDefinition toolbox = (IToolboxDefinition)Activator.CreateInstance(Type.GetType(ToolboxFullName));
+                    AutomaticNodeDescriptor descriptor = toolbox.AutomaticNodes.Single(an => an != null && an.NodeName == AutomaticNodeType);
+                    return descriptor.CallMarshal;
+                }
             }
             catch (Exception e)
             {

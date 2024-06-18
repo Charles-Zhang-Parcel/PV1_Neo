@@ -4,7 +4,7 @@ using Parcel.Toolbox.DataProcessing.Nodes;
 
 namespace Parcel.Toolbox.DataProcessing
 {
-    public class ToolboxDefinition: IToolboxEntry
+    public class ToolboxDefinition: IToolboxDefinition
     {
         #region Interface
         public string ToolboxName => "Data Processing";

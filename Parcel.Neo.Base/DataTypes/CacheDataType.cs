@@ -35,7 +35,7 @@ namespace Parcel.Neo.Base.DataTypes
         public static CacheDataType ConvertToCacheDataType(Type type)
         {
             if (type == typeof(double))
-                return DataTypes.CacheDataType.Number;
+                return CacheDataType.Number;
             throw new ArgumentException();
         }
         public static Type ConvertToNodeType(CacheDataType type)
