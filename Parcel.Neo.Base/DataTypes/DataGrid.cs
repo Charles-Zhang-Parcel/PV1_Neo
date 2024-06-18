@@ -2,12 +2,45 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Dynamic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using Csv;
 
 namespace Parcel.Neo.Base.DataTypes
 {
+    // TODO: Merge into Parcel.NEXT
+    public static class CSVHelper
+    {
+        public static IEnumerable<string[]> ReadCSVFile(string path, out string[]? headers, bool containsHeader = true)
+        {
+            IEnumerable<string> lines = File.ReadLines(path);
+            if (containsHeader)
+            {
+                headers = StringHelper.SplitCommandLine(lines.First()).ToArray();
+                return lines.Skip(1).Select(line => StringHelper.SplitCommandLine(line).ToArray()); // TODO: Not sure what really happens in this case since it's IEnumerable.
+            }
+            else
+            {
+                headers = null;
+                return lines.Select(line => StringHelper.SplitCommandLine(line).ToArray());
+            }
+        }
+        public static IEnumerable<string[]> ParseCSV(string text, out string[]? headers, bool containsHeader = true)
+        {
+            string[] lines = text.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            if (containsHeader)
+            {
+                headers = StringHelper.SplitCommandLine(lines.First()).ToArray();
+                return lines.Skip(1).Select(line => StringHelper.SplitCommandLine(line).ToArray());
+            }
+            else
+            {
+                headers = null;
+                return lines.Select(line => StringHelper.SplitCommandLine(line).ToArray());
+            }
+        }
+    }
+
     public class DataColumn
     {
         #region Construction
@@ -172,32 +205,26 @@ namespace Parcel.Neo.Base.DataTypes
         public DataGrid(){}
         public DataGrid(ExpandoObject expando)
         {
-            IDictionary<string, object> dict = (IDictionary<string, object>)expando;
+            IDictionary<string, object> dict = expando;
             foreach (string key in dict.Keys)
             {
-                DataColumn col = new DataColumn(key);
+                DataColumn col = new(key);
                 col.Add(dict[key]);
                 Columns.Add(col);
             }
         }
-        public DataGrid(IEnumerable<ICsvLine> csvLines)
+        public DataGrid(IEnumerable<string[]> csvLines, string[]? headers)
         {
-            string[] headers = null;
-            foreach (ICsvLine line in csvLines)
-            {
-                // Initialize columns
-                if (headers == null)
-                {
-                    headers = line.Headers;
-                    foreach (string header in headers)
-                        Columns.Add(new DataColumn(header));
-                }
-                
+            // Initialize columns
+            if (headers != null)
+                foreach (string header in headers)
+                    Columns.Add(new DataColumn(header));
+
+            foreach (string[] line in csvLines)
+            {                
                 // Add data to columns
                 for (var i = 0; i < headers.Length; i++)
-                {
                     Columns[i].Add(Preformatting(line[i]));
-                }
             }
         }
         public DataGrid(DataSet dataset, bool forceFirstLineAsHeader = false)

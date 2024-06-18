@@ -34,16 +34,11 @@ namespace Parcel.Toolbox.Math.Nodes
         {
             double number1 = _number1Input.FetchInputValue<double>();
             double number2 = _number2Input.FetchInputValue<double>();
-            ModulusParameter parameter = new ModulusParameter()
-            {
-                InputNumber1 = number1,
-                InputNumber2 = number2
-            };
-            MathHelper.Modulus(parameter);
+            double remainder = MathHelper.Modulus(number1, number2);
 
-            return new NodeExecutionResult(new NodeMessage($"{number1}%{number2}={parameter.OutputNumber}"), new Dictionary<OutputConnector, object>()
+            return new NodeExecutionResult(new NodeMessage($"{number1}%{number2}={remainder}"), new Dictionary<OutputConnector, object>()
             {
-                {_resultOutput, parameter.OutputNumber}
+                {_resultOutput, remainder}
             });
         }
         #endregion

@@ -14,6 +14,7 @@ namespace Parcel.Neo.Base.DataTypes
         Boolean
     }
 
+    // Remark-cz: Do we have to have those? Can we just do raw types? Maybe it's provided just for the sake of front-end (that would make sense because Gospel has something similar?
     [Serializable]
     public enum CacheDataType
     {

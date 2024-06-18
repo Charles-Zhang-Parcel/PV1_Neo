@@ -5,7 +5,6 @@ using System.Data.SQLite;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
-using Csv;
 using ExcelDataReader;
 using Parcel.Neo.Base.DataTypes;
 using DataColumn = Parcel.Neo.Base.DataTypes.DataColumn;
@@ -92,11 +91,8 @@ namespace Parcel.Toolbox.DataProcessing
                 throw new ArgumentException("Invalid inputs");
             // TODO: Currently if the CSV File is opened by excel then it's not readable by us, and the File.ReadAllText will throw an exception
 
-            IEnumerable<ICsvLine> csv = Csv.CsvReader.ReadFromText(File.ReadAllText(parameter.InputPath), new CsvOptions()
-            {
-                HeaderMode = parameter.InputContainsHeader ? HeaderMode.HeaderPresent : HeaderMode.HeaderAbsent
-            });
-            parameter.OutputTable = new DataGrid(csv);
+            bool hasHeader = parameter.InputContainsHeader ? true : false;
+            parameter.OutputTable = new DataGrid(CSVHelper.ReadCSVFile(parameter.InputPath, out string[] headers, hasHeader), headers);
         }
         
         public static void Excel(ExcelParameter parameter)

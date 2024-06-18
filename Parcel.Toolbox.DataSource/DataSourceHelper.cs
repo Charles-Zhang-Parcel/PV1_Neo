@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Csv;
 using Parcel.Neo.Base.DataTypes;
 
@@ -52,11 +49,7 @@ namespace Parcel.Toolbox.DataSource
             string csvUrl = // Remark: In the past the unaccessible entity error was caused by a typo in the url, not caused by UNIX timestamp; The server is able to handle quite generic timestamp
                 $"https://query1.finance.yahoo.com/v7/finance/download/{parameter.InputSymbol}?period1={startTime}&period2={endTime}&interval={interval}&events=history&includeAdjustedClose=true";
             string csvText = new WebClient().DownloadString(csvUrl);
-            IEnumerable<ICsvLine> csv = Csv.CsvReader.ReadFromText(csvText, new CsvOptions()
-            {
-                HeaderMode = HeaderMode.HeaderPresent
-            });
-            parameter.OutputTable = new DataGrid(csv);
+            parameter.OutputTable = new DataGrid(CSVHelper.ParseCSV(csvText, out string[]? headers, true), headers);
         }
     }
 }

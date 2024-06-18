@@ -6,8 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Csv" Version="2.0.67" />
-        <PackageReference Include="YamlDotNet.NetCore" Version="1.0.0" />
+      <ProjectReference Include="..\..\..\Parcel_NExT\C#\Parcel.NExT\CoreEngines\Parcel.CoreEngine\Parcel.CoreEngine.csproj" />
     </ItemGroup>
 
 </Project>

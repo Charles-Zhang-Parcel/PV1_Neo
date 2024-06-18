@@ -49,16 +49,11 @@ namespace Parcel.Toolbox.Math.Nodes
         {
             double number1 = _number1Input.FetchInputValue<double>();
             double number2 = _number2Input.FetchInputValue<double>();
-            AddParameter parameter = new()
-            {
-                InputNumber1 = number1,
-                InputNumber2 = number2
-            };
-            MathHelper.Add(parameter);
+            double sum = MathHelper.Add(number1, number2);
 
-            return new NodeExecutionResult(new NodeMessage($"{number1}+{number2}={parameter.OutputNumber}", NodeMessageType.Normal), new Dictionary<OutputConnector, object>()
+            return new NodeExecutionResult(new NodeMessage($"{number1}+{number2}={sum}", NodeMessageType.Normal), new Dictionary<OutputConnector, object>()
             {
-                {_resultOutput, parameter.OutputNumber}
+                {_resultOutput, sum}
             });
         }
         #endregion

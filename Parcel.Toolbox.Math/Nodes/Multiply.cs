@@ -51,16 +51,11 @@ namespace Parcel.Toolbox.Math.Nodes
         {
             double number1 = _number1Input.FetchInputValue<double>();
             double number2 = _number2Input.FetchInputValue<double>();
-            MultiplyParameter parameter = new MultiplyParameter()
-            {
-                InputNumber1 = number1,
-                InputNumber2 = number2
-            };
-            MathHelper.Multiply(parameter);
+            double product = MathHelper.Multiply(number1, number2);
 
-            return new NodeExecutionResult(new NodeMessage($"{number1}×{number2}={parameter.OutputNumber}"), new Dictionary<OutputConnector, object>()
+            return new NodeExecutionResult(new NodeMessage($"{number1}×{number2}={product}"), new Dictionary<OutputConnector, object>()
             {
-                {_resultOutput, parameter.OutputNumber}
+                {_resultOutput, product}
             });
         }
         #endregion

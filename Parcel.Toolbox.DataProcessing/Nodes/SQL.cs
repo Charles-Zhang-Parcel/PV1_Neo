@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Parcel.Neo.Base.DataTypes;
 using Parcel.Neo.Base.Framework;
@@ -21,11 +19,13 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
         }
         #endregion
 
+        #region Constructor
         public DatabaseTableInputConnector(string tableName) : base(typeof(DataGrid))
         {
             TableName = tableName;
             Title = "Data Table";
         }
+        #endregion
     }
     
     public class SQL: DynamicInputProcessorNode, INodeProperty

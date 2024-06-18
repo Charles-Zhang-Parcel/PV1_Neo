@@ -28,15 +28,11 @@ namespace Parcel.Toolbox.Math.Nodes
         protected override NodeExecutionResult Execute()
         {
             double angle = _angleInput.FetchInputValue<double>();
-            SinParameter parameter = new SinParameter()
-            {
-                InputAngle = angle,
-            };
-            MathHelper.Sin(parameter);
+            double sin = MathHelper.Sin(angle);
 
-            return new NodeExecutionResult(new NodeMessage($"sin({angle})={parameter.OutputNumber}"), new Dictionary<OutputConnector, object>()
+            return new NodeExecutionResult(new NodeMessage($"sin({angle})={sin}"), new Dictionary<OutputConnector, object>()
             {
-                {_resultOutput, parameter.OutputNumber}
+                {_resultOutput, sin}
             });
         }
         #endregion

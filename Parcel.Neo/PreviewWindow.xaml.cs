@@ -9,7 +9,6 @@ using Parcel.Neo.Base.DataTypes;
 using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
-using Parcel.Toolbox.DataProcessing.Nodes;
 using DataGrid = Parcel.Neo.Base.DataTypes.DataGrid;
 
 namespace Parcel.Neo
@@ -90,7 +89,7 @@ namespace Parcel.Neo
             OutputConnector output = Node.MainOutput;
             if (Node.HasCache(output))
             {
-                ConnectorCacheDescriptor cache = Node[output];
+                ConnectorCache cache = Node[output];
                 switch (cache.DataType)
                 {
                     case CacheDataType.Generic:

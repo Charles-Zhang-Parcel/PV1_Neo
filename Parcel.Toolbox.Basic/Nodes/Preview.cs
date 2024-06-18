@@ -32,7 +32,7 @@ namespace Parcel.Toolbox.Basic.Nodes
 
             return new NodeExecutionResult(new NodeMessage(obj.ToString()), new Dictionary<OutputConnector, object>()
             {
-                {_objectOutput, new ConnectorCacheDescriptor(obj, CacheDataType.Generic)}
+                {_objectOutput, new ConnectorCache(obj, CacheDataType.Generic)}
             });
         }
         #endregion

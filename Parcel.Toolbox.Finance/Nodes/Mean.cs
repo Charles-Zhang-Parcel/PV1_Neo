@@ -35,7 +35,7 @@ namespace Parcel.Toolbox.Finance.Nodes
         {
             DataGrid dataGrid = _dataTableInput.FetchInputValue<DataGrid>();
             string columnName = _columnNameInput.FetchInputValue<string>();
-            MeanParameter parameter = new MeanParameter()
+            MeanParameter parameter = new()
             {
                 InputTable = dataGrid,
                 InputColumnName = columnName
@@ -50,8 +50,7 @@ namespace Parcel.Toolbox.Finance.Nodes
         #endregion
         
         #region Serialization
-        protected override Dictionary<string, NodeSerializationRoutine> ProcessorNodeMemberSerialization { get; } =
-            null;
+        protected override Dictionary<string, NodeSerializationRoutine> ProcessorNodeMemberSerialization { get; } = null;
         protected override NodeSerializationRoutine VariantInputConnectorsSerialization { get; } = null;
         #endregion
     }

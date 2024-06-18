@@ -4,8 +4,9 @@ using Parcel.Neo.Base.DataTypes;
 
 namespace Parcel.Neo.Base.Framework
 {
-    public readonly struct ConnectorCacheDescriptor
+    public readonly struct ConnectorCache
     {
+        // Remark-cz: Do we have to have those? Can we just do raw types?
         private static readonly Dictionary<Type, CacheDataType> DataTypeMapping = new Dictionary<Type, CacheDataType>()
         {
             {typeof(double), CacheDataType.Number},
@@ -16,29 +17,35 @@ namespace Parcel.Neo.Base.Framework
             {typeof(DateTime), CacheDataType.DateTime},
             {typeof(DataGrid), CacheDataType.ParcelDataGrid},
         };
-        
+
+        #region Main Data
         public object DataObject { get; }
         public CacheDataType DataType { get; }
+        #endregion
 
-        public ConnectorCacheDescriptor(object dataObject)
+        #region Construction
+        public ConnectorCache(object dataObject)
         {
             DataObject = dataObject;
 
             if (dataObject != null)
             {
                 Type type = dataObject.GetType();
-                DataType = DataTypeMapping.ContainsKey(type)
-                    ? DataTypeMapping[type]
+                DataType = DataTypeMapping.TryGetValue(type, out CacheDataType value)
+                    ? value
                     : CacheDataType.Generic; // TODO: or we should potentially throw an error    
             }
             else DataType = CacheDataType.Generic;
         }
-        public ConnectorCacheDescriptor(object dataObject, CacheDataType dataType)
+        public ConnectorCache(object dataObject, CacheDataType dataType)
         {
             DataObject = dataObject;
             DataType = dataType;
         }
+        #endregion
 
+        #region Accessor
         public bool IsAvailable => DataObject != null;
+        #endregion
     }
 }

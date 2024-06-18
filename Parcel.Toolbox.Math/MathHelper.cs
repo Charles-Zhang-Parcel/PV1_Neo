@@ -1,87 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Dynamic;
-using System.IO;
-using System.Linq;
-using Csv;
-using Parcel.Neo.Base.DataTypes;
-using DataColumn = Parcel.Neo.Base.DataTypes.DataColumn;
-using DataTable = System.Data.DataTable;
 
 namespace Parcel.Toolbox.Math
 {
-    #region Parameters
-    public class BaseNumericalParameter
-    {
-        public double InputNumber1 { get; set; }
-        public double InputNumber2 { get; set; }
-        public double OutputNumber { get; set; }
-    }
-    public class AddParameter: BaseNumericalParameter
-    {
-    }
-    public class SubtractParameter: BaseNumericalParameter
-    {
-    }
-    public class MultiplyParameter: BaseNumericalParameter
-    {
-    }
-    public class DivideParameter: BaseNumericalParameter
-    {
-    }
-    public class ModulusParameter: BaseNumericalParameter
-    {
-    }
-    public class PowerParameter: BaseNumericalParameter
-    {
-    }
-
-    public class SinParameter
-    {
-        public double InputAngle { get; set; }
-        public double OutputNumber { get; set; }
-    }
-    #endregion
-
     public static class MathHelper
     {
-        public static void Add(AddParameter parameter)
+        public static double Add(double summand1, double summand2)
+            => summand1 + summand2;        
+        public static double Subtract(double minuend, double subtrahend)
+            => minuend - subtrahend;
+        public static double Multiply(double factor1, double factor2)
+            => factor1 * factor2;
+        public static double Divide(double dividend, double divisor)
         {
-            parameter.OutputNumber = parameter.InputNumber1 + parameter.InputNumber2;
-        }
-        
-        public static void Subtract(SubtractParameter parameter)
-        {
-            parameter.OutputNumber = parameter.InputNumber1 - parameter.InputNumber2;
-        }
-        
-        public static void Multiply(MultiplyParameter parameter)
-        {
-            parameter.OutputNumber = parameter.InputNumber1 * parameter.InputNumber2;
-        }
-        
-        public static void Divide(DivideParameter parameter)
-        {
-            if (parameter.InputNumber2 == 0)
+            if (divisor == 0)
                 throw new ArgumentException("Second input cannot be zero.");
 
-            parameter.OutputNumber = parameter.InputNumber1 / parameter.InputNumber2;
+            return dividend / divisor;
         }
-        
-        public static void Modulus(ModulusParameter parameter)
-        {
-            parameter.OutputNumber = parameter.InputNumber1 % parameter.InputNumber2;
-        }
-        
-        public static void Power(PowerParameter parameter)
-        {
-            parameter.OutputNumber = System.Math.Pow(parameter.InputNumber1, parameter.InputNumber2);
-        }
-        
-        public static void Sin(SinParameter parameter)
-        {
-            parameter.OutputNumber = System.Math.Sin(parameter.InputAngle);
-        }
+        public static double Modulus(double dividend, double divisor)
+            => dividend % divisor;
+        public static double Power(double @base, double exponent)
+            => System.Math.Pow(@base, exponent);
+        public static double Root(double radicand, double degree)
+            => System.Math.Pow(radicand, 1.0 / degree); // Mathematically equivalent
+        public static double Log(double antilogarithm, double @base)
+            => System.Math.Log(antilogarithm, @base);
+        public static double Sin(double angle)
+            => System.Math.Sin(angle);
     }
 }

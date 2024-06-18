@@ -9,7 +9,7 @@ namespace Parcel.Toolbox.Finance.Nodes
     public class PercentReturn: ProcessorNode
     {
         #region Node Interface
-        private readonly InputConnector _dataTableInput = new InputConnector(typeof(DataGrid))
+        private readonly InputConnector _dataTableInput = new(typeof(DataGrid))
         {
             Title = "Data Table",
         };
@@ -18,7 +18,7 @@ namespace Parcel.Toolbox.Finance.Nodes
         {
             Title = "Latest At Top"
         };
-        private readonly OutputConnector _dataTableOutput = new OutputConnector(typeof(DataGrid))
+        private readonly OutputConnector _dataTableOutput = new(typeof(DataGrid))
         {
             Title = "Result",
         };
@@ -40,7 +40,7 @@ namespace Parcel.Toolbox.Finance.Nodes
         {
             DataGrid dataGrid = _dataTableInput.FetchInputValue<DataGrid>();
             bool latestAtTop = _latestAtTopInput.FetchInputValue<bool>();
-            PercentReturnParameter parameter = new PercentReturnParameter()
+            PercentReturnParameter parameter = new()
             {
                 InputTable = dataGrid,
                 LatestAtTop = latestAtTop
@@ -55,8 +55,7 @@ namespace Parcel.Toolbox.Finance.Nodes
         #endregion
         
         #region Serialization
-        protected override Dictionary<string, NodeSerializationRoutine> ProcessorNodeMemberSerialization { get; } =
-            null;
+        protected override Dictionary<string, NodeSerializationRoutine> ProcessorNodeMemberSerialization { get; } = null;
         protected override NodeSerializationRoutine VariantInputConnectorsSerialization { get; } = null;
         #endregion
     }

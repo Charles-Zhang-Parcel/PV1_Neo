@@ -4,7 +4,6 @@ using System.Linq;
 using System.Windows;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Highlighting;
-using Parcel.Neo.Base.DataTypes;
 using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 using Parcel.Toolbox.DataProcessing.Nodes;
@@ -16,13 +15,11 @@ namespace Parcel.Neo
         public PropertyWindow(Window owner, ProcessorNode processor)
         {
             // Support SQL syntax highlight
-            using (var stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("Parcel.Neo.PreviewWindows.sql.xshd.xml"))
+            using (System.IO.Stream? stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("Parcel.Neo.PreviewWindows.sql.xshd.xml"))
             {
-                using (var reader = new System.Xml.XmlTextReader(stream))
-                {
-                    SQLSyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, 
-                        ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance);
-                }
+                using System.Xml.XmlTextReader reader = new(stream);
+                SQLSyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader,
+                    HighlightingManager.Instance);
             }
 
             Processor = processor;

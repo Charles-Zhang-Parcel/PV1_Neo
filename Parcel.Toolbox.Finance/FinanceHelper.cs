@@ -5,6 +5,7 @@ using Parcel.Neo.Base.DataTypes;
 namespace Parcel.Toolbox.Finance
 {
     #region Parameters
+    // Remark-cz: The use of such "Parameters" looks redundant - handlign routines can just take whatever arguments they need directly
     public class RobustMeanParameter
     {
         public double[] InputList { get; set; }

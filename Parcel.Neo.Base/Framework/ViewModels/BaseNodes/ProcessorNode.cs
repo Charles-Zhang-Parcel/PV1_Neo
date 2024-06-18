@@ -93,16 +93,16 @@ namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
             
             if (result.Caches == null) return;
             foreach ((OutputConnector outputConnector, object value) in result.Caches)
-                ProcessorCache[outputConnector] = value is ConnectorCacheDescriptor descriptor ? descriptor : new ConnectorCacheDescriptor(value);
+                ProcessorCache[outputConnector] = value is ConnectorCache descriptor ? descriptor : new ConnectorCache(value);
         }
-        public ConnectorCacheDescriptor this[OutputConnector cacheConnector] => ProcessorCache[cacheConnector];
+        public ConnectorCache this[OutputConnector cacheConnector] => ProcessorCache[cacheConnector];
         public bool HasCache(OutputConnector cacheConnector) => ProcessorCache.ContainsKey(cacheConnector);
         #endregion
 
         #region Routines
         protected abstract NodeExecutionResult Execute();
-        private Dictionary<OutputConnector, ConnectorCacheDescriptor> ProcessorCache { get; } =
-            new Dictionary<OutputConnector, ConnectorCacheDescriptor>();
+        private Dictionary<OutputConnector, ConnectorCache> ProcessorCache { get; } =
+            new Dictionary<OutputConnector, ConnectorCache>();
         #endregion
 
         #region Auto Connect Interface

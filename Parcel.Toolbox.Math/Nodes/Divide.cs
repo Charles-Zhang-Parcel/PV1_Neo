@@ -34,16 +34,11 @@ namespace Parcel.Toolbox.Math.Nodes
         {
             double number1 = _number1Input.FetchInputValue<double>();
             double number2 = _number2Input.FetchInputValue<double>();
-            DivideParameter parameter = new DivideParameter()
-            {
-                InputNumber1 = number1,
-                InputNumber2 = number2
-            };
-            MathHelper.Divide(parameter);
+            double ratio = MathHelper.Divide(number1, number2);
 
-            return new NodeExecutionResult(new NodeMessage($"{number1}÷{number2}={parameter.OutputNumber}"), new Dictionary<OutputConnector, object>()
+            return new NodeExecutionResult(new NodeMessage($"{number1}÷{number2}={ratio}"), new Dictionary<OutputConnector, object>()
             {
-                { _resultOutput, parameter.OutputNumber}
+                { _resultOutput, ratio}
             });
         }
         #endregion
