@@ -33,7 +33,13 @@ namespace Parcel.Neo
 
             // Register Parcel packages
             foreach (var package in GetPackages())
-                _registry.RegisterToolbox(package.Name, Assembly.LoadFrom(package.Path));
+            {
+                try
+                {
+                    _registry.RegisterToolbox(package.Name, Assembly.LoadFrom(package.Path));
+                }
+                catch (Exception) { continue; }
+            }
 
             Owner = owner;
             InitializeComponent();
@@ -229,15 +235,22 @@ namespace Parcel.Neo
                 {
                     Type[] parameterTypes = method.GetParameters().Select(p => p.GetType()).ToArray();
                     Type returnType = method.ReturnType;
-                    yield return new ToolboxNodeExport(method.Name, typeof(AutomaticProcessorNode))
+                    ToolboxNodeExport export;
+                    try
                     {
-                        Descriptor = new AutomaticNodeDescriptor(method.Name, 
-                            parameterTypes.Select(CacheTypeHelper.ConvertToCacheDataType).ToArray(), 
-                            CacheTypeHelper.ConvertToCacheDataType(returnType), 
+                        export = new ToolboxNodeExport(method.Name, typeof(AutomaticProcessorNode))
+                        {
+                            Descriptor = new AutomaticNodeDescriptor(method.Name,
+                            parameterTypes.Select(CacheTypeHelper.ConvertToCacheDataType).ToArray(),
+                            CacheTypeHelper.ConvertToCacheDataType(returnType),
                             objects => method.Invoke(null, objects)
                         ),
-                        Toolbox = toolbox,
-                    };
+                            Toolbox = toolbox,
+                        };
+                    }
+                    catch (Exception) { continue; }
+
+                    yield return export;
                 }
             }
         }

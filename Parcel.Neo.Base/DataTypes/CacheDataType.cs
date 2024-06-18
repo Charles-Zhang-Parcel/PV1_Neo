@@ -36,7 +36,15 @@ namespace Parcel.Neo.Base.DataTypes
         {
             if (type == typeof(double))
                 return CacheDataType.Number;
-            throw new ArgumentException();
+            else if (type == typeof(float))
+                return CacheDataType.Number;
+            else if (type == typeof(int))
+                return CacheDataType.Number;
+            else if (type == typeof(long))
+                return CacheDataType.Number;
+            else if (type == typeof(string))
+                return CacheDataType.String;
+            throw new ArgumentException($"Unrecognized type: {type.Name}");
         }
         public static Type ConvertToNodeType(CacheDataType type)
         {
