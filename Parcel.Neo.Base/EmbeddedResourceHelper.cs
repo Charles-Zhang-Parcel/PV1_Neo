@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Parcel.Neo.Base
 {
-    public static class Helpers
+    public static class EmbeddedResourceHelper
     {
         public static Stream ReadBinaryResource(string name)
         {
