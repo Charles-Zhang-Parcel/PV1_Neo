@@ -16,13 +16,15 @@ namespace Parcel.Neo.Base.DataTypes
             IEnumerable<string> lines = File.ReadLines(path);
             if (containsHeader)
             {
-                headers = StringHelper.SplitCommandLine(lines.First()).ToArray();
-                return lines.Skip(1).Select(line => StringHelper.SplitCommandLine(line).ToArray()); // TODO: Not sure what really happens in this case since it's IEnumerable.
+                string[] allLines = lines.ToArray();
+
+                headers = StringHelper.SplitCSVLine(allLines.First()).ToArray();
+                return allLines.Skip(1).Select(line => StringHelper.SplitCSVLine(line).ToArray());
             }
             else
             {
                 headers = null;
-                return lines.Select(line => StringHelper.SplitCommandLine(line).ToArray());
+                return lines.Select(line => StringHelper.SplitCSVLine(line).ToArray());
             }
         }
         public static IEnumerable<string[]> ParseCSV(string text, out string[]? headers, bool containsHeader = true)
@@ -30,13 +32,13 @@ namespace Parcel.Neo.Base.DataTypes
             string[] lines = text.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
             if (containsHeader)
             {
-                headers = StringHelper.SplitCommandLine(lines.First()).ToArray();
-                return lines.Skip(1).Select(line => StringHelper.SplitCommandLine(line).ToArray());
+                headers = StringHelper.SplitCSVLine(lines.First()).ToArray();
+                return lines.Skip(1).Select(line => StringHelper.SplitCSVLine(line).ToArray());
             }
             else
             {
                 headers = null;
-                return lines.Select(line => StringHelper.SplitCommandLine(line).ToArray());
+                return lines.Select(line => StringHelper.SplitCSVLine(line).ToArray());
             }
         }
     }

@@ -7,7 +7,9 @@ namespace Parcel.Neo.Base
     public static class StringHelper
     {
         #region Command-Line String Parsing
-        public static IEnumerable<string> SplitCommandLine(this string commandLine)
+        public static IEnumerable<string> SplitCSVLine(this string csvline)
+            => SplitCommandLine(csvline, ',');
+        public static IEnumerable<string> SplitCommandLine(this string commandLine, char delimiter = ' ')
         {
             bool inQuotes = false;
             
@@ -16,7 +18,7 @@ namespace Parcel.Neo.Base
                     if (c == '\"')
                         inQuotes = !inQuotes;
 
-                    return !inQuotes && c == ' ';
+                    return !inQuotes && c == delimiter;
                 })
                 .Select(arg => arg.Trim().TrimMatchingQuotes('\"'))
                 .Where(arg => !string.IsNullOrEmpty(arg));
