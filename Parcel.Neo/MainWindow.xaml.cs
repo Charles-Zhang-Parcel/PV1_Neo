@@ -60,7 +60,7 @@ namespace Parcel.Neo
         #endregion
 
         #region View Properties
-        private const string TitlePrefix = "Parcel - Workflow Engine";
+        private const string TitlePrefix = "PV1 Neo by Methodox - The Workflow Engine (Parcel NExT)";
         private string _dynamicTitle = TitlePrefix;
         public string DynamicTitle { get => _dynamicTitle; set => SetField(ref _dynamicTitle, value); }
         private string _currentFilePath;
