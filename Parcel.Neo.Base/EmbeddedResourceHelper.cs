@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -6,6 +7,9 @@ namespace Parcel.Neo.Base
 {
     public static class EmbeddedResourceHelper
     {
+        /// <remarks>
+        /// Caller must dispose stream.
+        /// </remarks>
         public static Stream ReadBinaryResource(string name)
         {
             // Determine path
@@ -18,8 +22,7 @@ namespace Parcel.Neo.Base
                     .Single(str => str.EndsWith(name));
             }
 
-            Stream stream = assembly.GetManifestResourceStream(resourcePath);
-            return stream;
+            return assembly.GetManifestResourceStream(resourcePath);
         }
         
         public static string ReadTextResource(string name)
@@ -34,11 +37,11 @@ namespace Parcel.Neo.Base
                     .Single(str => str.EndsWith(name));
             }
 
-            using (Stream stream = assembly.GetManifestResourceStream(resourcePath))
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                return reader.ReadToEnd();
-            }
+            using Stream? stream = assembly.GetManifestResourceStream(resourcePath);
+            if (stream == null)
+                throw new ArgumentException($"Cannot read {name}");
+            using StreamReader reader = new(stream);
+            return reader.ReadToEnd();
         }
     }
 }
