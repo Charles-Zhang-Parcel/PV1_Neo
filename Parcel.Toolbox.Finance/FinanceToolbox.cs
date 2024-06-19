@@ -4,7 +4,7 @@ using Parcel.Toolbox.Finance.Nodes;
 
 namespace Parcel.Toolbox.Finance
 {
-    public class ToolboxDefinition: IToolboxDefinition
+    public class FinanceToolbox: IToolboxDefinition
     {
         #region Interface
         public string ToolboxName => "Finance";

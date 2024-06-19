@@ -4,7 +4,7 @@ using Parcel.Toolbox.Special.Nodes;
 
 namespace Parcel.Toolbox.Special
 {
-    public class ToolboxDefinition: IToolboxDefinition
+    public class SpecialToolbox: IToolboxDefinition
     {
         #region Interface
         public string ToolboxName => "Special";

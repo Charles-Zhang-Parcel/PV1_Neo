@@ -4,7 +4,7 @@ using Parcel.Toolbox.DataSource.Nodes;
 
 namespace Parcel.Toolbox.DataSource
 {
-    public class ToolboxDefinition: IToolboxDefinition
+    public class DataSourceToolbox: IToolboxDefinition
     {
         #region Interface
         public string ToolboxName => "Data Source";

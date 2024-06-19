@@ -22,14 +22,14 @@ namespace Parcel.Neo
         {
             Dictionary<string, Assembly> toolboxAssemblies = [];
             // Register (old-fashioned) assemblies
-            RegisterToolbox(toolboxAssemblies, "Data Source", Assembly.GetAssembly(typeof(Toolbox.DataSource.ToolboxDefinition)));
-            RegisterToolbox(toolboxAssemblies, "File System", Assembly.GetAssembly(typeof(Toolbox.FileSystem.ToolboxDefinition)));
-            RegisterToolbox(toolboxAssemblies, "Finance", Assembly.GetAssembly(typeof(Toolbox.Finance.ToolboxDefinition)));
-            RegisterToolbox(toolboxAssemblies, "Generator", Assembly.GetAssembly(typeof(Toolbox.Generator.ToolboxDefinition)));
-            RegisterToolbox(toolboxAssemblies, "Logic", Assembly.GetAssembly(typeof(Toolbox.Logic.ToolboxDefinition)));
-            RegisterToolbox(toolboxAssemblies, "Math", Assembly.GetAssembly(typeof(Toolbox.Math.ToolboxDefinition)));
-            RegisterToolbox(toolboxAssemblies, "String", Assembly.GetAssembly(typeof(Toolbox.String.ToolboxDefinition)));
-            RegisterToolbox(toolboxAssemblies, "Special", Assembly.GetAssembly(typeof(Toolbox.Special.ToolboxDefinition)));
+            RegisterToolbox(toolboxAssemblies, "Data Source", Assembly.GetAssembly(typeof(Toolbox.DataSource.DataSourceToolbox)));
+            RegisterToolbox(toolboxAssemblies, "File System", Assembly.GetAssembly(typeof(Toolbox.FileSystem.FileSystemToolbox)));
+            RegisterToolbox(toolboxAssemblies, "Finance", Assembly.GetAssembly(typeof(Toolbox.Finance.FinanceToolbox)));
+            RegisterToolbox(toolboxAssemblies, "Generator", Assembly.GetAssembly(typeof(Toolbox.Generator.GeneratorToolbox)));
+            RegisterToolbox(toolboxAssemblies, "Logic", Assembly.GetAssembly(typeof(Toolbox.Logic.LogicToolbox)));
+            RegisterToolbox(toolboxAssemblies, "Math", Assembly.GetAssembly(typeof(Toolbox.Math.MathToolbox)));
+            RegisterToolbox(toolboxAssemblies, "String", Assembly.GetAssembly(typeof(Toolbox.String.StringToolbox)));
+            RegisterToolbox(toolboxAssemblies, "Special", Assembly.GetAssembly(typeof(Toolbox.Special.SpecialToolbox)));
             // Register Parcel packages
             foreach (var package in GetPackages())
             {

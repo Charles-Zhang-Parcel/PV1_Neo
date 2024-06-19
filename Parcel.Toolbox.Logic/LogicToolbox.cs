@@ -5,7 +5,7 @@ using Parcel.Toolbox.Logic.Nodes;
 
 namespace Parcel.Toolbox.Logic
 {
-    public class ToolboxDefinition: IToolboxDefinition
+    public class LogicToolbox: IToolboxDefinition
     {
         #region Interface
         public string ToolboxName => "Logic";
