@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SQLite;
+using System.Data.SQLite; // TODO: Change to Microsoft SQLite
 using System.Dynamic;
 using System.IO;
 using System.Linq;
@@ -10,19 +10,19 @@ using Parcel.Neo.Base.DataTypes;
 using DataColumn = Parcel.Neo.Base.DataTypes.DataColumn;
 using DataTable = System.Data.DataTable;
 
-namespace Parcel.Toolbox.DataProcessing
+namespace Parcel.Neo.Base.Toolboxes.DataProcessing
 {
     #region Parameters
     public class TabularFileBaseParameter
     {
         public string InputPath { get; set; }
         public bool InputContainsHeader { get; set; }
-        public DataGrid OutputTable { get; set; }   
+        public DataGrid OutputTable { get; set; }
     }
-    public class CSVParameter: TabularFileBaseParameter
+    public class CSVParameter : TabularFileBaseParameter
     {
     }
-    public class ExcelParameter: TabularFileBaseParameter
+    public class ExcelParameter : TabularFileBaseParameter
     {
     }
     public class TakeParameter
@@ -94,7 +94,7 @@ namespace Parcel.Toolbox.DataProcessing
             bool hasHeader = parameter.InputContainsHeader ? true : false;
             parameter.OutputTable = new DataGrid(CSVHelper.ReadCSVFile(parameter.InputPath, out string[] headers, hasHeader), headers);
         }
-        
+
         public static void Excel(ExcelParameter parameter)
         {
             if (string.IsNullOrWhiteSpace(parameter.InputPath) || !File.Exists(parameter.InputPath))
@@ -107,10 +107,10 @@ namespace Parcel.Toolbox.DataProcessing
             {
                 result = reader.AsDataSet();
             }
-          
+
             parameter.OutputTable = new DataGrid(result, parameter.InputContainsHeader);
         }
-        
+
         public static void Take(TakeParameter parameter)
         {
             if (parameter.InputTable == null)
@@ -121,41 +121,41 @@ namespace Parcel.Toolbox.DataProcessing
                 throw new ArgumentException("Take amount is more than amount of rows in table.");
             if (parameter.InputRowCount == parameter.InputTable.RowCount)
                 throw new ArgumentException("Take amount is the same as the amount of rows in table.");
-            
+
             DataGrid newDataGrid = new DataGrid();
             foreach (DataColumn inputTableColumn in parameter.InputTable.Columns)
                 newDataGrid.AddColumnFrom(inputTableColumn, parameter.InputRowCount);
             parameter.OutputTable = newDataGrid;
         }
-        
+
         public static void Extract(ExtractParameter parameter)
         {
             if (parameter.InputTable == null)
                 throw new ArgumentException("Missing Data Table input.");
             if (parameter.InputTable != null && parameter.InputColumnNames.Length == 0)
                 throw new ArgumentException("No columns are given for the table.");
-            
+
             Dictionary<string, DataGrid.ColumnInfo> columnInfos = parameter.InputTable.GetColumnInfoForDisplay();
             if (parameter.InputColumnNames.Any(cn => !columnInfos.ContainsKey(cn)))
                 throw new ArgumentException("Cannot find column with specified name on data table.");
-            
+
             parameter.OutputTable = parameter.InputTable.Extract(parameter.InputColumnNames.Select(cn => columnInfos[cn].ColumnIndex));
         }
-        
+
         public static void Exclude(ExcludeParameter parameter)
         {
             if (parameter.InputTable == null)
                 throw new ArgumentException("Missing Data Table input.");
             if (parameter.InputColumnNames.Length == 0)
                 throw new ArgumentException("No columns are given for the table.");
-            
+
             Dictionary<string, DataGrid.ColumnInfo> columnInfos = parameter.InputTable.GetColumnInfoForDisplay();
             if (parameter.InputColumnNames.Any(cn => !columnInfos.ContainsKey(cn)))
                 throw new ArgumentException("Cannot find column with specified name on data table.");
 
             parameter.OutputTable = parameter.InputTable.Exclude(parameter.InputColumnNames.Select(cn => columnInfos[cn].ColumnIndex));
         }
-        
+
         public static void Rename(RenameParameter parameter)
         {
             if (parameter.InputTable == null)
@@ -178,7 +178,7 @@ namespace Parcel.Toolbox.DataProcessing
             }
             parameter.OutputTable = copy;
         }
-        
+
         public static void Sort(SortParameter parameter)
         {
             if (parameter.InputTable == null)
@@ -193,7 +193,7 @@ namespace Parcel.Toolbox.DataProcessing
             newTable.Sort(parameter.InputColumnName, parameter.InputReverseOrder);
             parameter.OutputTable = newTable;
         }
-        
+
         public static void Append(AppendParameter parameter)
         {
             if (parameter.InputTables.Any(t => t == null))
@@ -206,15 +206,15 @@ namespace Parcel.Toolbox.DataProcessing
                 result = result.MakeCopy().Append(parameter.InputTables[i]);
             parameter.OutputTable = result;
         }
-        
+
         public static void Transpose(TransposeParameter parameter)
         {
             if (parameter.InputTable == null)
                 throw new ArgumentException("Missing Data Table input.");
-            
+
             parameter.OutputTable = parameter.InputTable.Transpose();
         }
-        
+
         public static void MatrixMultiply(MatrixMultiplyParameter parameter)
         {
             if (parameter.InputTables.Length != parameter.InputTableShouldTransposes.Length)
@@ -230,7 +230,7 @@ namespace Parcel.Toolbox.DataProcessing
             }
             parameter.OutputTable = result;
         }
-        
+
         public static void SQL(SQLParameter parameter)
         {
             void PopulateTable(DataGrid table, string tableName, SQLiteConnection connection)
@@ -238,17 +238,17 @@ namespace Parcel.Toolbox.DataProcessing
                 SQLiteCommand cmd = connection.CreateCommand();
                 cmd.CommandText = $"CREATE TABLE '{tableName}'({string.Join(',', table.Columns.Select(c => $"'{c.Header}'"))})";
                 cmd.ExecuteNonQuery();
-                
+
                 // Remark: The API is as shitty as it can get
-                
+
                 SQLiteTransaction transaction = connection.BeginTransaction();
-                
+
                 string sql = $"select * from '{tableName}' limit 1";
-                SQLiteDataAdapter adapter = new SQLiteDataAdapter(sql,connection);
+                SQLiteDataAdapter adapter = new SQLiteDataAdapter(sql, connection);
                 adapter.InsertCommand = new SQLiteCommandBuilder(adapter).GetInsertCommand();
-                
+
                 DataSet dataSet = new DataSet();
-                adapter.FillSchema(dataSet, SchemaType.Source, tableName); 
+                adapter.FillSchema(dataSet, SchemaType.Source, tableName);
                 adapter.Fill(dataSet, tableName);     // Load exiting table data (will be empty) 
 
                 // Insert data
@@ -256,26 +256,26 @@ namespace Parcel.Toolbox.DataProcessing
                 foreach (ExpandoObject row in table.Rows)
                 {
                     DataRow dataTableRow = dataTable.NewRow();
-                    foreach (KeyValuePair<string,dynamic> pair in (IDictionary<string, dynamic>)row)
-                        dataTableRow[pair.Key]=pair.Value;
+                    foreach (KeyValuePair<string, dynamic> pair in (IDictionary<string, dynamic>)row)
+                        dataTableRow[pair.Key] = pair.Value;
                     dataTable.Rows.Add(dataTableRow);
                 }
-                int result = adapter.Update(dataTable); 
-                
-                transaction.Commit(); 
+                int result = adapter.Update(dataTable);
+
+                transaction.Commit();
                 dataSet.AcceptChanges();
                 // Release resources 
                 adapter.Dispose();
                 dataSet.Clear();
             }
-            
+
             if (parameter.InputTables.Length == 0 || parameter.InputTables == null)
                 throw new ArgumentException("Missing Data Table input.");
-            
+
             using (var connection = new SQLiteConnection("Data Source=:memory:"))
             {
                 connection.Open();
-                
+
                 // Initialize
                 for (int i = 0; i < parameter.InputTables.Length; i++)
                 {
@@ -288,8 +288,8 @@ namespace Parcel.Toolbox.DataProcessing
                     : parameter.InputCommand + ';';
                 for (int i = 0; i < parameter.InputTables.Length; i++)
                     formattedText = formattedText.Replace($"@Table{i + 1}", $"'{parameter.InputTableNames[i]}'"); // Table names can't use parameters, so do it manually
-                SQLiteDataAdapter adapter = new SQLiteDataAdapter(formattedText, connection);
-                DataSet result = new DataSet();
+                SQLiteDataAdapter adapter = new(formattedText, connection);
+                DataSet result = new();
                 adapter.Fill(result);
                 // using (var reader = command.ExecuteReader())
                 // {
@@ -300,7 +300,7 @@ namespace Parcel.Toolbox.DataProcessing
                 //         Console.WriteLine($"Hello, {name}!");
                 //     }
                 // }
-                
+
                 parameter.OutputTable = new DataGrid(result);
                 connection.Close();
             }

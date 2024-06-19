@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
+﻿using System.Collections.Generic;
 using Parcel.Neo.Base.DataTypes;
 using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 
-namespace Parcel.Toolbox.DataProcessing.Nodes
+namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
 {
-    public class CSV: ProcessorNode
+    public class CSV : ProcessorNode
     {
         #region Node Interface
         private readonly InputConnector _pathInput = new PrimitiveStringInputConnector()
         {
             Title = "Path",
         };
-        private readonly  InputConnector _headerInput = new PrimitiveBooleanInputConnector()
+        private readonly InputConnector _headerInput = new PrimitiveBooleanInputConnector()
         {
             Title = "Contains Header",
             Value = true
@@ -23,7 +21,7 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
         private readonly OutputConnector _dataTableOutput = new OutputConnector(typeof(DataGrid))
         {
             Title = "Data Table"
-        }; 
+        };
         public CSV()
         {
             Title = NodeTypeName = "CSV";
@@ -32,7 +30,7 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
             Output.Add(_dataTableOutput);
         }
         #endregion
-        
+
         #region Processor Interface
         protected override NodeExecutionResult Execute()
         {
@@ -49,7 +47,7 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
             });
         }
         #endregion
-        
+
         #region Serialization
         protected override Dictionary<string, NodeSerializationRoutine> ProcessorNodeMemberSerialization { get; } =
             null;
@@ -57,7 +55,7 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
         #endregion
 
         #region Auto-Connect
-        public override bool ShouldHaveAutoConnection => _pathInput.IsConnected == false && string.IsNullOrWhiteSpace(((string) _pathInput.DefaultDataStorage));
+        public override bool ShouldHaveAutoConnection => _pathInput.IsConnected == false && string.IsNullOrWhiteSpace((string)_pathInput.DefaultDataStorage);
         #endregion
     }
 }

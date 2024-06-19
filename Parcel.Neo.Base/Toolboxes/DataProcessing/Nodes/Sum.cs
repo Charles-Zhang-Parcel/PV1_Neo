@@ -1,14 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Parcel.Neo.Base.DataTypes;
 using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 
-namespace Parcel.Toolbox.DataProcessing.Nodes
+namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
 {
-    public class Transpose: ProcessorNode
+    /// <summary>
+    /// Sum up all numerical columns and produce a new data grid
+    /// </summary>
+    public class Sum: ProcessorNode
     {
         #region Node Interface
         private readonly InputConnector _dataTableInput = new InputConnector(typeof(DataGrid))
@@ -19,9 +21,9 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
         {
             Title = "Result",
         };
-        public Transpose()
+        public Sum()
         {
-            Title = NodeTypeName = "Transpose";
+            Title = NodeTypeName = "Sum";
             Input.Add(_dataTableInput);
             Output.Add(_dataTableOutput);
         }
@@ -31,15 +33,17 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
         protected override NodeExecutionResult Execute()
         {
             DataGrid dataGrid = _dataTableInput.FetchInputValue<DataGrid>();
-            TransposeParameter parameter = new TransposeParameter()
+            DataGrid result = new DataGrid();
+            foreach (DataColumn dataColumn in dataGrid.Columns.Where(c => c.Type == typeof(double)))
             {
-                InputTable = dataGrid
-            };
-            DataProcessingHelper.Transpose(parameter);
+                DataColumn newColumn = new DataColumn($"{dataColumn.Header} (Sum)");
+                newColumn.Add(dataColumn.Sum());
+                result.Columns.Add(newColumn);
+            }
 
-            return new NodeExecutionResult(new NodeMessage($"{parameter.OutputTable.RowCount} Rows; {parameter.OutputTable.ColumnCount} Columns"), new Dictionary<OutputConnector, object>()
+            return new NodeExecutionResult(new NodeMessage($"{result.Columns.Count} Numerical Columns"), new Dictionary<OutputConnector, object>()
             {
-                {_dataTableOutput, parameter.OutputTable}
+                {_dataTableOutput, result}
             });
         }
         #endregion

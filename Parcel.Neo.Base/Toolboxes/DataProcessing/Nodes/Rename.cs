@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using Parcel.Neo.Base.DataTypes;
 using Parcel.Neo.Base.Framework;
@@ -9,9 +8,9 @@ using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 using Parcel.Neo.Base.Framework.ViewModels.Primitives;
 using Parcel.Neo.Base.Serialization;
 
-namespace Parcel.Toolbox.DataProcessing.Nodes
+namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
 {
-    public class Rename: DynamicInputProcessorNode
+    public class Rename : DynamicInputProcessorNode
     {
         #region Node Interface
         private readonly InputConnector _dataTableInput = new InputConnector(typeof(DataGrid))
@@ -28,17 +27,17 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
             {
                 Input.Clear();
                 int count = SerializationHelper.GetInt(o);
-                Input.Add(_dataTableInput);                
+                Input.Add(_dataTableInput);
                 for (int i = 0; i < count; i++)
                     AddInputs();
             });
-            
+
             Title = NodeTypeName = "Rename";
             Input.Add(_dataTableInput);
             Output.Add(_dataTableOutput);
 
             AddInputs();
-            
+
             AddEntryCommand = new RequeryCommand(
                 AddInputs,
                 () => true);
@@ -51,8 +50,8 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
         #region Routines
         private void AddInputs()
         {
-            Input.Add(new PrimitiveStringInputConnector() {Title = "Column"});
-            Input.Add(new PrimitiveStringInputConnector() {Title = "New Name"} );
+            Input.Add(new PrimitiveStringInputConnector() { Title = "Column" });
+            Input.Add(new PrimitiveStringInputConnector() { Title = "New Name" });
         }
         private void RemoveInputs()
         {
@@ -85,7 +84,7 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
             });
         }
         #endregion
-        
+
         #region Serialization
         protected override Dictionary<string, NodeSerializationRoutine> ProcessorNodeMemberSerialization { get; } =
             null;
@@ -99,13 +98,13 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
             {
                 List<Tuple<ToolboxNodeExport, Vector2D, InputConnector>> auto =
                     new List<Tuple<ToolboxNodeExport, Vector2D, InputConnector>>();
-                for (int i = 1; i < Input.Count; i+=2)
+                for (int i = 1; i < Input.Count; i += 2)
                 {
-                    if(!InputConnectorShouldRequireAutoConnection(Input[i])) continue;
+                    if (!InputConnectorShouldRequireAutoConnection(Input[i])) continue;
 
                     ToolboxNodeExport toolDef = new ToolboxNodeExport("Input Name", typeof(StringNode));
                     auto.Add(new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(toolDef, new Vector2D(-100, -50 + (i - 1) * 50), Input[i] as InputConnector));
-                    auto.Add(new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(toolDef, new Vector2D(-100, (i - 1) * 50), Input[i+1] as InputConnector));
+                    auto.Add(new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(toolDef, new Vector2D(-100, (i - 1) * 50), Input[i + 1] as InputConnector));
                 }
                 return auto.ToArray();
             }

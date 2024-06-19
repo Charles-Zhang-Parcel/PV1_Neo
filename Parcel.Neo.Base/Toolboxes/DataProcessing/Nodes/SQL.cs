@@ -6,7 +6,7 @@ using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 using Parcel.Neo.Base.Serialization;
 
-namespace Parcel.Toolbox.DataProcessing.Nodes
+namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
 {
     public class DatabaseTableInputConnector: InputConnector
     {

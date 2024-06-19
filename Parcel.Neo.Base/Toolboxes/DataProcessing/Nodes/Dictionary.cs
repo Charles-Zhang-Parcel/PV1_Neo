@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Dynamic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Parcel.Neo.Base.DataTypes;
 using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 
-namespace Parcel.Toolbox.DataProcessing.Nodes
+namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
 {
-    public class DictionaryEntryDefinition: ObservableObject
+    public class DictionaryEntryDefinition : ObservableObject
     {
         #region Properties
         private string _name = "New Key";
@@ -35,14 +33,14 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
         }
         #endregion
     }
-    
-    public class Dictionary: ProcessorNode
+
+    public class Dictionary : ProcessorNode
     {
         #region Node Interface
         private readonly OutputConnector _dataTableOutput = new OutputConnector(typeof(DataGrid))
         {
             Title = "Dictionary"
-        }; 
+        };
         public Dictionary()
         {
             // Serialization
@@ -57,9 +55,9 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
             {
                 new DictionaryEntryDefinition() { Name = "Entry 1" }
             };
-            
+
             AddEntryCommand = new RequeryCommand(
-                () => Definitions.Add(new DictionaryEntryDefinition() {Name = $"Entry {Definitions.Count+1}"} ),
+                () => Definitions.Add(new DictionaryEntryDefinition() { Name = $"Entry {Definitions.Count + 1}" }),
                 () => true);
             RemoveEntryCommand = new RequeryCommand(
                 () => Definitions.RemoveAt(Definitions.Count - 1),
@@ -73,14 +71,14 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
         public IProcessorNodeCommand AddEntryCommand { get; }
         public IProcessorNodeCommand RemoveEntryCommand { get; }
         #endregion
-        
+
         #region Processor Interface
         protected override NodeExecutionResult Execute()
         {
             ExpandoObject expando = new ExpandoObject();
             foreach (DictionaryEntryDefinition definition in Definitions)
             {
-                IDictionary<string, object> dict = (IDictionary<string, object>)expando;
+                IDictionary<string, object> dict = expando;
                 dict[definition.Name] = definition.Value;
             }
             DataGrid dataGrid = new DataGrid(expando);
@@ -91,10 +89,10 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
             });
         }
         #endregion
-        
+
         #region Routines
         private List<Tuple<string, int, object>> SerializeEntries()
-            => Definitions.Select(def => new Tuple<string, int, object>(def.Name, (int) def.Type, def.Value))
+            => Definitions.Select(def => new Tuple<string, int, object>(def.Name, (int)def.Type, def.Value))
                 .ToList();
         private void DeserializeEntries(IEnumerable<Tuple<string, int, object>> source)
         {
@@ -102,12 +100,12 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
             Definitions.AddRange(source.Select(tuple => new DictionaryEntryDefinition()
             {
                 Name = tuple.Item1,
-                Type = (DictionaryEntryType) tuple.Item2,
+                Type = (DictionaryEntryType)tuple.Item2,
                 Value = tuple.Item3
             }));
         }
         #endregion
-        
+
         #region Serialization
         protected override Dictionary<string, NodeSerializationRoutine> ProcessorNodeMemberSerialization { get; } =
             null;

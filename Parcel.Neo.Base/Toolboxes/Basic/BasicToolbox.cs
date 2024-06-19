@@ -15,7 +15,7 @@ namespace Parcel.Neo.Base.Toolboxes.Basic
         public ToolboxNodeExport?[] ExportNodes => new ToolboxNodeExport?[]
         {
             new("Comment", typeof(CommentNode)),
-            new("Preview", typeof(Preview)),
+            new("Preview", typeof(PreviewNode)),
             null, // Divisor line // Primitive Nodes
             new("Number", typeof(NumberNode)),
             new("String", typeof(StringNode)),
@@ -28,7 +28,7 @@ namespace Parcel.Neo.Base.Toolboxes.Basic
             null, // Divisor line // Graph Modularization
             new("Graph Input", typeof(GraphInput)),
             new("Graph Output", typeof(GraphOutput)),
-            new("Graph Reference", typeof(GraphReference)),
+            new("Graph Reference", typeof(GraphReferenceNode)),
             new("Sub Graph", typeof(object)),
         };
         public AutomaticNodeDescriptor[] AutomaticNodes => System.Array.Empty<AutomaticNodeDescriptor>();

@@ -6,9 +6,9 @@ using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 using Parcel.Neo.Base.Serialization;
 
-namespace Parcel.Toolbox.DataProcessing.Nodes
+namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
 {
-    public class Append: DynamicInputProcessorNode
+    public class Append : DynamicInputProcessorNode
     {
         #region Node Interface
         private readonly OutputConnector _dataTableOutput = new OutputConnector(typeof(DataGrid))
@@ -24,12 +24,12 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
                 for (int i = 0; i < count; i++)
                     AddInputs();
             });
-            
+
             Title = NodeTypeName = "Append";
             Output.Add(_dataTableOutput);
 
             AddInputs();
-            
+
             AddEntryCommand = new RequeryCommand(
                 AddInputs,
                 () => true);
@@ -38,18 +38,18 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
                 () => Input.Count > 1);
         }
         #endregion
-        
+
         #region Routines
         private void AddInputs()
         {
-            Input.Add(new InputConnector(typeof(DataGrid)){Title = $"Table {Input.Count + 1}"});
+            Input.Add(new InputConnector(typeof(DataGrid)) { Title = $"Table {Input.Count + 1}" });
         }
         private void RemoveInputs()
         {
             Input.RemoveAt(Input.Count - 1);
         }
         #endregion
-        
+
         #region Processor Interface
         public override OutputConnector MainOutput => _dataTableOutput as OutputConnector;
 
@@ -69,7 +69,7 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
             });
         }
         #endregion
-        
+
         #region Serialization
         protected override Dictionary<string, NodeSerializationRoutine> ProcessorNodeMemberSerialization { get; } =
             null;

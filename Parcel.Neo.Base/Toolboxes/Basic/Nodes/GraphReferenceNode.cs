@@ -10,10 +10,10 @@ using Parcel.Neo.Base.Serialization;
 
 namespace Parcel.Neo.Base.Toolboxes.Basic.Nodes
 {
-    public class GraphReference : ProcessorNode
+    public class GraphReferenceNode : ProcessorNode
     {
         #region Node Interface
-        public GraphReference()
+        public GraphReferenceNode()
         {
             ProcessorNodeMemberSerialization = new Dictionary<string, NodeSerializationRoutine>()
             {
@@ -127,8 +127,7 @@ namespace Parcel.Neo.Base.Toolboxes.Basic.Nodes
         {
             get
             {
-                List<Tuple<ToolboxNodeExport, Vector2D, InputConnector>> auto =
-                    new List<Tuple<ToolboxNodeExport, Vector2D, InputConnector>>();
+                List<Tuple<ToolboxNodeExport, Vector2D, InputConnector>> auto = [];
 
                 // Add nodes for additional variable-inputs
                 for (int i = 0; i < Input.Count; i++)
@@ -139,7 +138,7 @@ namespace Parcel.Neo.Base.Toolboxes.Basic.Nodes
                     auto.Add(new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(toolDef, new Vector2D(-100, -50 + (i - 1) * 50), Input[i]));
                 }
 
-                return auto.ToArray();
+                return [.. auto];
             }
         }
         public override bool ShouldHaveAutoConnection => Input.Count > 0 && Input.Any(i => i.Connections.Count == 0);

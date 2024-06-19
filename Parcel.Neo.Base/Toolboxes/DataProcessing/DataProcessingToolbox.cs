@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using Parcel.Neo.Base.Framework;
-using Parcel.Toolbox.DataProcessing.Nodes;
+using Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes;
 
-namespace Parcel.Toolbox.DataProcessing
+namespace Parcel.Neo.Base.Toolboxes.DataProcessing
 {
-    public class ToolboxDefinition: IToolboxDefinition
+    public class DataProcessingToolbox : IToolboxDefinition
     {
         #region Interface
         public string ToolboxName => "Data Processing";

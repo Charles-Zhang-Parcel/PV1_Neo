@@ -3,59 +3,46 @@ using Parcel.Neo.Base.DataTypes;
 using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
+using Parcel.Neo.Base.Toolboxes.DataProcessing;
 
-namespace Parcel.Toolbox.DataProcessing.Nodes
+namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
 {
-    public class Sort: ProcessorNode
+    public class Transpose : ProcessorNode
     {
         #region Node Interface
         private readonly InputConnector _dataTableInput = new InputConnector(typeof(DataGrid))
         {
             Title = "Data Table",
         };
-        private readonly InputConnector _columnNameInput = new InputConnector(typeof(string))
-        {
-            Title = "Column Name",
-        };
-        private readonly InputConnector _reverseOrderInput = new InputConnector(typeof(bool))
-        {
-            Title = "Reverse Order",
-        };
         private readonly OutputConnector _dataTableOutput = new OutputConnector(typeof(DataGrid))
         {
             Title = "Result",
         };
-        public Sort()
+        public Transpose()
         {
-            Title = NodeTypeName = "Sort";
+            Title = NodeTypeName = "Transpose";
             Input.Add(_dataTableInput);
-            Input.Add(_columnNameInput);
-            Input.Add(_reverseOrderInput);
             Output.Add(_dataTableOutput);
         }
         #endregion
-        
+
         #region Processor Interface
         protected override NodeExecutionResult Execute()
         {
             DataGrid dataGrid = _dataTableInput.FetchInputValue<DataGrid>();
-            string columnName = _columnNameInput.FetchInputValue<string>();
-            bool reverseOrder = _reverseOrderInput.FetchInputValue<bool>();
-            SortParameter parameter = new SortParameter()
+            TransposeParameter parameter = new TransposeParameter()
             {
-                InputTable = dataGrid,
-                InputColumnName = columnName,
-                InputReverseOrder = reverseOrder
+                InputTable = dataGrid
             };
-            DataProcessingHelper.Sort(parameter);
+            DataProcessingHelper.Transpose(parameter);
 
-            return new NodeExecutionResult(new NodeMessage($"{parameter.OutputTable.RowCount} Rows {parameter.OutputTable.ColumnCount} Columns"), new Dictionary<OutputConnector, object>()
+            return new NodeExecutionResult(new NodeMessage($"{parameter.OutputTable.RowCount} Rows; {parameter.OutputTable.ColumnCount} Columns"), new Dictionary<OutputConnector, object>()
             {
                 {_dataTableOutput, parameter.OutputTable}
             });
         }
         #endregion
-        
+
         #region Serialization
         protected override Dictionary<string, NodeSerializationRoutine> ProcessorNodeMemberSerialization { get; } =
             null;

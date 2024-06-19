@@ -8,9 +8,9 @@ using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 using Parcel.Neo.Base.Framework.ViewModels.Primitives;
 using Parcel.Neo.Base.Serialization;
 
-namespace Parcel.Toolbox.DataProcessing.Nodes
+namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
 {
-    public class Extract: DynamicInputProcessorNode
+    public class Exclude : DynamicInputProcessorNode
     {
         #region Node Interface
         private readonly InputConnector _dataTableInput = new InputConnector(typeof(DataGrid))
@@ -21,23 +21,23 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
         {
             Title = "Result",
         };
-        public Extract()
+        public Exclude()
         {
             VariantInputConnectorsSerialization = new NodeSerializationRoutine(() => SerializationHelper.Serialize(Input.Count - 1), o =>
             {
                 Input.Clear();
                 int count = SerializationHelper.GetInt(o);
-                Input.Add(_dataTableInput);                
+                Input.Add(_dataTableInput);
                 for (int i = 0; i < count; i++)
                     AddInputs();
             });
-            
-            Title = NodeTypeName = "Extract";
+
+            Title = NodeTypeName = "Exclude";
             Input.Add(_dataTableInput);
             Output.Add(_dataTableOutput);
-            
+
             AddInputs();
-            
+
             AddEntryCommand = new RequeryCommand(
                 AddInputs,
                 () => true);
@@ -46,37 +46,39 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
                 () => Input.Count > 2);
         }
         #endregion
-        
+
         #region Routines
         private void AddInputs()
         {
-            Input.Add(new PrimitiveStringInputConnector() {Title = "Column Name"});
+            Input.Add(new PrimitiveStringInputConnector() { Title = "Column Name" });
         }
         private void RemoveInputs()
         {
             Input.RemoveAt(Input.Count - 1);
         }
         #endregion
-        
+
         #region Processor Interface
+        public override OutputConnector MainOutput => _dataTableOutput as OutputConnector;
+
         protected override NodeExecutionResult Execute()
         {
             DataGrid dataGrid = _dataTableInput.FetchInputValue<DataGrid>();
-            ExtractParameter parameter = new ExtractParameter()
+            ExcludeParameter parameter = new ExcludeParameter()
             {
                 InputTable = dataGrid,
                 InputColumnNames = Input.Skip(1)
                     .Select(input => input.FetchInputValue<string>()).ToArray(),
             };
-            DataProcessingHelper.Extract(parameter);
+            DataProcessingHelper.Exclude(parameter);
 
-            return new NodeExecutionResult(new NodeMessage($"{parameter.OutputTable.RowCount} Rows; {parameter.OutputTable.ColumnCount} Columns"), new Dictionary<OutputConnector, object>()
+            return new NodeExecutionResult(new NodeMessage($"{parameter.OutputTable.Columns.Count} Columns"), new Dictionary<OutputConnector, object>()
             {
                 {_dataTableOutput, parameter.OutputTable}
             });
         }
         #endregion
-        
+
         #region Serialization
         protected override Dictionary<string, NodeSerializationRoutine> ProcessorNodeMemberSerialization { get; } =
             null;
@@ -92,7 +94,7 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
                     new List<Tuple<ToolboxNodeExport, Vector2D, InputConnector>>();
                 for (int i = 1; i < Input.Count; i++)
                 {
-                    if(!InputConnectorShouldRequireAutoConnection(Input[i])) continue;
+                    if (Input[i].Connections.Count != 0) continue;
 
                     ToolboxNodeExport toolDef = new ToolboxNodeExport("Column Name", typeof(StringNode));
                     auto.Add(new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(toolDef, new Vector2D(-100, -50 + (i - 1) * 50), Input[i] as InputConnector));
@@ -100,7 +102,8 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
                 return auto.ToArray();
             }
         }
-        public override bool ShouldHaveAutoConnection => Input.Count > 1 && Input.Skip(1).Any(InputConnectorShouldRequireAutoConnection);
+        public override bool ShouldHaveAutoConnection => _dataTableInput.Connections.Count == 0 ||
+                                                     Input.Count > 1 && Input.Skip(1).Any(i => i.Connections.Count == 0);
         #endregion
     }
 }

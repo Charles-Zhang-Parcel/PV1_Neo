@@ -7,14 +7,13 @@ using Parcel.Neo.Base.DataTypes;
 using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
-using Parcel.Neo.Base.Serialization;
 
-namespace Parcel.Toolbox.DataProcessing.Nodes
+namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
 {
     /// <summary>
     /// TODO: Editing for Data Table node is not working yet at this moment due to a transform as Expando object during presentation
     /// </summary>
-    public class DataTableFieldDefinition: ObservableObject
+    public class DataTableFieldDefinition : ObservableObject
     {
         #region Properties
         private string _name = "New Field";
@@ -31,14 +30,14 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
         }
         #endregion
     }
-    
-    public class DataTable: ProcessorNode
+
+    public class DataTable : ProcessorNode
     {
         #region Node Interface
         private readonly OutputConnector _dataTableOutput = new OutputConnector(typeof(DataGrid))
         {
             Title = "Data Table"
-        }; 
+        };
         public DataTable()
         {
             // Serialization
@@ -50,19 +49,19 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
             };
             VariantInputConnectorsSerialization = new NodeSerializationRoutine(SerializeEntries,
                 DeserializeEntries);
-            
+
             Definitions =
             [
                 new DataTableFieldDefinition() { Name = "New Field" }
             ];
-            
+
             AddEntryCommand = new RequeryCommand(
-                () => Definitions.Add(new DataTableFieldDefinition() {Name = $"New Field {Definitions.Count + 1}"} ),
+                () => Definitions.Add(new DataTableFieldDefinition() { Name = $"New Field {Definitions.Count + 1}" }),
                 () => true);
             RemoveEntryCommand = new RequeryCommand(
                 () => Definitions.RemoveAt(Definitions.Count - 1),
                 () => Definitions.Count > 1);
-            
+
             Title = NodeTypeName = "Data Table";
             Output.Add(_dataTableOutput);
         }
@@ -71,11 +70,14 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
         #region Native Data
         public object[][] Data { get; set; }
         #endregion
-        
+
         #region View Binding/Internal Node Properties
         private ObservableCollection<DataTableFieldDefinition> _definitions;
-        public ObservableCollection<DataTableFieldDefinition> Definitions { get => _definitions;
-            private set => SetField(ref _definitions, value); }
+        public ObservableCollection<DataTableFieldDefinition> Definitions
+        {
+            get => _definitions;
+            private set => SetField(ref _definitions, value);
+        }
         public IProcessorNodeCommand AddEntryCommand { get; }
         public IProcessorNodeCommand RemoveEntryCommand { get; }
         #endregion
@@ -107,15 +109,15 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
                 if (Data != null)
                     column.RemoveAt(0); // Remove redundant data
             }
-            
+
             // Populate data
             if (Data != null)
             {
                 for (int col = 0; col < Math.Min(Data.Length, Definitions.Count); col++)
-                for (int row = 0; row < Data[col].Length; row++)
-                    dataGrid.Columns[col].Add(Data[col][row]);
+                    for (int row = 0; row < Data[col].Length; row++)
+                        dataGrid.Columns[col].Add(Data[col][row]);
             }
-            
+
             return dataGrid;
         }
         #endregion
@@ -130,7 +132,7 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
             });
         }
         #endregion
-        
+
         #region Serialization
         protected override Dictionary<string, NodeSerializationRoutine> ProcessorNodeMemberSerialization { get; }
         protected override NodeSerializationRoutine VariantInputConnectorsSerialization { get; }

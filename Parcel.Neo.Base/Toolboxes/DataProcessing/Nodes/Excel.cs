@@ -4,51 +4,49 @@ using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 
-namespace Parcel.Toolbox.DataProcessing.Nodes
+namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
 {
-    public class Take: ProcessorNode
+    public class Excel : ProcessorNode
     {
         #region Node Interface
-        private readonly InputConnector _dataTableInput = new InputConnector(typeof(DataGrid))
+        private readonly InputConnector _pathInput = new PrimitiveStringInputConnector()
         {
-            Title = "Data Table",
+            Title = "Path",
         };
-        private readonly InputConnector _rowCountInput = new InputConnector(typeof(double))
+        private readonly InputConnector _headerInput = new PrimitiveBooleanInputConnector()
         {
-            Title = "Row Count",
+            Title = "Contains Header"
         };
         private readonly OutputConnector _dataTableOutput = new OutputConnector(typeof(DataGrid))
         {
-            Title = "Data Table Column",
+            Title = "Data Table"
         };
-        public Take()
+        public Excel()
         {
-            Title = NodeTypeName = "Take";
-            Input.Add(_dataTableInput);
-            Input.Add(_rowCountInput);
+            Title = NodeTypeName = "Excel";
+            Input.Add(_pathInput);
+            Input.Add(_headerInput);
             Output.Add(_dataTableOutput);
         }
         #endregion
-        
+
         #region Processor Interface
         protected override NodeExecutionResult Execute()
         {
-            DataGrid dataGrid = _dataTableInput.FetchInputValue<DataGrid>();
-            double rowCount = _rowCountInput.FetchInputValue<double>();
-            TakeParameter parameter = new TakeParameter()
+            ExcelParameter parameter = new ExcelParameter()
             {
-                InputTable = dataGrid,
-                InputRowCount = (int)rowCount
+                InputPath = _pathInput.FetchInputValue<string>(),
+                InputContainsHeader = _headerInput.FetchInputValue<bool>()
             };
-            DataProcessingHelper.Take(parameter);
+            DataProcessingHelper.Excel(parameter);
 
-            return new NodeExecutionResult(new NodeMessage($"{parameter.OutputTable.Rows.Count} Rows"), new Dictionary<OutputConnector, object>()
+            return new NodeExecutionResult(new NodeMessage($"{parameter.OutputTable.RowCount} Rows; {parameter.OutputTable.ColumnCount} Columns."), new Dictionary<OutputConnector, object>()
             {
                 {_dataTableOutput, parameter.OutputTable}
             });
         }
         #endregion
-        
+
         #region Serialization
         protected override Dictionary<string, NodeSerializationRoutine> ProcessorNodeMemberSerialization { get; } =
             null;

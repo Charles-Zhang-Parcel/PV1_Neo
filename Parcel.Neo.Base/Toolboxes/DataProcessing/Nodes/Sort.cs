@@ -1,53 +1,61 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Parcel.Neo.Base.DataTypes;
 using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 
-namespace Parcel.Toolbox.DataProcessing.Nodes
+namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
 {
-    /// <summary>
-    /// Sum up all numerical columns and produce a new data grid
-    /// </summary>
-    public class Sum: ProcessorNode
+    public class Sort : ProcessorNode
     {
         #region Node Interface
         private readonly InputConnector _dataTableInput = new InputConnector(typeof(DataGrid))
         {
             Title = "Data Table",
         };
+        private readonly InputConnector _columnNameInput = new InputConnector(typeof(string))
+        {
+            Title = "Column Name",
+        };
+        private readonly InputConnector _reverseOrderInput = new InputConnector(typeof(bool))
+        {
+            Title = "Reverse Order",
+        };
         private readonly OutputConnector _dataTableOutput = new OutputConnector(typeof(DataGrid))
         {
             Title = "Result",
         };
-        public Sum()
+        public Sort()
         {
-            Title = NodeTypeName = "Sum";
+            Title = NodeTypeName = "Sort";
             Input.Add(_dataTableInput);
+            Input.Add(_columnNameInput);
+            Input.Add(_reverseOrderInput);
             Output.Add(_dataTableOutput);
         }
         #endregion
-        
+
         #region Processor Interface
         protected override NodeExecutionResult Execute()
         {
             DataGrid dataGrid = _dataTableInput.FetchInputValue<DataGrid>();
-            DataGrid result = new DataGrid();
-            foreach (DataColumn dataColumn in dataGrid.Columns.Where(c => c.Type == typeof(double)))
+            string columnName = _columnNameInput.FetchInputValue<string>();
+            bool reverseOrder = _reverseOrderInput.FetchInputValue<bool>();
+            SortParameter parameter = new SortParameter()
             {
-                DataColumn newColumn = new DataColumn($"{dataColumn.Header} (Sum)");
-                newColumn.Add(dataColumn.Sum());
-                result.Columns.Add(newColumn);
-            }
+                InputTable = dataGrid,
+                InputColumnName = columnName,
+                InputReverseOrder = reverseOrder
+            };
+            DataProcessingHelper.Sort(parameter);
 
-            return new NodeExecutionResult(new NodeMessage($"{result.Columns.Count} Numerical Columns"), new Dictionary<OutputConnector, object>()
+            return new NodeExecutionResult(new NodeMessage($"{parameter.OutputTable.RowCount} Rows {parameter.OutputTable.ColumnCount} Columns"), new Dictionary<OutputConnector, object>()
             {
-                {_dataTableOutput, result}
+                {_dataTableOutput, parameter.OutputTable}
             });
         }
         #endregion
-        
+
         #region Serialization
         protected override Dictionary<string, NodeSerializationRoutine> ProcessorNodeMemberSerialization { get; } =
             null;

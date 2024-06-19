@@ -6,7 +6,7 @@ using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Highlighting;
 using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
-using Parcel.Toolbox.DataProcessing.Nodes;
+using Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes;
 
 namespace Parcel.Neo
 {

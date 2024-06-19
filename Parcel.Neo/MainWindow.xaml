@@ -9,7 +9,7 @@
         xmlns:baseNodes="clr-namespace:Parcel.Neo.Base.Framework.ViewModels.BaseNodes;assembly=Parcel.Neo.Base"
         xmlns:primitives="clr-namespace:Parcel.Neo.Base.Framework.ViewModels.Primitives;assembly=Parcel.Neo.Base"
         xmlns:converters="clr-namespace:Parcel.Neo.Converters"
-        xmlns:nodes="clr-namespace:Parcel.Toolbox.DataProcessing.Nodes;assembly=Parcel.Toolbox.DataProcessing"
+        xmlns:nodes="clr-namespace:Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes;assembly=Parcel.Neo.Base"
         xmlns:System="clr-namespace:System;assembly=System.Runtime"
         xmlns:dataTypes="clr-namespace:Parcel.Neo.Base.DataTypes;assembly=Parcel.Neo.Base"
         xmlns:advanced="clr-namespace:Parcel.Neo.Base.Framework.Advanced;assembly=Parcel.Neo.Base"

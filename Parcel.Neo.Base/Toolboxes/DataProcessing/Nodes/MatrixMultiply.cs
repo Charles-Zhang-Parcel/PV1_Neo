@@ -6,9 +6,9 @@ using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 using Parcel.Neo.Base.Serialization;
 
-namespace Parcel.Toolbox.DataProcessing.Nodes
+namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
 {
-    public class MatrixMultiply: DynamicInputProcessorNode
+    public class MatrixMultiply : DynamicInputProcessorNode
     {
         #region Node Interface
         private readonly OutputConnector _dataTableOutput = new OutputConnector(typeof(DataGrid))
@@ -24,12 +24,12 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
                 for (int i = 0; i < count; i++)
                     AddInputs();
             });
-            
+
             Title = NodeTypeName = "Matrix Multiply";
             Output.Add(_dataTableOutput);
 
             AddInputs();
-            
+
             AddEntryCommand = new RequeryCommand(
                 AddInputs,
                 () => true);
@@ -42,8 +42,8 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
         #region Routines
         private void AddInputs()
         {
-            Input.Add(new InputConnector(typeof(DataGrid)){Title = $"Table {Input.Count / 2 + 1}"});
-            Input.Add(new PrimitiveBooleanInputConnector() {Title = "Transpose"} );
+            Input.Add(new InputConnector(typeof(DataGrid)) { Title = $"Table {Input.Count / 2 + 1}" });
+            Input.Add(new PrimitiveBooleanInputConnector() { Title = "Transpose" });
         }
         private void RemoveInputs()
         {
@@ -54,7 +54,7 @@ namespace Parcel.Toolbox.DataProcessing.Nodes
 
         #region View Binding/Internal Node Properties
         #endregion
-        
+
         #region Serialization
         protected override Dictionary<string, NodeSerializationRoutine> ProcessorNodeMemberSerialization { get; } =
             null;

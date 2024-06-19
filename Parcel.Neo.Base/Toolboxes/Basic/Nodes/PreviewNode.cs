@@ -6,7 +6,7 @@ using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 
 namespace Parcel.Neo.Base.Toolboxes.Basic.Nodes
 {
-    public class Preview : ProcessorNode
+    public class PreviewNode : ProcessorNode
     {
         #region Node Interface
         private readonly InputConnector _objectInput = new InputConnector(typeof(object))
@@ -17,7 +17,7 @@ namespace Parcel.Neo.Base.Toolboxes.Basic.Nodes
         {
             Title = "Object",
         };
-        public Preview()
+        public PreviewNode()
         {
             Title = NodeTypeName = "Preview";
             Input.Add(_objectInput);

@@ -11,6 +11,8 @@ using Parcel.Neo.Base.DataTypes;
 using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 using Parcel.Neo.Base.Toolboxes.Basic;
+using Parcel.Neo.Base.Toolboxes.DataProcessing;
+using Parcel.Toolbox.ControlFlow;
 
 namespace Parcel.Neo
 {
@@ -20,8 +22,6 @@ namespace Parcel.Neo
         {
             Dictionary<string, Assembly> toolboxAssemblies = [];
             // Register (old-fashioned) assemblies
-            RegisterToolbox(toolboxAssemblies, "Control Flow", Assembly.GetAssembly(typeof(Toolbox.ControlFlow.ToolboxDefinition)));
-            RegisterToolbox(toolboxAssemblies, "Data Processing", Assembly.GetAssembly(typeof(Toolbox.DataProcessing.ToolboxDefinition)));
             RegisterToolbox(toolboxAssemblies, "Data Source", Assembly.GetAssembly(typeof(Toolbox.DataSource.ToolboxDefinition)));
             RegisterToolbox(toolboxAssemblies, "File System", Assembly.GetAssembly(typeof(Toolbox.FileSystem.ToolboxDefinition)));
             RegisterToolbox(toolboxAssemblies, "Finance", Assembly.GetAssembly(typeof(Toolbox.Finance.ToolboxDefinition)));
@@ -43,6 +43,8 @@ namespace Parcel.Neo
             Dictionary<string, ToolboxNodeExport[]> toolboxes = IndexToolboxes(toolboxAssemblies);
             // Index new internal toolboxes
             AddToolbox(toolboxes, "Basic", new BasicToolbox());
+            AddToolbox(toolboxes, "Control Flow", new ControlFlowToolbox());
+            AddToolbox(toolboxes, "Data Processing", new DataProcessingToolbox());
 
             Owner = owner;
             InitializeComponent();

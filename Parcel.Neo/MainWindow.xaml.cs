@@ -14,8 +14,8 @@ using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 using Parcel.Neo.Base.Framework.ViewModels.Primitives;
 using Parcel.Neo.Base.Toolboxes.Basic.Nodes;
+using Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes;
 using Parcel.Neo.PopupWindows;
-using Parcel.Toolbox.DataProcessing.Nodes;
 using Parcel.Toolbox.FileSystem.Nodes;
 using BaseConnection = Parcel.Neo.Base.Framework.ViewModels.BaseConnection;
 
@@ -229,7 +229,7 @@ namespace Parcel.Neo
                 Canvas.Save(GetAutoSavePath(CurrentFilePath));
             
             node.IsPreview = true;
-            if (!(node is GraphReference reference) || _graphPreviewWindows.ContainsKey(reference) || _previewWindows.ContainsKey(reference))  // For graph reference we really don't want to execute it during preview the first time
+            if (!(node is GraphReferenceNode reference) || _graphPreviewWindows.ContainsKey(reference) || _previewWindows.ContainsKey(reference))  // For graph reference we really don't want to execute it during preview the first time
                 ExecuteAll();
 
             e.Handled = true;
@@ -288,7 +288,7 @@ namespace Parcel.Neo
             {
                 if (node.MainOutput == null || !node.HasCache(node.MainOutput)) return;
                 
-                if (node is GraphReference graph)
+                if (node is GraphReferenceNode graph)
                 {
                     if (graph.GraphPath == null)
                         InitializeGraphReferenceNode(graph);
@@ -313,7 +313,7 @@ namespace Parcel.Neo
         }
         private void SpawnPropertyWindow(BaseNode node)
         {
-            if (node is GraphReference graphReference)
+            if (node is GraphReferenceNode graphReference)
             {
                 InitializeGraphReferenceNode(graphReference);
                 return;
@@ -333,7 +333,7 @@ namespace Parcel.Neo
                     Top = cursor.Y
                 }.Show();
         }
-        private static void InitializeGraphReferenceNode(GraphReference graphReference)
+        private static void InitializeGraphReferenceNode(GraphReferenceNode graphReference)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
@@ -381,7 +381,7 @@ namespace Parcel.Neo
             // Close previews
             foreach (KeyValuePair<ProcessorNode,PreviewWindow> previewWindow in _previewWindows)
                 previewWindow.Value.Close();
-            foreach (KeyValuePair<GraphReference,MainWindow> graphPreviewWindow in _graphPreviewWindows)
+            foreach (KeyValuePair<GraphReferenceNode,MainWindow> graphPreviewWindow in _graphPreviewWindows)
                 graphPreviewWindow.Value.Close();
             
             // Open
@@ -434,8 +434,8 @@ namespace Parcel.Neo
         #region State
         private readonly Dictionary<ProcessorNode, PreviewWindow> _previewWindows =
             new Dictionary<ProcessorNode, PreviewWindow>();
-        private readonly Dictionary<GraphReference, MainWindow> _graphPreviewWindows =
-            new Dictionary<GraphReference, MainWindow>();
+        private readonly Dictionary<GraphReferenceNode, MainWindow> _graphPreviewWindows =
+            new Dictionary<GraphReferenceNode, MainWindow>();
         #endregion
 
         #region Interop
