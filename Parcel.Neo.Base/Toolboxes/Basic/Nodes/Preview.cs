@@ -4,9 +4,9 @@ using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 
-namespace Parcel.Toolbox.Basic.Nodes
+namespace Parcel.Neo.Base.Toolboxes.Basic.Nodes
 {
-    public class Preview: ProcessorNode
+    public class Preview : ProcessorNode
     {
         #region Node Interface
         private readonly InputConnector _objectInput = new InputConnector(typeof(object))
@@ -24,7 +24,7 @@ namespace Parcel.Toolbox.Basic.Nodes
             Output.Add(_objectOutput);
         }
         #endregion
-        
+
         #region Processor Interface
         protected override NodeExecutionResult Execute()
         {
@@ -36,10 +36,9 @@ namespace Parcel.Toolbox.Basic.Nodes
             });
         }
         #endregion
-        
+
         #region Serialization
-        protected override Dictionary<string, NodeSerializationRoutine> ProcessorNodeMemberSerialization { get; } =
-            null;
+        protected override Dictionary<string, NodeSerializationRoutine> ProcessorNodeMemberSerialization { get; } = null;
         protected override NodeSerializationRoutine VariantInputConnectorsSerialization { get; } = null;
         #endregion
     }

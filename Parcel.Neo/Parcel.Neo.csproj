@@ -28,7 +28,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Parcel.Neo.Base\Parcel.Neo.Base.csproj" />
-    <ProjectReference Include="..\Parcel.Toolbox.Basic\Parcel.Toolbox.Basic.csproj" />
     <ProjectReference Include="..\Parcel.Toolbox.ControlFlow\Parcel.Toolbox.ControlFlow.csproj" />
     <ProjectReference Include="..\Parcel.Toolbox.DataProcessing\Parcel.Toolbox.DataProcessing.csproj" />
     <ProjectReference Include="..\Parcel.Toolbox.DataSource\Parcel.Toolbox.DataSource.csproj" />

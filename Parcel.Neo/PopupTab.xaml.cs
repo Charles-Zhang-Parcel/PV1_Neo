@@ -7,11 +7,10 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Xml.Linq;
-using Parcel.Neo.Base;
 using Parcel.Neo.Base.DataTypes;
 using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
+using Parcel.Neo.Base.Toolboxes.Basic;
 
 namespace Parcel.Neo
 {
@@ -19,24 +18,24 @@ namespace Parcel.Neo
     {
         public PopupTab(Window owner)
         {
-            _registry.RegisterToolbox("Basic", Assembly.GetAssembly(typeof(Toolbox.Basic.ToolboxDefinition)));
-            _registry.RegisterToolbox("Control Flow", Assembly.GetAssembly(typeof(Toolbox.ControlFlow.ToolboxDefinition)));
-            _registry.RegisterToolbox("Data Processing", Assembly.GetAssembly(typeof(Toolbox.DataProcessing.ToolboxDefinition)));
-            _registry.RegisterToolbox("Data Source", Assembly.GetAssembly(typeof(Toolbox.DataSource.ToolboxDefinition)));
-            _registry.RegisterToolbox("File System", Assembly.GetAssembly(typeof(Toolbox.FileSystem.ToolboxDefinition)));
-            _registry.RegisterToolbox("Finance", Assembly.GetAssembly(typeof(Toolbox.Finance.ToolboxDefinition)));
-            _registry.RegisterToolbox("Generator", Assembly.GetAssembly(typeof(Toolbox.Generator.ToolboxDefinition)));
-            _registry.RegisterToolbox("Logic", Assembly.GetAssembly(typeof(Toolbox.Logic.ToolboxDefinition)));
-            _registry.RegisterToolbox("Math", Assembly.GetAssembly(typeof(Toolbox.Math.ToolboxDefinition)));
-            _registry.RegisterToolbox("String", Assembly.GetAssembly(typeof(Toolbox.String.ToolboxDefinition)));
-            _registry.RegisterToolbox("Special", Assembly.GetAssembly(typeof(Toolbox.Special.ToolboxDefinition)));
+            RegisterToolbox("Basic", Assembly.GetAssembly(typeof(ToolboxDefinition)));
+            RegisterToolbox("Control Flow", Assembly.GetAssembly(typeof(Toolbox.ControlFlow.ToolboxDefinition)));
+            RegisterToolbox("Data Processing", Assembly.GetAssembly(typeof(Toolbox.DataProcessing.ToolboxDefinition)));
+            RegisterToolbox("Data Source", Assembly.GetAssembly(typeof(Toolbox.DataSource.ToolboxDefinition)));
+            RegisterToolbox("File System", Assembly.GetAssembly(typeof(Toolbox.FileSystem.ToolboxDefinition)));
+            RegisterToolbox("Finance", Assembly.GetAssembly(typeof(Toolbox.Finance.ToolboxDefinition)));
+            RegisterToolbox("Generator", Assembly.GetAssembly(typeof(Toolbox.Generator.ToolboxDefinition)));
+            RegisterToolbox("Logic", Assembly.GetAssembly(typeof(Toolbox.Logic.ToolboxDefinition)));
+            RegisterToolbox("Math", Assembly.GetAssembly(typeof(Toolbox.Math.ToolboxDefinition)));
+            RegisterToolbox("String", Assembly.GetAssembly(typeof(Toolbox.String.ToolboxDefinition)));
+            RegisterToolbox("Special", Assembly.GetAssembly(typeof(Toolbox.Special.ToolboxDefinition)));
 
             // Register Parcel packages
             foreach (var package in GetPackages())
             {
                 try
                 {
-                    _registry.RegisterToolbox(package.Name, Assembly.LoadFrom(package.Path));
+                    RegisterToolbox(package.Name, Assembly.LoadFrom(package.Path));
                 }
                 catch (Exception) { continue; }
             }
@@ -47,27 +46,10 @@ namespace Parcel.Neo
             // Additional setup
             PopulateToolboxItems();
             SearchTextBox.Focus();
-
-            static (string Name, string Path)[] GetPackages()
-            {
-                string packageImportPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Parcel NExT", "Packages");
-
-                string? environmentOverride = Environment.GetEnvironmentVariable("PARCEL_PACKAGES");
-                if (environmentOverride != null && Directory.Exists(environmentOverride))
-                    packageImportPath = environmentOverride;
-
-                if (Directory.Exists(packageImportPath))
-                    return Directory
-                        .EnumerateFiles(packageImportPath)
-                        .Where(file => Path.GetExtension(file).Equals(".dll", StringComparison.CurrentCultureIgnoreCase))
-                        .Select(file => (Path.GetFileNameWithoutExtension(file), file))
-                        .ToArray();
-                return [];
-            }
         }
 
         #region States
-        private readonly ToolboxRegistry _registry = new ToolboxRegistry();
+        private Dictionary<string, Assembly> Toolboxes { get; } = [];
         private List<ToolboxNodeExport> _availableNodes;
         private Dictionary<string, ToolboxNodeExport> _searchResultLookup;
         #endregion
@@ -145,9 +127,9 @@ namespace Parcel.Neo
             // TODO: The setup here need complete changes to conform to POS assembly formats
             _availableNodes = [];
                 
-            foreach (string name in _registry.Toolboxes.Keys.OrderBy(k => k))
+            foreach (string name in Toolboxes.Keys.OrderBy(k => k))
             {
-                Assembly assembly = _registry.Toolboxes[name];
+                Assembly assembly = Toolboxes[name];
 
                 // Create menu instance
                 Menu menu = new();
@@ -185,6 +167,32 @@ namespace Parcel.Neo
         #endregion
 
         #region Helpers
+        private static (string Name, string Path)[] GetPackages()
+        {
+            string packageImportPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Parcel NExT", "Packages");
+
+            string? environmentOverride = Environment.GetEnvironmentVariable("PARCEL_PACKAGES");
+            if (environmentOverride != null && Directory.Exists(environmentOverride))
+                packageImportPath = environmentOverride;
+
+            if (Directory.Exists(packageImportPath))
+                return Directory
+                    .EnumerateFiles(packageImportPath)
+                    .Where(file => Path.GetExtension(file).Equals(".dll", StringComparison.CurrentCultureIgnoreCase))
+                    .Select(file => (Path.GetFileNameWithoutExtension(file), file))
+                    .ToArray();
+            return [];
+        }
+        private void RegisterToolbox(string name, Assembly? assembly)
+        {
+            if (assembly == null)
+                throw new ArgumentException($"Assembly is null.");
+
+            if (Toolboxes.ContainsKey(name))
+                throw new InvalidOperationException($"Assembly `{assembly.FullName}` is already registered.");
+
+            Toolboxes.Add(name, assembly);
+        }
         private static IEnumerable<ToolboxNodeExport?> GetExportNodesFromConvention(string name, Assembly assembly)
         {
             string formalName = $"{name.Replace(" ", string.Empty)}";
