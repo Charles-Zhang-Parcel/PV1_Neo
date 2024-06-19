@@ -20,7 +20,6 @@ namespace Parcel.Neo
         {
             Dictionary<string, Assembly> toolboxAssemblies = [];
             // Register (old-fashioned) assemblies
-            RegisterToolbox(toolboxAssemblies, "Basic", Assembly.GetAssembly(typeof(ToolboxDefinition)));
             RegisterToolbox(toolboxAssemblies, "Control Flow", Assembly.GetAssembly(typeof(Toolbox.ControlFlow.ToolboxDefinition)));
             RegisterToolbox(toolboxAssemblies, "Data Processing", Assembly.GetAssembly(typeof(Toolbox.DataProcessing.ToolboxDefinition)));
             RegisterToolbox(toolboxAssemblies, "Data Source", Assembly.GetAssembly(typeof(Toolbox.DataSource.ToolboxDefinition)));
@@ -42,6 +41,8 @@ namespace Parcel.Neo
             }
             // Index nodes
             Dictionary<string, ToolboxNodeExport[]> toolboxes = IndexToolboxes(toolboxAssemblies);
+            // Index new internal toolboxes
+            AddToolbox(toolboxes, "Basic", new BasicToolbox());
 
             Owner = owner;
             InitializeComponent();
@@ -147,6 +148,27 @@ namespace Parcel.Neo
                 // Add menu to GUI
                 ModulesListView.Items.Add(menu);
             }
+        }
+        private static void AddToolbox(Dictionary<string, ToolboxNodeExport[]> toolboxes, string name, IToolboxDefinition toolbox)
+        {
+            List<ToolboxNodeExport> nodes = [];
+
+            foreach (ToolboxNodeExport nodeExport in toolbox.ExportNodes)
+            {
+                if (nodeExport != null)
+                    nodeExport.Toolbox = toolbox;
+                nodes.Add(nodeExport);
+            }
+            foreach (AutomaticNodeDescriptor definition in toolbox.AutomaticNodes)
+                nodes.Add(definition == null
+                    ? null
+                    : new ToolboxNodeExport(definition.NodeName, typeof(AutomaticProcessorNode))
+                    {
+                        Descriptor = definition,
+                        Toolbox = toolbox,
+                    });
+
+            toolboxes[name] = nodes.ToArray();
         }
         private static Dictionary<string, ToolboxNodeExport[]> IndexToolboxes(Dictionary<string, Assembly> assemblies)
         {

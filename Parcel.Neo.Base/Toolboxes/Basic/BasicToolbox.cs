@@ -7,7 +7,7 @@ using Parcel.Neo.Base.Toolboxes.Basic.Nodes;
 
 namespace Parcel.Neo.Base.Toolboxes.Basic
 {
-    public class ToolboxDefinition : IToolboxDefinition
+    public class BasicToolbox : IToolboxDefinition
     {
         #region Interface
         public string ToolboxName => "Basic";
