@@ -2,47 +2,11 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Dynamic;
-using System.IO;
 using System.Linq;
 using System.Text;
 
 namespace Parcel.Neo.Base.DataTypes
 {
-    // TODO: Merge into Parcel.NEXT
-    public static class CSVHelper
-    {
-        public static IEnumerable<string[]> ReadCSVFile(string path, out string[]? headers, bool containsHeader = true)
-        {
-            IEnumerable<string> lines = File.ReadLines(path);
-            if (containsHeader)
-            {
-                string[] allLines = lines.ToArray();
-
-                headers = StringHelper.SplitCSVLine(allLines.First()).ToArray();
-                return allLines.Skip(1).Select(line => StringHelper.SplitCSVLine(line).ToArray());
-            }
-            else
-            {
-                headers = null;
-                return lines.Select(line => StringHelper.SplitCSVLine(line).ToArray());
-            }
-        }
-        public static IEnumerable<string[]> ParseCSV(string text, out string[]? headers, bool containsHeader = true)
-        {
-            string[] lines = text.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            if (containsHeader)
-            {
-                headers = StringHelper.SplitCSVLine(lines.First()).ToArray();
-                return lines.Skip(1).Select(line => StringHelper.SplitCSVLine(line).ToArray());
-            }
-            else
-            {
-                headers = null;
-                return lines.Select(line => StringHelper.SplitCSVLine(line).ToArray());
-            }
-        }
-    }
-
     public class DataColumn
     {
         #region Construction
