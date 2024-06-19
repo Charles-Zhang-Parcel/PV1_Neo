@@ -18,38 +18,40 @@ namespace Parcel.Neo
     {
         public PopupTab(Window owner)
         {
-            RegisterToolbox("Basic", Assembly.GetAssembly(typeof(ToolboxDefinition)));
-            RegisterToolbox("Control Flow", Assembly.GetAssembly(typeof(Toolbox.ControlFlow.ToolboxDefinition)));
-            RegisterToolbox("Data Processing", Assembly.GetAssembly(typeof(Toolbox.DataProcessing.ToolboxDefinition)));
-            RegisterToolbox("Data Source", Assembly.GetAssembly(typeof(Toolbox.DataSource.ToolboxDefinition)));
-            RegisterToolbox("File System", Assembly.GetAssembly(typeof(Toolbox.FileSystem.ToolboxDefinition)));
-            RegisterToolbox("Finance", Assembly.GetAssembly(typeof(Toolbox.Finance.ToolboxDefinition)));
-            RegisterToolbox("Generator", Assembly.GetAssembly(typeof(Toolbox.Generator.ToolboxDefinition)));
-            RegisterToolbox("Logic", Assembly.GetAssembly(typeof(Toolbox.Logic.ToolboxDefinition)));
-            RegisterToolbox("Math", Assembly.GetAssembly(typeof(Toolbox.Math.ToolboxDefinition)));
-            RegisterToolbox("String", Assembly.GetAssembly(typeof(Toolbox.String.ToolboxDefinition)));
-            RegisterToolbox("Special", Assembly.GetAssembly(typeof(Toolbox.Special.ToolboxDefinition)));
-
+            Dictionary<string, Assembly> toolboxAssemblies = [];
+            // Register (old-fashioned) assemblies
+            RegisterToolbox(toolboxAssemblies, "Basic", Assembly.GetAssembly(typeof(ToolboxDefinition)));
+            RegisterToolbox(toolboxAssemblies, "Control Flow", Assembly.GetAssembly(typeof(Toolbox.ControlFlow.ToolboxDefinition)));
+            RegisterToolbox(toolboxAssemblies, "Data Processing", Assembly.GetAssembly(typeof(Toolbox.DataProcessing.ToolboxDefinition)));
+            RegisterToolbox(toolboxAssemblies, "Data Source", Assembly.GetAssembly(typeof(Toolbox.DataSource.ToolboxDefinition)));
+            RegisterToolbox(toolboxAssemblies, "File System", Assembly.GetAssembly(typeof(Toolbox.FileSystem.ToolboxDefinition)));
+            RegisterToolbox(toolboxAssemblies, "Finance", Assembly.GetAssembly(typeof(Toolbox.Finance.ToolboxDefinition)));
+            RegisterToolbox(toolboxAssemblies, "Generator", Assembly.GetAssembly(typeof(Toolbox.Generator.ToolboxDefinition)));
+            RegisterToolbox(toolboxAssemblies, "Logic", Assembly.GetAssembly(typeof(Toolbox.Logic.ToolboxDefinition)));
+            RegisterToolbox(toolboxAssemblies, "Math", Assembly.GetAssembly(typeof(Toolbox.Math.ToolboxDefinition)));
+            RegisterToolbox(toolboxAssemblies, "String", Assembly.GetAssembly(typeof(Toolbox.String.ToolboxDefinition)));
+            RegisterToolbox(toolboxAssemblies, "Special", Assembly.GetAssembly(typeof(Toolbox.Special.ToolboxDefinition)));
             // Register Parcel packages
             foreach (var package in GetPackages())
             {
                 try
                 {
-                    RegisterToolbox(package.Name, Assembly.LoadFrom(package.Path));
+                    RegisterToolbox(toolboxAssemblies, package.Name, Assembly.LoadFrom(package.Path));
                 }
                 catch (Exception) { continue; }
             }
+            // Index nodes
+            Dictionary<string, ToolboxNodeExport[]> toolboxes = IndexToolboxes(toolboxAssemblies);
 
             Owner = owner;
             InitializeComponent();
 
             // Additional setup
-            PopulateToolboxItems();
+            PopulateToolboxItems(toolboxes);
             SearchTextBox.Focus();
         }
 
         #region States
-        private Dictionary<string, Assembly> Toolboxes { get; } = [];
         private List<ToolboxNodeExport> _availableNodes;
         private Dictionary<string, ToolboxNodeExport> _searchResultLookup;
         #endregion
@@ -122,23 +124,38 @@ namespace Parcel.Neo
                 SearchResultsVisibility = Visibility.Collapsed;
             }
         }
-        private void PopulateToolboxItems()
+        private void PopulateToolboxItems(Dictionary<string, ToolboxNodeExport[]> toolboxes)
         {
             // TODO: The setup here need complete changes to conform to POS assembly formats
             _availableNodes = [];
                 
-            foreach (string name in Toolboxes.Keys.OrderBy(k => k))
+            foreach ((string Name, ToolboxNodeExport[] Nodes) in toolboxes)
             {
-                Assembly assembly = Toolboxes[name];
-
                 // Create menu instance
                 Menu menu = new();
                 MenuItem topMenu = new()
                 {
-                    Header = name, 
+                    Header = Name, 
                     Width = Width * 0.8,
                 };
                 menu.Items.Add(topMenu);
+
+                // Add to menu
+                foreach (ToolboxNodeExport export in Nodes)
+                    AddMenuItem(export, topMenu);
+
+                // Add menu to GUI
+                ModulesListView.Items.Add(menu);
+            }
+        }
+        private static Dictionary<string, ToolboxNodeExport[]> IndexToolboxes(Dictionary<string, Assembly> assemblies)
+        {
+            Dictionary<string, ToolboxNodeExport[]> toolboxes = [];
+
+            foreach (string name in assemblies.Keys.OrderBy(k => k))
+            {
+                Assembly assembly = assemblies[name];
+                toolboxes[name] = [];
 
                 // Load either old PV1 toolbox or new Parcel package
                 IEnumerable<ToolboxNodeExport?>? exportedNodes = null;
@@ -155,14 +172,10 @@ namespace Parcel.Neo
                     // Load generic Parcel package
                     exportedNodes = GetExportNodesFromGenericAssembly(name, assembly);
                 }
-                // Add to menu
-                foreach (ToolboxNodeExport? export in exportedNodes!)
-                    AddMenuItem(export, topMenu);
-
-
-                // Add menu to GUI
-                ModulesListView.Items.Add(menu);
+                toolboxes[name] = exportedNodes!.Select(n => n!).ToArray();
             }
+
+            return toolboxes;
         }
         #endregion
 
@@ -183,15 +196,15 @@ namespace Parcel.Neo
                     .ToArray();
             return [];
         }
-        private void RegisterToolbox(string name, Assembly? assembly)
+        private void RegisterToolbox(Dictionary<string, Assembly> toolboxAssemblies, string name, Assembly? assembly)
         {
             if (assembly == null)
                 throw new ArgumentException($"Assembly is null.");
 
-            if (Toolboxes.ContainsKey(name))
+            if (toolboxAssemblies.ContainsKey(name))
                 throw new InvalidOperationException($"Assembly `{assembly.FullName}` is already registered.");
 
-            Toolboxes.Add(name, assembly);
+            toolboxAssemblies.Add(name, assembly);
         }
         private static IEnumerable<ToolboxNodeExport?> GetExportNodesFromConvention(string name, Assembly assembly)
         {
