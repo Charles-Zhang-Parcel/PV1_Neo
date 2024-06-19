@@ -12,6 +12,14 @@ using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 using Parcel.Neo.Base.Toolboxes.Basic;
 using Parcel.Neo.Base.Toolboxes.DataProcessing;
+using Parcel.Neo.Base.Toolboxes.DataSource;
+using Parcel.Neo.Base.Toolboxes.FileSystem;
+using Parcel.Neo.Base.Toolboxes.Finance;
+using Parcel.Neo.Base.Toolboxes.Generator;
+using Parcel.Neo.Base.Toolboxes.Logic;
+using Parcel.Neo.Base.Toolboxes.Math;
+using Parcel.Neo.Base.Toolboxes.Special;
+using Parcel.Neo.Base.Toolboxes.String;
 using Parcel.Toolbox.ControlFlow;
 
 namespace Parcel.Neo
@@ -21,15 +29,6 @@ namespace Parcel.Neo
         public PopupTab(Window owner)
         {
             Dictionary<string, Assembly> toolboxAssemblies = [];
-            // Register (old-fashioned) assemblies
-            RegisterToolbox(toolboxAssemblies, "Data Source", Assembly.GetAssembly(typeof(Toolbox.DataSource.DataSourceToolbox)));
-            RegisterToolbox(toolboxAssemblies, "File System", Assembly.GetAssembly(typeof(Toolbox.FileSystem.FileSystemToolbox)));
-            RegisterToolbox(toolboxAssemblies, "Finance", Assembly.GetAssembly(typeof(Toolbox.Finance.FinanceToolbox)));
-            RegisterToolbox(toolboxAssemblies, "Generator", Assembly.GetAssembly(typeof(Toolbox.Generator.GeneratorToolbox)));
-            RegisterToolbox(toolboxAssemblies, "Logic", Assembly.GetAssembly(typeof(Toolbox.Logic.LogicToolbox)));
-            RegisterToolbox(toolboxAssemblies, "Math", Assembly.GetAssembly(typeof(Toolbox.Math.MathToolbox)));
-            RegisterToolbox(toolboxAssemblies, "String", Assembly.GetAssembly(typeof(Toolbox.String.StringToolbox)));
-            RegisterToolbox(toolboxAssemblies, "Special", Assembly.GetAssembly(typeof(Toolbox.Special.SpecialToolbox)));
             // Register Parcel packages
             foreach (var package in GetPackages())
             {
@@ -39,12 +38,21 @@ namespace Parcel.Neo
                 }
                 catch (Exception) { continue; }
             }
+
             // Index nodes
             Dictionary<string, ToolboxNodeExport[]> toolboxes = IndexToolboxes(toolboxAssemblies);
             // Index new internal toolboxes
             AddToolbox(toolboxes, "Basic", new BasicToolbox());
             AddToolbox(toolboxes, "Control Flow", new ControlFlowToolbox());
             AddToolbox(toolboxes, "Data Processing", new DataProcessingToolbox());
+            AddToolbox(toolboxes, "Data Source", new DataSourceToolbox());
+            AddToolbox(toolboxes, "File System", new FileSystemToolbox());
+            AddToolbox(toolboxes, "Finance", new FinanceToolbox());
+            AddToolbox(toolboxes, "Generator", new GeneratorToolbox());
+            AddToolbox(toolboxes, "Logic", new LogicToolbox());
+            AddToolbox(toolboxes, "Math", new MathToolbox());
+            AddToolbox(toolboxes, "String", new StringToolbox());
+            AddToolbox(toolboxes, "Special", new SpecialToolbox());
 
             Owner = owner;
             InitializeComponent();

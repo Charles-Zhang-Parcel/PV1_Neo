@@ -28,14 +28,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Parcel.Neo.Base\Parcel.Neo.Base.csproj" />
-    <ProjectReference Include="..\Parcel.Toolbox.DataSource\Parcel.Toolbox.DataSource.csproj" />
-    <ProjectReference Include="..\Parcel.Toolbox.FileSystem\Parcel.Toolbox.FileSystem.csproj" />
-    <ProjectReference Include="..\Parcel.Toolbox.Finance\Parcel.Toolbox.Finance.csproj" />
-    <ProjectReference Include="..\Parcel.Toolbox.Generator\Parcel.Toolbox.Generator.csproj" />
-    <ProjectReference Include="..\Parcel.Toolbox.Logic\Parcel.Toolbox.Logic.csproj" />
-    <ProjectReference Include="..\Parcel.Toolbox.Math\Parcel.Toolbox.Math.csproj" />
-    <ProjectReference Include="..\Parcel.Toolbox.Special\Parcel.Toolbox.Special.csproj" />
-    <ProjectReference Include="..\Parcel.Toolbox.String\Parcel.Toolbox.String.csproj" />
   </ItemGroup>
 
   <ItemGroup>
