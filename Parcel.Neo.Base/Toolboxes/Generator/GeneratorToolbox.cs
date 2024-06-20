@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Reflection;
 using Parcel.Types;
 using Parcel.Neo.Base.Framework;
 using RandomNameGeneratorNG;
@@ -11,9 +10,8 @@ namespace Parcel.Neo.Base.Toolboxes.Generator
     public class GeneratorToolbox : IToolboxDefinition
     {
         #region Interface
-        public string ToolboxName => "Generator";
-        public string ToolboxAssemblyFullName => Assembly.GetExecutingAssembly().FullName;
-        public ToolboxNodeExport?[]? ExportNodes => Array.Empty<ToolboxNodeExport>();
+        public ToolboxNodeExport?[]? ExportNodes => AutomaticNodes.Select(a => a == null ? null : new ToolboxNodeExport(a.NodeName, CoreEngine.Runtime.RuntimeNodeType.Method, a)).ToArray();
+
         public AutomaticNodeDescriptor?[]? AutomaticNodes => [
             // Random Numbers
             new("Random Number", [], CacheDataType.Number,

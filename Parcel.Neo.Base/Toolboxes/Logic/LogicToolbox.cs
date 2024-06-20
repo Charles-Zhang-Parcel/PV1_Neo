@@ -1,33 +1,30 @@
-﻿using System.Reflection;
-using Parcel.Neo.Base.Framework;
+﻿using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Toolboxes.Logic.Nodes;
 using Parcel.Neo.Base.DataTypes;
+using System.Linq;
 
 namespace Parcel.Neo.Base.Toolboxes.Logic
 {
     public class LogicToolbox : IToolboxDefinition
     {
         #region Interface
-        public string ToolboxName => "Logic";
-        public string ToolboxAssemblyFullName => Assembly.GetExecutingAssembly().FullName;
-        public ToolboxNodeExport[] ExportNodes => new ToolboxNodeExport[]
-        {
+        public ToolboxNodeExport[] ExportNodes => [
             // Functional
-            new ToolboxNodeExport("Choose", typeof(Choose)),
-        };
-        public AutomaticNodeDescriptor[] AutomaticNodes => new AutomaticNodeDescriptor[]
-        {
+            new ToolboxNodeExport("Choose", CoreEngine.Runtime.RuntimeNodeType.Method, typeof(Choose)),
+            .. AutomaticNodes.Select(a => a == null ? null : new ToolboxNodeExport(a.NodeName, CoreEngine.Runtime.RuntimeNodeType.Method, a))
+        ];
+        public AutomaticNodeDescriptor[] AutomaticNodes => [
             // Numerical
-            new AutomaticNodeDescriptor("> (Bigger Than)", new []{CacheDataType.Number, CacheDataType.Number}, CacheDataType.Number,
+            new("> (Bigger Than)", [CacheDataType.Number, CacheDataType.Number], CacheDataType.Number,
                 objects => (double)objects[0] > (double)objects[1]),
-            new AutomaticNodeDescriptor("< (Smaller Than)", new []{CacheDataType.Number, CacheDataType.Number}, CacheDataType.Number,
+            new("< (Smaller Than)", [CacheDataType.Number, CacheDataType.Number], CacheDataType.Number,
                 objects => (double)objects[0] < (double)objects[1]),
             null, // Divisor line // Boolean
-            new AutomaticNodeDescriptor("AND", new []{CacheDataType.Boolean, CacheDataType.Boolean}, CacheDataType.Boolean,
+            new("AND", [CacheDataType.Boolean, CacheDataType.Boolean], CacheDataType.Boolean,
                 objects => (bool)objects[0] && (bool)objects[1]),
-            new AutomaticNodeDescriptor("OR", new []{CacheDataType.Boolean, CacheDataType.Boolean}, CacheDataType.Boolean,
+            new("OR", [CacheDataType.Boolean, CacheDataType.Boolean], CacheDataType.Boolean,
                 objects => (bool)objects[0] || (bool)objects[1]),
-        };
+        ];
         #endregion
     }
 }

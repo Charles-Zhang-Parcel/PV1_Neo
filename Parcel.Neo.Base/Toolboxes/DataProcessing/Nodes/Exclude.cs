@@ -86,8 +86,8 @@ namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
         protected override NodeSerializationRoutine VariantInputConnectorsSerialization { get; }
         #endregion
 
-        #region Auto Generate Interface
-        public override Tuple<ToolboxNodeExport, Vector2D, InputConnector>[] AutoGenerateNodes
+        #region Auto Populate Connections Interface
+        public override Tuple<ToolboxNodeExport, Vector2D, InputConnector>[] AutoPopulatedConnectionNodes
         {
             get
             {
@@ -97,14 +97,13 @@ namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
                 {
                     if (Input[i].Connections.Count != 0) continue;
 
-                    ToolboxNodeExport toolDef = new ToolboxNodeExport("Column Name", typeof(StringNode));
+                    ToolboxNodeExport toolDef = new("Column Name", CoreEngine.Runtime.RuntimeNodeType.Method, typeof(StringNode));
                     auto.Add(new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(toolDef, new Vector2D(-100, -50 + (i - 1) * 50), Input[i] as InputConnector));
                 }
-                return auto.ToArray();
+                return [.. auto];
             }
         }
-        public override bool ShouldHaveAutoConnection => _dataTableInput.Connections.Count == 0 ||
-                                                     Input.Count > 1 && Input.Skip(1).Any(i => i.Connections.Count == 0);
+        public override bool ShouldHaveAutoConnection => _dataTableInput.Connections.Count == 0 || Input.Count > 1 && Input.Skip(1).Any(i => i.Connections.Count == 0);
         #endregion
     }
 }

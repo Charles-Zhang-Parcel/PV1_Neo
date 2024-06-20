@@ -70,13 +70,13 @@ namespace Parcel.Neo.Base.Toolboxes.DataSource.Nodes
 
         #region Auto Connect Interface
         public override bool ShouldHaveAutoConnection => _symbolInput.Connections.Count == 0;
-        public override Tuple<ToolboxNodeExport, Vector2D, InputConnector>[] AutoGenerateNodes =>
+        public override Tuple<ToolboxNodeExport, Vector2D, InputConnector>[] AutoPopulatedConnectionNodes =>
             new Tuple<ToolboxNodeExport, Vector2D, InputConnector>[]
             {
-                new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(new ToolboxNodeExport("String", typeof(StringNode)), new Vector2D(-250, -100), _symbolInput),
-                new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(new ToolboxNodeExport("Start Date", typeof(DateTimeNode)), new Vector2D(-250, -50), _startDateInput),
-                new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(new ToolboxNodeExport("End Date", typeof(DateTimeNode)), new Vector2D(-250, 0), _endDateInput),
-                new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(new ToolboxNodeExport("Interval", typeof(StringNode)), new Vector2D(-250, 50), _intervalInput)
+                new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(new ToolboxNodeExport("String", CoreEngine.Runtime.RuntimeNodeType.Method, typeof(StringNode)), new Vector2D(-250, -100), _symbolInput),
+                new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(new ToolboxNodeExport("Start Date", CoreEngine.Runtime.RuntimeNodeType.Method, typeof(DateTimeNode)), new Vector2D(-250, -50), _startDateInput),
+                new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(new ToolboxNodeExport("End Date", CoreEngine.Runtime.RuntimeNodeType.Method, typeof(DateTimeNode)), new Vector2D(-250, 0), _endDateInput),
+                new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(new ToolboxNodeExport("Interval", CoreEngine.Runtime.RuntimeNodeType.Method, typeof(StringNode)), new Vector2D(-250, 50), _intervalInput)
             };
         #endregion
     }

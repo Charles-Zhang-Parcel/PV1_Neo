@@ -93,7 +93,7 @@ namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
         #endregion
 
         #region Auto-Connect Interface
-        public override Tuple<ToolboxNodeExport, Vector2D, InputConnector>[] AutoGenerateNodes
+        public override Tuple<ToolboxNodeExport, Vector2D, InputConnector>[] AutoPopulatedConnectionNodes
         {
             get
             {
@@ -103,11 +103,11 @@ namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
                 {
                     if (!InputConnectorShouldRequireAutoConnection(Input[i])) continue;
 
-                    ToolboxNodeExport toolDef = new ToolboxNodeExport("Input Name", typeof(StringNode));
+                    ToolboxNodeExport toolDef = new("Input Name", CoreEngine.Runtime.RuntimeNodeType.Method, typeof(StringNode));
                     auto.Add(new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(toolDef, new Vector2D(-100, -50 + (i - 1) * 50), Input[i] as InputConnector));
                     auto.Add(new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(toolDef, new Vector2D(-100, (i - 1) * 50), Input[i + 1] as InputConnector));
                 }
-                return auto.ToArray();
+                return [.. auto];
             }
         }
         public override bool ShouldHaveAutoConnection => Input.Count > 1 && Input.Skip(1).Any(InputConnectorShouldRequireAutoConnection);

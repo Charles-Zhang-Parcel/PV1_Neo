@@ -20,7 +20,6 @@ namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
             ProcessorNodeMemberSerialization = new Dictionary<string, NodeSerializationRoutine>()
             {
                 {nameof(AutomaticNodeType), new NodeSerializationRoutine(() => SerializationHelper.Serialize(AutomaticNodeType), value => AutomaticNodeType = SerializationHelper.GetString(value))},
-                {nameof(ToolboxFullName), new NodeSerializationRoutine(() => SerializationHelper.Serialize(ToolboxFullName), value => ToolboxFullName = SerializationHelper.GetString(value))},
                 {nameof(InputTypes), new NodeSerializationRoutine(() => SerializationHelper.Serialize(InputTypes), value => InputTypes = SerializationHelper.GetCacheDataTypes(value))},
                 {nameof(OutputTypes), new NodeSerializationRoutine(() => SerializationHelper.Serialize(OutputTypes), value => OutputTypes = SerializationHelper.GetCacheDataTypes(value))},
                 {nameof(InputNames), new NodeSerializationRoutine(() => SerializationHelper.Serialize(InputNames), value => InputNames = SerializationHelper.GetStrings(value))},
@@ -28,15 +27,13 @@ namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
             };
         }
         private AutomaticNodeDescriptor Descriptor { get; } // Remark-cz: Hack we are saving descriptor here for easier invoking of dynamic types; However, this is not serializable at the moment! The reason we don't want it is because the descriptor itself is not serialized which means when the graph is loaded all such information is gone - and that's why we had IToolboxDefinition before.
-        public AutomaticProcessorNode(AutomaticNodeDescriptor descriptor, IToolboxDefinition toolbox)
-            :this()
+        public AutomaticProcessorNode(AutomaticNodeDescriptor descriptor) :this()
         {
             // Remark-cz: Hack we are saving descriptor here for easier invoking of dynamic types; However, this is not serializable at the mometn!
             Descriptor = descriptor;
 
             // Serialization
             AutomaticNodeType = descriptor.NodeName;
-            ToolboxFullName = toolbox.GetType().AssemblyQualifiedName;
             InputTypes = descriptor.InputTypes;
             OutputTypes = descriptor.OutputTypes;
             InputNames = descriptor.InputNames;
@@ -60,9 +57,10 @@ namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
                 else 
                 {
                     // Remark-cz: This is more general and can handle serialization well
-                    IToolboxDefinition toolbox = (IToolboxDefinition)Activator.CreateInstance(Type.GetType(ToolboxFullName));
-                    AutomaticNodeDescriptor descriptor = toolbox.AutomaticNodes.Single(an => an != null && an.NodeName == AutomaticNodeType);
-                    return descriptor.CallMarshal;
+                    //IToolboxDefinition toolbox = (IToolboxDefinition)Activator.CreateInstance(Type.GetType(ToolboxFullName));
+                    //AutomaticNodeDescriptor descriptor = toolbox.AutomaticNodes.Single(an => an != null && an.NodeName == AutomaticNodeType);
+                    //return descriptor.CallMarshal;
+                    throw new NotImplementedException();
                 }
             }
             catch (Exception e)
@@ -139,7 +137,6 @@ namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
 
         #region Properties
         private string AutomaticNodeType { get; set; }
-        private string ToolboxFullName { get; set; }
         private CacheDataType[] InputTypes { get; set; }
         private CacheDataType[] OutputTypes { get; set; }
         private string[] InputNames { get; set; }
@@ -175,21 +172,20 @@ namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
         #endregion
 
         #region Auto-Connect Interface
-        public override Tuple<ToolboxNodeExport, Vector2D, InputConnector>[] AutoGenerateNodes
+        public override Tuple<ToolboxNodeExport, Vector2D, InputConnector>[] AutoPopulatedConnectionNodes
         {
             get
             {
-                List<Tuple<ToolboxNodeExport, Vector2D, InputConnector>> auto =
-                    new List<Tuple<ToolboxNodeExport, Vector2D, InputConnector>>();
+                List<Tuple<ToolboxNodeExport, Vector2D, InputConnector>> auto = [];
                 for (int i = 0; i < Input.Count; i++)
                 {
                     if(!InputConnectorShouldRequireAutoConnection(Input[i])) continue;
 
                     Type nodeType = CacheTypeHelper.ConvertToNodeType(InputTypes[i]);
-                    ToolboxNodeExport toolDef = new ToolboxNodeExport(Input[i].Title, nodeType);
+                    ToolboxNodeExport toolDef = new ToolboxNodeExport(Input[i].Title, CoreEngine.Runtime.RuntimeNodeType.Method, nodeType);
                     auto.Add(new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(toolDef, new Vector2D(-100, -50 + (i - 1) * 50), Input[i]));
                 }
-                return auto.ToArray();
+                return [.. auto];
             }
         }
 

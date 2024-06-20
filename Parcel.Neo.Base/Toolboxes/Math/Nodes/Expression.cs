@@ -99,7 +99,7 @@ namespace Parcel.Neo.Base.Toolboxes.Math.Nodes
         
         #region Auto Connect Interface
         public override bool ShouldHaveAutoConnection => Input.Count > 0 && Input.Any(i => i.Connections.Count == 0);
-        public override Tuple<ToolboxNodeExport, Vector2D, InputConnector>[] AutoGenerateNodes
+        public override Tuple<ToolboxNodeExport, Vector2D, InputConnector>[] AutoPopulatedConnectionNodes
         {
             get
             {
@@ -109,10 +109,10 @@ namespace Parcel.Neo.Base.Toolboxes.Math.Nodes
                 {
                     if(Input[i].Connections.Count != 0) continue;
 
-                    ToolboxNodeExport toolDef = new ToolboxNodeExport($"Input {i+1}", typeof(NumberNode));
+                    ToolboxNodeExport toolDef = new($"Input {i + 1}", CoreEngine.Runtime.RuntimeNodeType.Method, typeof(NumberNode));
                     auto.Add(new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(toolDef, new Vector2D(-100, -50 + (i - 1) * 50), Input[i]));
                 }
-                return auto.ToArray();
+                return [.. auto];
             }
         }
         #endregion

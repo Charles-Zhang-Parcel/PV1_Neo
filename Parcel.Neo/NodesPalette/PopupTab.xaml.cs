@@ -65,7 +65,7 @@ namespace Parcel.Neo
         }
 
         #region States
-        private List<ToolboxNodeExport> _availableNodes;
+        private Dictionary<ToolboxNodeExport, string> _availableNodes; // From node to toolbox name mapping
         private Dictionary<string, ToolboxNodeExport> _searchResultLookup;
         #endregion
 
@@ -101,7 +101,7 @@ namespace Parcel.Neo
         #endregion
 
         #region Routines
-        private void AddMenuItem(ToolboxNodeExport? node, MenuItem topMenu)
+        private void AddMenuItem(ToolboxNodeExport? node, MenuItem topMenu, string toolboxName)
         {
             if (node == null)
                 topMenu.Items.Add(new Separator());
@@ -111,18 +111,18 @@ namespace Parcel.Neo
                 item.Click += NodeMenuItemOnClick;
                 topMenu.Items.Add(item);
                 
-                _availableNodes.Add(node);
+                _availableNodes.Add(node, toolboxName);
             }
         }
         private void UpdateSearch(string searchText)
         {
             _searchResultLookup = [];
             SearchResults = new ObservableCollection<string>(_availableNodes
-                .Where(n => n.Name.Contains(searchText, StringComparison.CurrentCultureIgnoreCase))
-                .Select(n =>
+                .Where(n => n.Key.Name.Contains(searchText, StringComparison.CurrentCultureIgnoreCase))
+                .Select(node =>
                 {
-                    string key = $"{n.Toolbox.ToolboxName} -> {n.Name}";
-                    _searchResultLookup[key] = n;
+                    string key = $"{node.Value} -> {node.Key.Name}";
+                    _searchResultLookup[key] = node.Key;
                     return key;
                 }));
 
@@ -155,7 +155,7 @@ namespace Parcel.Neo
 
                 // Add to menu
                 foreach (ToolboxNodeExport export in Nodes)
-                    AddMenuItem(export, topMenu);
+                    AddMenuItem(export, topMenu, Name);
 
                 // Add menu to GUI
                 ModulesListView.Items.Add(menu);
@@ -163,73 +163,32 @@ namespace Parcel.Neo
         }
         private static void RegisterType(Dictionary<string, ToolboxNodeExport[]> toolboxes, string name, Type type)
         {
-            GenericToolbox toolbox = new()
-            {
-                ToolboxName = name,
-                ToolboxAssemblyFullName = type.Assembly.FullName,
-            };
-            List<ToolboxNodeExport> nodes = [.. GetStaticMethods(type, toolbox), .. GetInstanceMethods(type, toolbox)];
+            List<ToolboxNodeExport> nodes = [.. GetStaticMethods(type), .. GetInstanceMethods(type)];
 
             toolboxes[name] = [.. nodes];
         }
-        private static IEnumerable<ToolboxNodeExport> GetStaticMethods(Type type, GenericToolbox toolbox)
+        private static IEnumerable<ToolboxNodeExport> GetStaticMethods(Type type)
         {
             IEnumerable<MethodInfo> methods = type
                             .GetMethods(BindingFlags.Public | BindingFlags.Static)
                             .Where(m => m.DeclaringType != typeof(object));
             foreach (MethodInfo method in methods)
-            {
-                Type[] parameterTypes = method.GetParameters().Select(p => p.ParameterType).ToArray();
-                Type returnType = method.ReturnType;
-                yield return new ToolboxNodeExport(method.Name, typeof(AutomaticProcessorNode))
-                {
-                    Descriptor = new AutomaticNodeDescriptor(method.Name,
-                        parameterTypes.Select(CacheTypeHelper.ConvertToCacheDataType).ToArray(),
-                        CacheTypeHelper.ConvertToCacheDataType(returnType),
-                        objects => method.Invoke(null, objects)
-                    ),
-                    Toolbox = toolbox,
-                };
-            }
+                yield return new ToolboxNodeExport(method.Name, CoreEngine.Runtime.RuntimeNodeType.Method, method);
         }
-        private static IEnumerable<ToolboxNodeExport> GetInstanceMethods(Type type, GenericToolbox toolbox)
+        private static IEnumerable<ToolboxNodeExport> GetInstanceMethods(Type type)
         {
             IEnumerable<MethodInfo> methods = type
                             .GetMethods(BindingFlags.Public | BindingFlags.Instance)
                             .Where(m => m.DeclaringType != typeof(object));
             foreach (MethodInfo method in methods)
-            {
-                Type[] parameterTypes = method.GetParameters().Select(p => p.ParameterType).ToArray();
-                Type returnType = method.ReturnType;
-                yield return new ToolboxNodeExport(method.Name, typeof(AutomaticProcessorNode))
-                {
-                    Descriptor = new AutomaticNodeDescriptor(method.Name,
-                        [CacheTypeHelper.ConvertToCacheDataType(type), .. parameterTypes.Select(CacheTypeHelper.ConvertToCacheDataType)],
-                        returnType == typeof(void) ? CacheTypeHelper.ConvertToCacheDataType(type) : CacheTypeHelper.ConvertToCacheDataType(returnType),
-                        objects => method.Invoke(null, objects) // TODO: Finish implementation; Likely we will require a new custom node descriptor type to handle this kind of behavior
-                    ),
-                    Toolbox = toolbox,
-                };
-            }
+                yield return new ToolboxNodeExport(method.Name, CoreEngine.Runtime.RuntimeNodeType.Method, method);
         }
         private static void AddToolbox(Dictionary<string, ToolboxNodeExport[]> toolboxes, string name, IToolboxDefinition toolbox)
         {
             List<ToolboxNodeExport> nodes = [];
 
             foreach (ToolboxNodeExport nodeExport in toolbox.ExportNodes)
-            {
-                if (nodeExport != null)
-                    nodeExport.Toolbox = toolbox;
                 nodes.Add(nodeExport);
-            }
-            foreach (AutomaticNodeDescriptor definition in toolbox.AutomaticNodes)
-                nodes.Add(definition == null
-                    ? null
-                    : new ToolboxNodeExport(definition.NodeName, typeof(AutomaticProcessorNode))
-                    {
-                        Descriptor = definition,
-                        Toolbox = toolbox,
-                    });
 
             toolboxes[name] = [.. nodes];
         }
@@ -303,19 +262,7 @@ namespace Parcel.Neo
                 if (toolbox == null) continue;
 
                 foreach (ToolboxNodeExport nodeExport in toolbox.ExportNodes)
-                {
-                    if (nodeExport != null) 
-                        nodeExport.Toolbox = toolbox;
                     yield return nodeExport;
-                }
-                foreach (AutomaticNodeDescriptor definition in toolbox.AutomaticNodes)
-                    yield return definition == null
-                        ? null
-                        : new ToolboxNodeExport(definition.NodeName, typeof(AutomaticProcessorNode))
-                        {
-                            Descriptor = definition,
-                            Toolbox = toolbox,
-                        };
             }
         }
         private static IEnumerable<ToolboxNodeExport?> GetExportNodesFromGenericAssembly(string name, Assembly assembly)
@@ -324,11 +271,6 @@ namespace Parcel.Neo
                 .Where(t => t.IsAbstract)
                 .Where(t => t.Name != "Object")
                 .ToArray();
-            GenericToolbox toolbox = new()
-            {
-                ToolboxName = name,
-                ToolboxAssemblyFullName = assembly.FullName,
-            };
 
             foreach (Type type in types)
             {
@@ -338,26 +280,7 @@ namespace Parcel.Neo
                     .ToArray();
 
                 foreach (MethodInfo method in methods)
-                {
-                    Type[] parameterTypes = method.GetParameters().Select(p => p.ParameterType).ToArray();
-                    Type returnType = method.ReturnType;
-                    ToolboxNodeExport export;
-                    try
-                    {
-                        export = new ToolboxNodeExport(method.Name, typeof(AutomaticProcessorNode))
-                        {
-                            Descriptor = new AutomaticNodeDescriptor(method.Name,
-                                parameterTypes.Select(CacheTypeHelper.ConvertToCacheDataType).ToArray(),
-                                CacheTypeHelper.ConvertToCacheDataType(returnType),
-                                objects => method.Invoke(null, objects)
-                            ),
-                            Toolbox = toolbox,
-                        };
-                    }
-                    catch (Exception) { continue; }
-
-                    yield return export;
-                }
+                    yield return new ToolboxNodeExport(method.Name, CoreEngine.Runtime.RuntimeNodeType.Method, method);
             }
         }
         #endregion

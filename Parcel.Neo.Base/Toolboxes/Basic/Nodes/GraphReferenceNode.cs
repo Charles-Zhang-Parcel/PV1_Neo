@@ -122,8 +122,8 @@ namespace Parcel.Neo.Base.Toolboxes.Basic.Nodes
         protected override NodeSerializationRoutine VariantInputConnectorsSerialization { get; } = null;
         #endregion
 
-        #region Auto Generate Interface
-        public override Tuple<ToolboxNodeExport, Vector2D, InputConnector>[] AutoGenerateNodes
+        #region Auto Populate Connections Interface
+        public override Tuple<ToolboxNodeExport, Vector2D, InputConnector>[] AutoPopulatedConnectionNodes
         {
             get
             {
@@ -134,7 +134,7 @@ namespace Parcel.Neo.Base.Toolboxes.Basic.Nodes
                 {
                     if (Input[i].Connections.Count != 0) continue;
 
-                    ToolboxNodeExport toolDef = new ToolboxNodeExport(Input[i].Title, GetInputNodeType(InputDefinitions[i]));
+                    ToolboxNodeExport toolDef = new(Input[i].Title, CoreEngine.Runtime.RuntimeNodeType.Method, GetInputNodeType(InputDefinitions[i]));
                     auto.Add(new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(toolDef, new Vector2D(-100, -50 + (i - 1) * 50), Input[i]));
                 }
 

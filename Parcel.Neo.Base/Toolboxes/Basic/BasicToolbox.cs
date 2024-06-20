@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+﻿using Parcel.CoreEngine.Runtime;
 using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.Advanced;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
@@ -10,28 +10,25 @@ namespace Parcel.Neo.Base.Toolboxes.Basic
     public class BasicToolbox : IToolboxDefinition
     {
         #region Interface
-        public string ToolboxName => "Basic";
-        public string ToolboxAssemblyFullName => Assembly.GetExecutingAssembly().FullName!;
         public ToolboxNodeExport?[] ExportNodes => new ToolboxNodeExport?[]
         {
-            new("Comment", typeof(CommentNode)),
-            new("Preview", typeof(PreviewNode)),
+            new("Comment", RuntimeNodeType.Method, typeof(CommentNode)),
+            new("Preview", RuntimeNodeType.Method, typeof(PreviewNode)),
             null, // Divisor line // Primitive Nodes
-            new("Number", typeof(NumberNode)),
-            new("String", typeof(StringNode)),
-            new("Boolean", typeof(BooleanNode)),
-            new("DateTime", typeof(DateTimeNode)),
-            new("Text", typeof(object)),
-            new("File", typeof(OpenFileNode)),
-            new("Save File", typeof(object)),
-            // new("Array", typeof(object)), // Generic array representation of all above types, CANNOT have mixed types
+            new("Number", RuntimeNodeType.Method, typeof(NumberNode)),
+            new("String", RuntimeNodeType.Method, typeof(StringNode)),
+            new("Boolean", RuntimeNodeType.Method, typeof(BooleanNode)),
+            new("DateTime", RuntimeNodeType.Method, typeof(DateTimeNode)),
+            new("Text", RuntimeNodeType.Method, typeof(object)),
+            new("File", RuntimeNodeType.Method, typeof(OpenFileNode)),
+            new("Save File", RuntimeNodeType.Method, typeof(object)),
+            // new("Array", RuntimeNodeType.Method, typeof(object)), // Generic array representation of all above types, CANNOT have mixed types
             null, // Divisor line // Graph Modularization
-            new("Graph Input", typeof(GraphInput)),
-            new("Graph Output", typeof(GraphOutput)),
-            new("Graph Reference", typeof(GraphReferenceNode)),
-            new("Sub Graph", typeof(object)),
+            new("Graph Input", RuntimeNodeType.Method, typeof(GraphInput)),
+            new("Graph Output", RuntimeNodeType.Method, typeof(GraphOutput)),
+            new("Graph Reference", RuntimeNodeType.Method, typeof(GraphReferenceNode)),
+            new("Sub Graph", RuntimeNodeType.Method, typeof(object)),
         };
-        public AutomaticNodeDescriptor[] AutomaticNodes => System.Array.Empty<AutomaticNodeDescriptor>();
         #endregion
     }
 }

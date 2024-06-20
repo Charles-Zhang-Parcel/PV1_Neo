@@ -7,6 +7,6 @@ namespace Parcel.Neo.Base.Framework
     public interface IAutoConnect
     {
         public bool ShouldHaveAutoConnection { get; }
-        public Tuple<ToolboxNodeExport, Vector2D, InputConnector>[] AutoGenerateNodes { get; }
+        public Tuple<ToolboxNodeExport, Vector2D, InputConnector>[] AutoPopulatedConnectionNodes { get; }
     }
 }
