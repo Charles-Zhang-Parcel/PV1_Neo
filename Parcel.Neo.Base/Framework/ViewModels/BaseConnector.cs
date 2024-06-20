@@ -259,8 +259,8 @@ namespace Parcel.Neo.Base.Framework.ViewModels
         };
         private ConnectorShape DecideShape(Type dataType)
         {
-            if (_mappings.ContainsKey(dataType))
-                return _mappings[dataType];
+            if (_mappings.TryGetValue(dataType, out ConnectorShape value))
+                return value;
             return ConnectorShape.Circle;
         }
         #endregion

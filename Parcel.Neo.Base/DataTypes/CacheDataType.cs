@@ -25,11 +25,10 @@ namespace Parcel.Neo.Base.DataTypes
         String,
         DateTime,
         // Basic Numerical
-        ParcelDataGrid, // Including arrays
+        ParcelDataGrid, // Including arrays // TODO: Remove explicit dependency?
         // Advanced
         Generic,
-        BatchJob,
-        ServerConfig
+        BatchJob
     }
 
     public static class CacheTypeHelper
@@ -46,7 +45,10 @@ namespace Parcel.Neo.Base.DataTypes
                 return CacheDataType.Number;
             else if (type == typeof(string))
                 return CacheDataType.String;
-            throw new ArgumentException($"Unrecognized type: {type.Name}");
+            else if (type == typeof(DataGrid))
+                return CacheDataType.ParcelDataGrid;
+            else // Object
+                return CacheDataType.Generic;
         }
         public static Type ConvertToNodeType(CacheDataType type)
         {
@@ -65,7 +67,6 @@ namespace Parcel.Neo.Base.DataTypes
                 case CacheDataType.Generic:
                     return typeof(object);
                 case CacheDataType.BatchJob:
-                case CacheDataType.ServerConfig:
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -87,7 +88,6 @@ namespace Parcel.Neo.Base.DataTypes
                 case CacheDataType.Generic:
                     return typeof(object);
                 case CacheDataType.BatchJob:
-                case CacheDataType.ServerConfig:
                     throw new NotImplementedException();
                 default:
                     throw new ArgumentOutOfRangeException();

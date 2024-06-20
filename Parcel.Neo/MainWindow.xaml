@@ -361,8 +361,10 @@
                 <MenuItem Header="Select All (Ctrl+A)"/>
             </MenuItem>
             <MenuItem Header="Document">
+                <MenuItem Header="Add Graph"/>
+                <Separator/>
                 <MenuItem Name="GoToGraphMenu" Header="Go to Graph">
-                    <MenuItem Header="Default (F1)"/>
+                    <MenuItem Header="Default (Main) (F1)"/>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="View">

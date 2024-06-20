@@ -110,23 +110,22 @@ namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
         protected bool InputConnectorShouldRequireAutoConnection(InputConnector connector)
             => !IsPrimitiveInput(connector) && connector.Connections.Count == 0 &&
                connector.DataType != typeof(DataGrid); // Technically DataGrid connectors do need connection but we can't auto generate for it
-        private bool IsPrimitiveInput(InputConnector connector)
+        private static bool IsPrimitiveInput(InputConnector connector)
             => connector is PrimitiveInputConnector;
         public virtual bool ShouldHaveAutoConnection => Input.Count != 0 && Input.Any(InputConnectorShouldRequireAutoConnection);
         public virtual Tuple<ToolboxNodeExport, Vector2D, InputConnector>[] AutoGenerateNodes
         {
             get
             {
-                List<Tuple<ToolboxNodeExport, Vector2D, InputConnector>> auto =
-                    new List<Tuple<ToolboxNodeExport, Vector2D, InputConnector>>();
+                List<Tuple<ToolboxNodeExport, Vector2D, InputConnector>> auto = [];
                 for (int i = 0; i < Input.Count; i++)
                 {
                     if(!InputConnectorShouldRequireAutoConnection(Input[i])) continue;
 
-                    ToolboxNodeExport toolDef = new ToolboxNodeExport(Input[i].Title, CacheTypeHelper.ConvertToNodeType(Input[i].DataType));
+                    ToolboxNodeExport toolDef = new(Input[i].Title, CacheTypeHelper.ConvertToNodeType(Input[i].DataType));
                     auto.Add(new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(toolDef, new Vector2D(-180, -20 + (i - 1) * 50), Input[i]));
                 }
-                return auto.ToArray();
+                return [.. auto];
             }
         }
 

@@ -53,6 +53,8 @@ namespace Parcel.Neo
             AddToolbox(toolboxes, "Math", new MathToolbox());
             AddToolbox(toolboxes, "String", new StringToolbox());
             AddToolbox(toolboxes, "Special", new SpecialToolbox());
+            // Register specific types
+            RegisterType(toolboxes, "Data Grid", typeof(Parcel.Types.DataGrid));
 
             Owner = owner;
             InitializeComponent();
@@ -159,6 +161,57 @@ namespace Parcel.Neo
                 ModulesListView.Items.Add(menu);
             }
         }
+        private static void RegisterType(Dictionary<string, ToolboxNodeExport[]> toolboxes, string name, Type type)
+        {
+            GenericToolbox toolbox = new()
+            {
+                ToolboxName = name,
+                ToolboxAssemblyFullName = type.Assembly.FullName,
+            };
+            List<ToolboxNodeExport> nodes = [.. GetStaticMethods(type, toolbox), .. GetInstanceMethods(type, toolbox)];
+
+            toolboxes[name] = [.. nodes];
+        }
+        private static IEnumerable<ToolboxNodeExport> GetStaticMethods(Type type, GenericToolbox toolbox)
+        {
+            IEnumerable<MethodInfo> methods = type
+                            .GetMethods(BindingFlags.Public | BindingFlags.Static)
+                            .Where(m => m.DeclaringType != typeof(object));
+            foreach (MethodInfo method in methods)
+            {
+                Type[] parameterTypes = method.GetParameters().Select(p => p.ParameterType).ToArray();
+                Type returnType = method.ReturnType;
+                yield return new ToolboxNodeExport(method.Name, typeof(AutomaticProcessorNode))
+                {
+                    Descriptor = new AutomaticNodeDescriptor(method.Name,
+                        parameterTypes.Select(CacheTypeHelper.ConvertToCacheDataType).ToArray(),
+                        CacheTypeHelper.ConvertToCacheDataType(returnType),
+                        objects => method.Invoke(null, objects)
+                    ),
+                    Toolbox = toolbox,
+                };
+            }
+        }
+        private static IEnumerable<ToolboxNodeExport> GetInstanceMethods(Type type, GenericToolbox toolbox)
+        {
+            IEnumerable<MethodInfo> methods = type
+                            .GetMethods(BindingFlags.Public | BindingFlags.Instance)
+                            .Where(m => m.DeclaringType != typeof(object));
+            foreach (MethodInfo method in methods)
+            {
+                Type[] parameterTypes = method.GetParameters().Select(p => p.ParameterType).ToArray();
+                Type returnType = method.ReturnType;
+                yield return new ToolboxNodeExport(method.Name, typeof(AutomaticProcessorNode))
+                {
+                    Descriptor = new AutomaticNodeDescriptor(method.Name,
+                        [CacheTypeHelper.ConvertToCacheDataType(type), .. parameterTypes.Select(CacheTypeHelper.ConvertToCacheDataType)],
+                        returnType == typeof(void) ? CacheTypeHelper.ConvertToCacheDataType(type) : CacheTypeHelper.ConvertToCacheDataType(returnType),
+                        objects => method.Invoke(null, objects) // TODO: Finish implementation; Likely we will require a new custom node descriptor type to handle this kind of behavior
+                    ),
+                    Toolbox = toolbox,
+                };
+            }
+        }
         private static void AddToolbox(Dictionary<string, ToolboxNodeExport[]> toolboxes, string name, IToolboxDefinition toolbox)
         {
             List<ToolboxNodeExport> nodes = [];
@@ -178,7 +231,7 @@ namespace Parcel.Neo
                         Toolbox = toolbox,
                     });
 
-            toolboxes[name] = nodes.ToArray();
+            toolboxes[name] = [.. nodes];
         }
         private static Dictionary<string, ToolboxNodeExport[]> IndexToolboxes(Dictionary<string, Assembly> assemblies)
         {
@@ -286,7 +339,7 @@ namespace Parcel.Neo
 
                 foreach (MethodInfo method in methods)
                 {
-                    Type[] parameterTypes = method.GetParameters().Select(p => p.GetType()).ToArray();
+                    Type[] parameterTypes = method.GetParameters().Select(p => p.ParameterType).ToArray();
                     Type returnType = method.ReturnType;
                     ToolboxNodeExport export;
                     try
@@ -294,10 +347,10 @@ namespace Parcel.Neo
                         export = new ToolboxNodeExport(method.Name, typeof(AutomaticProcessorNode))
                         {
                             Descriptor = new AutomaticNodeDescriptor(method.Name,
-                            parameterTypes.Select(CacheTypeHelper.ConvertToCacheDataType).ToArray(),
-                            CacheTypeHelper.ConvertToCacheDataType(returnType),
-                            objects => method.Invoke(null, objects)
-                        ),
+                                parameterTypes.Select(CacheTypeHelper.ConvertToCacheDataType).ToArray(),
+                                CacheTypeHelper.ConvertToCacheDataType(returnType),
+                                objects => method.Invoke(null, objects)
+                            ),
                             Toolbox = toolbox,
                         };
                     }
