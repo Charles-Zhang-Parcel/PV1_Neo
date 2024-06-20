@@ -47,6 +47,8 @@ namespace Parcel.Neo.Base.DataTypes
                 return CacheDataType.String;
             else if (type == typeof(DataGrid))
                 return CacheDataType.ParcelDataGrid;
+            else if (type == typeof(bool))
+                return CacheDataType.Boolean;
             else // Object
                 return CacheDataType.Generic;
         }

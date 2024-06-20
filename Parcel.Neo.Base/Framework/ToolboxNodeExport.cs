@@ -67,12 +67,18 @@ namespace Parcel.Neo.Base.Framework
                         return new AutomaticProcessorNode(new AutomaticNodeDescriptor(Name,
                             parameterTypes.Select(CacheTypeHelper.ConvertToCacheDataType).ToArray(),
                             CacheTypeHelper.ConvertToCacheDataType(returnType),
-                            objects => Method.Invoke(null, objects)));
+                            objects => Method.Invoke(null, objects))
+                        {
+                            InputNames = Method.GetParameters().Select(p => p.Name).ToArray()
+                        });
                     else
                         return new AutomaticProcessorNode(new AutomaticNodeDescriptor(Name,
                             [CacheTypeHelper.ConvertToCacheDataType(Method.DeclaringType), .. parameterTypes.Select(CacheTypeHelper.ConvertToCacheDataType)],
                             returnType == typeof(void) ? CacheTypeHelper.ConvertToCacheDataType(Method.DeclaringType) : CacheTypeHelper.ConvertToCacheDataType(returnType),
-                            objects => Method.Invoke(null, objects))); // TODO: Finish implementation; Likely we will require a new custom node descriptor type to handle this kind of behavior))
+                            objects => Method.Invoke(objects[0], objects.Skip(1).ToArray()))
+                            {
+                                InputNames = [Method.DeclaringType.Name, .. Method.GetParameters().Select(p => p.Name)]
+                            }); // TODO: Finish implementation; Likely we will require a new custom node descriptor type to handle this kind of behavior))
                 case NodeImplementationType.AutomaticLambda:
                     return new AutomaticProcessorNode(Descriptor);
                 default:
