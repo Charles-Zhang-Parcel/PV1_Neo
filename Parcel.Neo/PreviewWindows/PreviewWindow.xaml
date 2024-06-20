@@ -10,7 +10,9 @@
             DataContext="{Binding RelativeSource={RelativeSource self}}">
     <Grid>
         <Grid Visibility="{Binding InfoGridVisibility}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <Label Content="{Binding TestLabel}" FontSize="36"></Label>    
+            <ScrollViewer>
+                <TextBlock Text="{Binding TestLabel}" TextWrapping="WrapWithOverflow" FontSize="36"/>
+            </ScrollViewer>
         </Grid>
         
         <DockPanel Visibility="{Binding DataGridVisibility}"

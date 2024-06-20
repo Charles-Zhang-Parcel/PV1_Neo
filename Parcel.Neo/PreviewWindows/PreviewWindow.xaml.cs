@@ -142,9 +142,6 @@ namespace Parcel.Neo
             // Bind object
             dataGridData = objects;
         }
-
         #endregion
-
-        
     }
 }
