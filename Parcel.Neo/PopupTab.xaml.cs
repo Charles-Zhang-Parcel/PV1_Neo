@@ -7,7 +7,6 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Parcel.Neo.Base.DataTypes;
 using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 using Parcel.Neo.Base.Toolboxes.Basic;
@@ -21,6 +20,7 @@ using Parcel.Neo.Base.Toolboxes.Math;
 using Parcel.Neo.Base.Toolboxes.Special;
 using Parcel.Neo.Base.Toolboxes.String;
 using Parcel.Toolbox.ControlFlow;
+using Parcel.Neo.Base.DataTypes;
 
 namespace Parcel.Neo
 {

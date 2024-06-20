@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Parcel.Neo.Base.DataTypes;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
+using Parcel.Neo.Base.DataTypes;
 
 namespace Parcel.Neo.Base.Framework.ViewModels
 {

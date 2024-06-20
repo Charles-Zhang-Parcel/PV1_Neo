@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using Parcel.Neo.Base.DataTypes;
+using Parcel.Types;
 using Parcel.Neo.Base.Framework;
 using RandomNameGeneratorNG;
+using Parcel.Neo.Base.DataTypes;
 
 namespace Parcel.Neo.Base.Toolboxes.Generator
 {

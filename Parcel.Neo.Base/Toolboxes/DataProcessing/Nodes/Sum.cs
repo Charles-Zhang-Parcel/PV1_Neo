@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Parcel.Neo.Base.DataTypes;
 using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
+using Parcel.Types;
 
 namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
 {

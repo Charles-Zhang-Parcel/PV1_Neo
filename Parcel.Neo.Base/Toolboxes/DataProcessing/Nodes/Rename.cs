@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Parcel.Neo.Base.DataTypes;
+using Parcel.Types;
 using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 using Parcel.Neo.Base.Framework.ViewModels.Primitives;
 using Parcel.Neo.Base.Serialization;
+using Parcel.Neo.Base.DataTypes;
 
 namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
 {

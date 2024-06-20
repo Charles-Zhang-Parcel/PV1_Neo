@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Parcel.Neo.Base.DataTypes;
+using Parcel.Types;
 
 namespace Parcel.Neo.Base.Framework
 {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Parcel.Neo.Base.DataTypes;
+using Parcel.Types;
 using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
@@ -35,10 +35,6 @@ namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
         {
             Title = "Result"
         };
-        private readonly OutputConnector _serverConfigOutput = new OutputConnector(typeof(ServerConfig))
-        {
-            Title = "Present"
-        };
         public SQL()
         {
             // Serialization
@@ -62,7 +58,6 @@ namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
             
             Title = NodeTypeName = "SQL";
             Output.Add(_dataTableOutput);
-            Output.Add(_serverConfigOutput);
             
             AddInputs();
             

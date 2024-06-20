@@ -1,5 +1,6 @@
 ﻿using System;
 using Parcel.Neo.Base.Framework.ViewModels.Primitives;
+using Parcel.Types;
 
 namespace Parcel.Neo.Base.DataTypes
 {

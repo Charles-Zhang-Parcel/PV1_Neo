@@ -6,7 +6,6 @@ using System.Linq;
 using Parcel.Neo.Base.DataTypes;
 using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Parcel.Neo.Base.Framework.Advanced
 {

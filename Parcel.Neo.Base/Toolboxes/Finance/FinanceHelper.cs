@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Parcel.Neo.Base.DataTypes;
+using Parcel.Types;
+using Parcel.Types;
 
 namespace Parcel.Neo.Base.Toolboxes.Finance
 {
@@ -124,7 +125,7 @@ namespace Parcel.Neo.Base.Toolboxes.Finance
 
             var column = parameter.InputTable.Columns.Single(c => c.Header == parameter.InputColumnName);
             bool usePopulation = column.Length > 50;
-            parameter.OutputValue = column.STD(usePopulation);
+            parameter.OutputValue = column.StandardDeviation(usePopulation);
         }
 
         public static void Min(MinParameter parameter)

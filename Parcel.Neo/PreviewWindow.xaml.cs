@@ -5,11 +5,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using Parcel.Neo.Base.DataTypes;
 using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
-using DataGrid = Parcel.Neo.Base.DataTypes.DataGrid;
+using Parcel.Neo.Base.DataTypes;
 
 namespace Parcel.Neo
 {
@@ -100,7 +99,7 @@ namespace Parcel.Neo
                         InfoGridVisibility = Visibility.Visible;
                         break;
                     case CacheDataType.ParcelDataGrid:
-                        PopulateDataGrid(WpfDataGrid, cache.DataObject as DataGrid, out string[] dataGridDataColumns, out List<dynamic> dataGridData);
+                        PopulateDataGrid(WpfDataGrid, cache.DataObject as Parcel.Types.DataGrid, out string[] dataGridDataColumns, out List<dynamic> dataGridData);
                         DataGridDataColumns = dataGridDataColumns;
                         DataGridData = dataGridData;
                         DataGridVisibility = Visibility.Visible;
@@ -113,7 +112,7 @@ namespace Parcel.Neo
             }
         }
 
-        public static void PopulateDataGrid(System.Windows.Controls.DataGrid wpfDataGrid, DataGrid dataGrid,
+        public static void PopulateDataGrid(DataGrid wpfDataGrid, Parcel.Types.DataGrid dataGrid,
             out string[] dataGridDataColumns, out List<dynamic> dataGridData)
         {
             string FormatHeader(string header, string typeName)
@@ -122,7 +121,7 @@ namespace Parcel.Neo
             }
 
             List<dynamic> objects = dataGrid.Rows;
-            Dictionary<string, DataGrid.ColumnInfo> columnInfo = dataGrid.GetColumnInfoForDisplay();
+            Dictionary<string, Parcel.Types.DataGrid.ColumnInfo> columnInfo = dataGrid.GetColumnInfoForDisplay();
 
             // Collect column names
             IEnumerable<IDictionary<string, object>> rows = objects.OfType<IDictionary<string, object>>();

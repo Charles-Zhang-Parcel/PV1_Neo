@@ -8,7 +8,6 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using Microsoft.Win32;
 using Parcel.Neo.Base.Algorithms;
-using Parcel.Neo.Base.DataTypes;
 using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
@@ -18,6 +17,7 @@ using Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes;
 using Parcel.Neo.Base.Toolboxes.FileSystem.Nodes;
 using Parcel.Neo.PopupWindows;
 using BaseConnection = Parcel.Neo.Base.Framework.ViewModels.BaseConnection;
+using Parcel.Neo.Base.DataTypes;
 
 namespace Parcel.Neo
 {

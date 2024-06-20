@@ -8,7 +8,9 @@ using System.Linq;
 using ExcelDataReader;
 using Parcel.CoreEngine.Helpers;
 using Parcel.Neo.Base.DataTypes;
-using DataColumn = Parcel.Neo.Base.DataTypes.DataColumn;
+using Parcel.Types;
+using Parcel.Types;
+using DataColumn = Parcel.Types.DataColumn;
 using DataTable = System.Data.DataTable;
 
 namespace Parcel.Neo.Base.Toolboxes.DataProcessing
@@ -80,7 +82,6 @@ namespace Parcel.Neo.Base.Toolboxes.DataProcessing
         public string[] InputTableNames { get; set; }
         public string InputCommand { get; set; }
         public DataGrid OutputTable { get; set; }
-        public ServerConfig OutputConfig { get; set; }
     }
     #endregion
 
@@ -93,7 +94,7 @@ namespace Parcel.Neo.Base.Toolboxes.DataProcessing
             // TODO: Currently if the CSV File is opened by excel then it's not readable by us, and the File.ReadAllText will throw an exception
 
             bool hasHeader = parameter.InputContainsHeader ? true : false;
-            parameter.OutputTable = new DataGrid(CSVHelper.ReadCSVFile(parameter.InputPath, out string[] headers, hasHeader), headers);
+            parameter.OutputTable = new DataGrid(Path.GetFileNameWithoutExtension(parameter.InputPath), CSVHelper.ReadCSVFile(parameter.InputPath, out string[] headers, hasHeader), headers);
         }
 
         public static void Excel(ExcelParameter parameter)
