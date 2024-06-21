@@ -354,7 +354,9 @@
                 <MenuItem Header="Open..."/>
                 <MenuItem Header="Save"/>
                 <MenuItem Header="Save As..."/>
-                <Separator HorizontalAlignment="Stretch"/>
+                <Separator/>
+                <MenuItem Header="Import..." ToolTip="Import and insert a document into current graph."/>
+                <Separator/>
                 <MenuItem Header="Close"/>
             </MenuItem>
             <MenuItem Header="Edit">
@@ -776,7 +778,11 @@
                 Background="Transparent">
                 <Label Margin="0" Padding="0" Foreground="#34A8A8A8" FontFamily="Arial" FontSize="16" FontWeight="Bold" Content="Beta Test" HorizontalAlignment="Center"/>
                 <Label Margin="0" Padding="0" Foreground="#34A8A8A8" FontFamily="Arial" FontSize="8" FontStyle="Italic" Content="Autumn 2024" HorizontalAlignment="Center"/>
-                <Label Margin="0" Padding="0" Foreground="#44A8A8A8" FontFamily="Arial" FontSize="8" Content="This version is not production ready." HorizontalAlignment="Right"/>
+                <TextBlock Margin="0" Padding="0" Foreground="#44A8A8A8" FontFamily="Arial" FontSize="8" HorizontalAlignment="Right" TextAlignment="Center" TextWrapping="WrapWithOverflow" MaxWidth="160">
+                    This version is not production ready.
+                    <LineBreak/>
+                    Interface may update, GUI may be adjusted, node behaviors may change.
+                </TextBlock>
             </StackPanel>
         </Grid>
     </DockPanel>
