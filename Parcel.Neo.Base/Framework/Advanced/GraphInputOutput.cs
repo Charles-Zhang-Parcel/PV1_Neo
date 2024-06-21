@@ -31,7 +31,7 @@ namespace Parcel.Neo.Base.Framework.Advanced
         #endregion
 
         #region Accessor
-        public Type ObjectType => CacheTypeHelper.ConvertToObjectType(Type);
+        public Type ObjectType => throw new NotImplementedException();
         #endregion
     }
 

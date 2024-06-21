@@ -1,6 +1,4 @@
 ﻿using System;
-using Parcel.Neo.Base.Framework.ViewModels.Primitives;
-using Parcel.Types;
 
 namespace Parcel.Neo.Base.DataTypes
 {
@@ -35,86 +33,5 @@ namespace Parcel.Neo.Base.DataTypes
         // Advanced (Not implemented)
         Generic,
         BatchJob
-    }
-
-    public static class CacheTypeHelper
-    {
-        public static CacheDataType ConvertToCacheDataType(Type type)
-        {
-            if (type == typeof(double))
-                return CacheDataType.Number;
-            else if (type == typeof(float))
-                return CacheDataType.Number;
-            else if (type == typeof(int))
-                return CacheDataType.Number;
-            else if (type == typeof(long))
-                return CacheDataType.Number;
-            else if (type == typeof(string))
-                return CacheDataType.String;
-            else if (type == typeof(DataGrid))
-                return CacheDataType.ParcelDataGrid;
-            else if (type == typeof(DataColumn) || (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))) // The second part deals with nullable
-                return CacheDataType.ParcelDataGridDataColumn;
-            else if (type == typeof(bool))
-                return CacheDataType.Boolean;
-            else // Object
-                return CacheDataType.Generic;
-        }
-        public static Type ConvertToNodeType(CacheDataType type)
-        {
-            switch (type)
-            {
-                case CacheDataType.Boolean:
-                    return typeof(BooleanNode);
-                case CacheDataType.Number:
-                    return typeof(NumberNode);
-                case CacheDataType.String:
-                    return typeof(StringNode);
-                case CacheDataType.DateTime:
-                    return typeof(DateTimeNode);
-                case CacheDataType.ParcelDataGrid:
-                    return typeof(DataGrid);
-                case CacheDataType.Generic:
-                    return typeof(object);
-                case CacheDataType.BatchJob:
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-        public static Type ConvertToObjectType(CacheDataType type)
-        {
-            switch (type)
-            {
-                case CacheDataType.Boolean:
-                    return typeof(bool);
-                case CacheDataType.Number:
-                    return typeof(double);
-                case CacheDataType.String:
-                    return typeof(string);
-                case CacheDataType.DateTime:
-                    return typeof(DateTime);
-                case CacheDataType.ParcelDataGrid:
-                    return typeof(DataGrid);
-                case CacheDataType.Generic:
-                    return typeof(object);
-                case CacheDataType.BatchJob:
-                    throw new NotImplementedException();
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        public static Type ConvertToNodeType(Type dataType)
-        {
-            if (dataType == typeof(double))
-                return typeof(NumberNode);
-            else if (dataType == typeof(string))
-                return typeof(StringNode);
-            else if (dataType == typeof(bool))
-                return typeof(BooleanNode);
-            else if (dataType == typeof(DateTime))
-                return typeof(DateTimeNode);
-            throw new ArgumentException("Advanced data type not supported.");
-        }
     }
 }

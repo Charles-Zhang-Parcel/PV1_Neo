@@ -172,7 +172,7 @@ namespace Parcel.Neo
                             .Where(m => m.DeclaringType != typeof(object))
                             .OrderBy(t => t.Name);
             foreach (MethodInfo method in methods)
-                yield return new ToolboxNodeExport(method.Name, CoreEngine.Runtime.RuntimeNodeType.Method, method);
+                yield return new ToolboxNodeExport(method.Name, method);
         }
         private static IEnumerable<ToolboxNodeExport> GetInstanceMethods(Type type)
         {
@@ -181,7 +181,7 @@ namespace Parcel.Neo
                             .Where(m => m.DeclaringType != typeof(object))
                             .OrderBy(t => t.Name);
             foreach (MethodInfo method in methods)
-                yield return new ToolboxNodeExport(method.Name, CoreEngine.Runtime.RuntimeNodeType.Method, method);
+                yield return new ToolboxNodeExport(method.Name, method);
         }
         private static void AddToolbox(Dictionary<string, ToolboxNodeExport[]> toolboxes, string name, IToolboxDefinition toolbox)
         {
@@ -280,7 +280,7 @@ namespace Parcel.Neo
                     .ToArray();
 
                 foreach (MethodInfo method in methods)
-                    yield return new ToolboxNodeExport(method.Name, CoreEngine.Runtime.RuntimeNodeType.Method, method);
+                    yield return new ToolboxNodeExport(method.Name, method);
             }
         }
         #endregion

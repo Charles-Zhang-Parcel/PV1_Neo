@@ -1,5 +1,4 @@
-﻿using Parcel.CoreEngine.Runtime;
-using Parcel.Neo.Base.Framework;
+﻿using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Toolboxes.FileSystem.Nodes;
 
 namespace Parcel.Neo.Base.Toolboxes.FileSystem
@@ -10,14 +9,14 @@ namespace Parcel.Neo.Base.Toolboxes.FileSystem
         public ToolboxNodeExport[] ExportNodes => new ToolboxNodeExport[]
         {
             // Basic IO
-            //new("Read File", RuntimeNodeType.Method, typeof(object)),
-            //new("Read File as Number", RuntimeNodeType.Method, typeof(object)),
-            //new("Read File as Dictionary", RuntimeNodeType.Method, typeof(object)),
-            // new("Read File as List", RuntimeNodeType.Method, typeof(object)), // Don't do this, it's just one step away the same as CSV
+            //new("Read File", typeof(object)),
+            //new("Read File as Number", typeof(object)),
+            //new("Read File as Dictionary", typeof(object)),
+            // new("Read File as List", typeof(object)), // Don't do this, it's just one step away the same as CSV
             null, // Divisor line // Save File
-            new("Write CSV", RuntimeNodeType.Method, typeof(WriteCSV)), // Preview should open file location
-            //new("Write String", RuntimeNodeType.Method, typeof(object)),
-            //new("Write Number", RuntimeNodeType.Method, typeof(object)),
+            new("Write CSV", typeof(WriteCSV)), // Preview should open file location
+            //new("Write String", typeof(object)),
+            //new("Write Number", typeof(object)),
         };
         #endregion
     }

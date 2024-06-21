@@ -1,6 +1,5 @@
 ﻿using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Toolboxes.Logic.Nodes;
-using Parcel.Neo.Base.DataTypes;
 using System.Linq;
 
 namespace Parcel.Neo.Base.Toolboxes.Logic
@@ -10,19 +9,19 @@ namespace Parcel.Neo.Base.Toolboxes.Logic
         #region Interface
         public ToolboxNodeExport[] ExportNodes => [
             // Functional
-            new ToolboxNodeExport("Choose", CoreEngine.Runtime.RuntimeNodeType.Method, typeof(Choose)),
-            .. AutomaticNodes.Select(a => a == null ? null : new ToolboxNodeExport(a.NodeName, CoreEngine.Runtime.RuntimeNodeType.Method, a))
+            new ToolboxNodeExport("Choose", typeof(Choose)),
+            .. AutomaticNodes.Select(a => a == null ? null : new ToolboxNodeExport(a.NodeName, a))
         ];
         public AutomaticNodeDescriptor[] AutomaticNodes => [
             // Numerical
-            new("> (Bigger Than)", [CacheDataType.Number, CacheDataType.Number], CacheDataType.Number,
+            new("> (Bigger Than)", [typeof(double), typeof(double)], typeof(double),
                 objects => (double)objects[0] > (double)objects[1]),
-            new("< (Smaller Than)", [CacheDataType.Number, CacheDataType.Number], CacheDataType.Number,
+            new("< (Smaller Than)", [typeof(double), typeof(double)], typeof(double),
                 objects => (double)objects[0] < (double)objects[1]),
             null, // Divisor line // Boolean
-            new("AND", [CacheDataType.Boolean, CacheDataType.Boolean], CacheDataType.Boolean,
+            new("AND", [typeof(bool), typeof(bool)], typeof(bool),
                 objects => (bool)objects[0] && (bool)objects[1]),
-            new("OR", [CacheDataType.Boolean, CacheDataType.Boolean], CacheDataType.Boolean,
+            new("OR", [typeof(bool), typeof(bool)], typeof(bool),
                 objects => (bool)objects[0] || (bool)objects[1]),
         ];
         #endregion

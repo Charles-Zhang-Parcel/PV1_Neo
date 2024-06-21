@@ -25,8 +25,8 @@ namespace Parcel.Neo.Base.Framework
     public class AutomaticNodeDescriptor
     {
         public string NodeName { get; }
-        public CacheDataType[] InputTypes { get; }
-        public CacheDataType[] OutputTypes { get; }
+        public Type[] InputTypes { get; }
+        public Type[] OutputTypes { get; }
         public Func<object[], object[]> CallMarshal { get; }
 
         #region Additional Payload
@@ -34,14 +34,14 @@ namespace Parcel.Neo.Base.Framework
         public string[] OutputNames { get; set; }
         #endregion
 
-        public AutomaticNodeDescriptor(string nodeName, CacheDataType[] inputTypes, CacheDataType[] outputTypes, Func<object[], object[]> callMarshal)
+        public AutomaticNodeDescriptor(string nodeName, Type[] inputTypes, Type[] outputTypes, Func<object[], object[]> callMarshal)
         {
             NodeName = nodeName;
             InputTypes = inputTypes;
             OutputTypes = outputTypes;
             CallMarshal = callMarshal;
         }
-        public AutomaticNodeDescriptor(string nodeName, CacheDataType[] inputTypes, CacheDataType outputType, Func<object[], object> callMarshal)
+        public AutomaticNodeDescriptor(string nodeName, Type[] inputTypes, Type outputType, Func<object[], object> callMarshal)
         {
             NodeName = nodeName;
             InputTypes = inputTypes;

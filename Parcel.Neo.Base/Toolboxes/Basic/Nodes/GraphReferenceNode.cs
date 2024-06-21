@@ -60,7 +60,7 @@ namespace Parcel.Neo.Base.Toolboxes.Basic.Nodes
                     if (!unique.ContainsKey(definition.Name))
                     {
                         unique[definition.Name] = definition;
-                        Input.Add(new InputConnector(CacheTypeHelper.ConvertToObjectType(definition.Type)) { Title = definition.Name });
+                        Input.Add(new InputConnector(definition.ObjectType) { Title = definition.Name });
                         InputDefinitions.Add(definition);
                     }
                 }
@@ -75,7 +75,7 @@ namespace Parcel.Neo.Base.Toolboxes.Basic.Nodes
                     if (!unique.ContainsKey(definition.Name))
                     {
                         unique[definition.Name] = definition;
-                        Output.Add(new OutputConnector(CacheTypeHelper.ConvertToObjectType(definition.Type)) { Title = definition.Name });
+                        Output.Add(new OutputConnector(definition.ObjectType) { Title = definition.Name });
                         OutputDefinitions.Add(definition);
                     }
                 }
@@ -85,7 +85,7 @@ namespace Parcel.Neo.Base.Toolboxes.Basic.Nodes
             }
         }
         private static Type GetInputNodeType(GraphInputOutputDefinition definition)
-            => CacheTypeHelper.ConvertToNodeType(definition.Type);
+            => definition.ObjectType;
         #endregion
 
         #region Private States
@@ -134,7 +134,7 @@ namespace Parcel.Neo.Base.Toolboxes.Basic.Nodes
                 {
                     if (Input[i].Connections.Count != 0) continue;
 
-                    ToolboxNodeExport toolDef = new(Input[i].Title, CoreEngine.Runtime.RuntimeNodeType.Method, GetInputNodeType(InputDefinitions[i]));
+                    ToolboxNodeExport toolDef = new(Input[i].Title, GetInputNodeType(InputDefinitions[i]));
                     auto.Add(new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(toolDef, new Vector2D(-100, -50 + (i - 1) * 50), Input[i]));
                 }
 

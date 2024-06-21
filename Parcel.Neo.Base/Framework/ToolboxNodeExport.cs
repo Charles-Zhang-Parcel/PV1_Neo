@@ -1,6 +1,4 @@
 ﻿using Humanizer;
-using Parcel.CoreEngine.Runtime;
-using Parcel.Neo.Base.DataTypes;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 using System;
 using System.Linq;
@@ -19,7 +17,6 @@ namespace Parcel.Neo.Base.Framework
 
         #region Attributes
         public string Name { get; }
-        public RuntimeNodeType NodeType { get; }
         #endregion
 
         #region Payload Type
@@ -30,24 +27,21 @@ namespace Parcel.Neo.Base.Framework
         #endregion
 
         #region Constructor
-        public ToolboxNodeExport(string name, RuntimeNodeType nodeType, MethodInfo method)
+        public ToolboxNodeExport(string name, MethodInfo method)
         {
             Name = name;
-            NodeType = nodeType;
             Method = method;
             ImplementationType = NodeImplementationType.MethodInfo;
         }
-        public ToolboxNodeExport(string name, RuntimeNodeType nodeType, AutomaticNodeDescriptor descriptor)
+        public ToolboxNodeExport(string name, AutomaticNodeDescriptor descriptor)
         {
             Name = name;
-            NodeType = nodeType;
             Descriptor = descriptor;
             ImplementationType = NodeImplementationType.AutomaticLambda;
         }
-        public ToolboxNodeExport(string name, RuntimeNodeType nodeType, Type type)
+        public ToolboxNodeExport(string name, Type type)
         {
             Name = name;
-            NodeType = nodeType;
             ProcessorNodeType = type;
             ImplementationType = NodeImplementationType.OOPNode;
         }
@@ -65,17 +59,14 @@ namespace Parcel.Neo.Base.Framework
                     Type returnType = Method.ReturnType;
                     // TODO: Replace with some more suitable implementation (e.g. a custom class specialized in handling those)
                     if (Method.IsStatic)
-                        return new AutomaticProcessorNode(new AutomaticNodeDescriptor(Name,
-                            parameterTypes.Select(CacheTypeHelper.ConvertToCacheDataType).ToArray(),
-                            CacheTypeHelper.ConvertToCacheDataType(returnType),
-                            objects => Method.Invoke(null, objects))
+                        return new AutomaticProcessorNode(new AutomaticNodeDescriptor(Name, parameterTypes, returnType, objects => Method.Invoke(null, objects))
                         {
                             InputNames = Method.GetParameters().Select(p => p.Name.Titleize()).ToArray()
                         });
                     else
                         return new AutomaticProcessorNode(new AutomaticNodeDescriptor(Name,
-                            [CacheTypeHelper.ConvertToCacheDataType(Method.DeclaringType), .. parameterTypes.Select(CacheTypeHelper.ConvertToCacheDataType)],
-                            returnType == typeof(void) ? CacheTypeHelper.ConvertToCacheDataType(Method.DeclaringType) : CacheTypeHelper.ConvertToCacheDataType(returnType),
+                            [Method.DeclaringType, .. parameterTypes],
+                            returnType == typeof(void) ? Method.DeclaringType : returnType,
                             objects => Method.Invoke(objects[0], objects.Skip(1).ToArray()))
                             {
                                 InputNames = [Method.DeclaringType.Name, .. Method.GetParameters().Select(p => p.Name.Titleize())]

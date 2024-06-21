@@ -109,7 +109,7 @@ namespace Parcel.Neo.Base.Toolboxes.Math.Nodes
                 {
                     if(Input[i].Connections.Count != 0) continue;
 
-                    ToolboxNodeExport toolDef = new($"Input {i + 1}", CoreEngine.Runtime.RuntimeNodeType.Method, typeof(NumberNode));
+                    ToolboxNodeExport toolDef = new($"Input {i + 1}", typeof(NumberNode));
                     auto.Add(new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(toolDef, new Vector2D(-100, -50 + (i - 1) * 50), Input[i]));
                 }
                 return [.. auto];

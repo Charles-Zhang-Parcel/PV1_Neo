@@ -97,7 +97,7 @@ namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
                 {
                     if (Input[i].Connections.Count != 0) continue;
 
-                    ToolboxNodeExport toolDef = new("Column Name", CoreEngine.Runtime.RuntimeNodeType.Method, typeof(StringNode));
+                    ToolboxNodeExport toolDef = new("Column Name", typeof(StringNode));
                     auto.Add(new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(toolDef, new Vector2D(-100, -50 + (i - 1) * 50), Input[i] as InputConnector));
                 }
                 return [.. auto];

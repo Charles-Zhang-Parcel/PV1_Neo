@@ -19,8 +19,8 @@ namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
             ProcessorNodeMemberSerialization = new Dictionary<string, NodeSerializationRoutine>()
             {
                 {nameof(AutomaticNodeType), new NodeSerializationRoutine(() => SerializationHelper.Serialize(AutomaticNodeType), value => AutomaticNodeType = SerializationHelper.GetString(value))},
-                {nameof(InputTypes), new NodeSerializationRoutine(() => SerializationHelper.Serialize(InputTypes), value => InputTypes = SerializationHelper.GetCacheDataTypes(value))},
-                {nameof(OutputTypes), new NodeSerializationRoutine(() => SerializationHelper.Serialize(OutputTypes), value => OutputTypes = SerializationHelper.GetCacheDataTypes(value))},
+                //{nameof(InputTypes), new NodeSerializationRoutine(() => SerializationHelper.Serialize(InputTypes), value => InputTypes = SerializationHelper.GetCacheDataTypes(value))},
+                //{nameof(OutputTypes), new NodeSerializationRoutine(() => SerializationHelper.Serialize(OutputTypes), value => OutputTypes = SerializationHelper.GetCacheDataTypes(value))},
                 {nameof(InputNames), new NodeSerializationRoutine(() => SerializationHelper.Serialize(InputNames), value => InputNames = SerializationHelper.GetStrings(value))},
                 {nameof(OutputNames), new NodeSerializationRoutine(() => SerializationHelper.Serialize(OutputNames), value => OutputNames = SerializationHelper.GetStrings(value))},
             };
@@ -69,78 +69,80 @@ namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
         }
         private void PopulateInputsOutputs()
         {
-            Title = NodeTypeName = AutomaticNodeType;
-            for (int index = 0; index < InputTypes.Length; index++)
-            {
-                CacheDataType inputType = InputTypes[index];
-                string preferredTitle = InputNames?[index];
-                switch (inputType)
-                {
-                    case CacheDataType.Boolean:
-                        Input.Add(new PrimitiveBooleanInputConnector() {Title = preferredTitle ?? "Bool"});
-                        break;
-                    case CacheDataType.Number:
-                        Input.Add(new PrimitiveNumberInputConnector() {Title = preferredTitle ?? "Number"});
-                        break;
-                    case CacheDataType.String:
-                        Input.Add(new PrimitiveStringInputConnector() {Title = preferredTitle ?? "String"});
-                        break;
-                    case CacheDataType.DateTime:
-                        Input.Add(new PrimitiveDateTimeInputConnector() {Title = preferredTitle ?? "Date"});
-                        break;
-                    case CacheDataType.ParcelDataGrid:
-                        Input.Add(new InputConnector(typeof(DataGrid)) {Title = preferredTitle ?? "Data"});
-                        break;
-                    case CacheDataType.Generic:
-                        Input.Add(new InputConnector(typeof(object)) { Title = preferredTitle ?? "Entity" });
-                        break;
-                    case CacheDataType.BatchJob:
-                        throw new NotImplementedException();
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
+            throw new NotImplementedException();
 
-            for (int index = 0; index < OutputTypes.Length; index++)
-            {
-                CacheDataType outputType = OutputTypes[index];
-                string preferredTitle = OutputNames?[index];
-                switch (outputType)
-                {
-                    case CacheDataType.Boolean:
-                        Output.Add(new OutputConnector(typeof(bool)) {Title = preferredTitle ?? "Truth"});
-                        break;
-                    case CacheDataType.Number:
-                        Output.Add(new OutputConnector(typeof(double)) {Title = preferredTitle ?? "Number"});
-                        break;
-                    case CacheDataType.String:
-                        Output.Add(new OutputConnector(typeof(string)) {Title = preferredTitle ?? "Value"});
-                        break;
-                    case CacheDataType.DateTime:
-                        Output.Add(new OutputConnector(typeof(DateTime)) {Title = preferredTitle ?? "Date"});
-                        break;
-                    case CacheDataType.ParcelDataGrid:
-                        Output.Add(new OutputConnector(typeof(DataGrid)) {Title = preferredTitle ?? "Data"});
-                        break;
-                    case CacheDataType.ParcelDataGridDataColumn: // TODO: Pending taking a look at all references to CacheDataType.ParcelDataGrid and consolidate implementation requirements - at the moment it looks like to add a new cache data type it takes way too much code changes - ideally we only need to change two places: the CacheDataType enum, a two-way mapping, and the Preview window itself
-                        Output.Add(new OutputConnector(typeof(DataColumn)) { Title = preferredTitle ?? "Data Column" });
-                        break;
-                    case CacheDataType.Generic:
-                        Output.Add(new OutputConnector(typeof(object)) { Title = preferredTitle ?? "Entity" });
-                        break;
-                    case CacheDataType.BatchJob:
-                        throw new NotImplementedException();
-                    default:
-                        throw new ArgumentException($"Invalid cache data type: {outputType}");
-                }
-            }
+            //Title = NodeTypeName = AutomaticNodeType;
+            //for (int index = 0; index < InputTypes.Length; index++)
+            //{
+            //    CacheDataType inputType = InputTypes[index];
+            //    string preferredTitle = InputNames?[index];
+            //    switch (inputType)
+            //    {
+            //        case CacheDataType.Boolean:
+            //            Input.Add(new PrimitiveBooleanInputConnector() {Title = preferredTitle ?? "Bool"});
+            //            break;
+            //        case CacheDataType.Number:
+            //            Input.Add(new PrimitiveNumberInputConnector() {Title = preferredTitle ?? "Number"});
+            //            break;
+            //        case CacheDataType.String:
+            //            Input.Add(new PrimitiveStringInputConnector() {Title = preferredTitle ?? "String"});
+            //            break;
+            //        case CacheDataType.DateTime:
+            //            Input.Add(new PrimitiveDateTimeInputConnector() {Title = preferredTitle ?? "Date"});
+            //            break;
+            //        case CacheDataType.ParcelDataGrid:
+            //            Input.Add(new InputConnector(typeof(DataGrid)) {Title = preferredTitle ?? "Data"});
+            //            break;
+            //        case CacheDataType.Generic:
+            //            Input.Add(new InputConnector(typeof(object)) { Title = preferredTitle ?? "Entity" });
+            //            break;
+            //        case CacheDataType.BatchJob:
+            //            throw new NotImplementedException();
+            //        default:
+            //            throw new ArgumentOutOfRangeException();
+            //    }
+            //}
+
+            //for (int index = 0; index < OutputTypes.Length; index++)
+            //{
+            //    CacheDataType outputType = OutputTypes[index];
+            //    string preferredTitle = OutputNames?[index];
+            //    switch (outputType)
+            //    {
+            //        case CacheDataType.Boolean:
+            //            Output.Add(new OutputConnector(typeof(bool)) {Title = preferredTitle ?? "Truth"});
+            //            break;
+            //        case CacheDataType.Number:
+            //            Output.Add(new OutputConnector(typeof(double)) {Title = preferredTitle ?? "Number"});
+            //            break;
+            //        case CacheDataType.String:
+            //            Output.Add(new OutputConnector(typeof(string)) {Title = preferredTitle ?? "Value"});
+            //            break;
+            //        case CacheDataType.DateTime:
+            //            Output.Add(new OutputConnector(typeof(DateTime)) {Title = preferredTitle ?? "Date"});
+            //            break;
+            //        case CacheDataType.ParcelDataGrid:
+            //            Output.Add(new OutputConnector(typeof(DataGrid)) {Title = preferredTitle ?? "Data"});
+            //            break;
+            //        case CacheDataType.ParcelDataGridDataColumn: // TODO: Pending taking a look at all references to CacheDataType.ParcelDataGrid and consolidate implementation requirements - at the moment it looks like to add a new cache data type it takes way too much code changes - ideally we only need to change two places: the CacheDataType enum, a two-way mapping, and the Preview window itself
+            //            Output.Add(new OutputConnector(typeof(DataColumn)) { Title = preferredTitle ?? "Data Column" });
+            //            break;
+            //        case CacheDataType.Generic:
+            //            Output.Add(new OutputConnector(typeof(object)) { Title = preferredTitle ?? "Entity" });
+            //            break;
+            //        case CacheDataType.BatchJob:
+            //            throw new NotImplementedException();
+            //        default:
+            //            throw new ArgumentException($"Invalid cache data type: {outputType}");
+            //    }
+            //}
         }
         #endregion
 
         #region Properties
         private string AutomaticNodeType { get; set; }
-        private CacheDataType[] InputTypes { get; set; }
-        private CacheDataType[] OutputTypes { get; set; }
+        private Type[] InputTypes { get; set; }
+        private Type[] OutputTypes { get; set; }
         private string[] InputNames { get; set; }
         private string[] OutputNames { get; set; }
         #endregion
@@ -183,9 +185,10 @@ namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
                 {
                     if(!InputConnectorShouldRequireAutoConnection(Input[i])) continue;
 
-                    Type nodeType = CacheTypeHelper.ConvertToNodeType(InputTypes[i]);
-                    ToolboxNodeExport toolDef = new ToolboxNodeExport(Input[i].Title, CoreEngine.Runtime.RuntimeNodeType.Method, nodeType);
-                    auto.Add(new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(toolDef, new Vector2D(-100, -50 + (i - 1) * 50), Input[i]));
+                    throw new NotImplementedException();
+                    //Type nodeType = InputTypes[i];
+                    //ToolboxNodeExport toolDef = new ToolboxNodeExport(Input[i].Title, nodeType);
+                    //auto.Add(new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(toolDef, new Vector2D(-100, -50 + (i - 1) * 50), Input[i]));
                 }
                 return [.. auto];
             }

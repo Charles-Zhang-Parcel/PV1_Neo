@@ -175,7 +175,7 @@ namespace Parcel.Neo
             // Auto-Generate
             if ((node is CSV || node is Excel) && node.ShouldHaveAutoConnection)
             {
-                OpenFileNode filePathNode = SpawnNode(new ToolboxNodeExport("File Input", CoreEngine.Runtime.RuntimeNodeType.Method, typeof(OpenFileNode)),
+                OpenFileNode filePathNode = SpawnNode(new ToolboxNodeExport("File Input", typeof(OpenFileNode)),
                     node.Location + new Vector2D(-200, -60)) as OpenFileNode;
                 Canvas.Schema.TryAddConnection(filePathNode!.MainOutput, node.Input.First());
 
@@ -193,7 +193,7 @@ namespace Parcel.Neo
             }
             if (node is WriteCSV && node.ShouldHaveAutoConnection)
             {
-                SaveFileNode filePathNode = SpawnNode(new ToolboxNodeExport("File Path", CoreEngine.Runtime.RuntimeNodeType.Method, typeof(SaveFileNode)),
+                SaveFileNode filePathNode = SpawnNode(new ToolboxNodeExport("File Path", typeof(SaveFileNode)),
                     node.Location + new Vector2D(-200, -60)) as SaveFileNode;
                 Canvas.Schema.TryAddConnection(filePathNode!.MainOutput, node.Input.First());
 

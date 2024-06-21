@@ -1,5 +1,4 @@
-﻿using Parcel.CoreEngine.Runtime;
-using Parcel.Neo.Base.Framework;
+﻿using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Toolboxes.DataSource.Nodes;
 
 namespace Parcel.Neo.Base.Toolboxes.DataSource
@@ -9,10 +8,10 @@ namespace Parcel.Neo.Base.Toolboxes.DataSource
         #region Interface
         public ToolboxNodeExport?[]? ExportNodes => [
             // Data Base System
-            //new("MS MDL", RuntimeNodeType.Method, typeof(object)),
-            //new("PL SQL", RuntimeNodeType.Method, typeof(object)),
+            //new("MS MDL", typeof(object)),
+            //new("PL SQL", typeof(object)),
             //null, // Divisor line // Web Services
-            new("Yahoo Finance", RuntimeNodeType.Method, typeof(YahooFinance)),
+            new("Yahoo Finance", typeof(YahooFinance)),
         ];
         #endregion
     }

@@ -122,7 +122,7 @@ namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
                 {
                     if(!InputConnectorShouldRequireAutoConnection(Input[i])) continue;
 
-                    ToolboxNodeExport toolDef = new(Input[i].Title, CoreEngine.Runtime.RuntimeNodeType.Method, CacheTypeHelper.ConvertToNodeType(Input[i].DataType));
+                    ToolboxNodeExport toolDef = new(Input[i].Title, Input[i].DataType);
                     auto.Add(new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(toolDef, new Vector2D(-180, -20 + (i - 1) * 50), Input[i]));
                 }
                 return [.. auto];
