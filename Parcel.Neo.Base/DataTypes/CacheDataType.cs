@@ -16,6 +16,10 @@ namespace Parcel.Neo.Base.DataTypes
     }
 
     // Remark-cz: Do we have to have those? Can we just do raw types? Maybe it's provided just for the sake of front-end (that would make sense because Gospel has something similar?
+    // TODO: Pending removing this or moving it entirely to the front-end aka. PreviewWindow. At the moment the GUI (XAML) depends on i because of naive graph input/output definition support - which is quite restricting because it cannot handle arbitrary graph input/output types.
+    /// <remarks>
+    /// This is front-end level contract and entirely for the purpose of front-ends - unless a particular type implements Parcel.CoreEngine's serialization interface, and the front-end has a way to view that serialized result, all other particular visualization types must be explicitly supported here. That's the only way front-ends can provide reasonable preview for any specific object type (e.g. data grid and images).
+    /// </remarks>
     [Serializable]
     public enum CacheDataType
     {
@@ -24,9 +28,11 @@ namespace Parcel.Neo.Base.DataTypes
         Number,
         String,
         DateTime,
-        // Basic Numerical
-        ParcelDataGrid, // Including arrays // TODO: Remove explicit dependency?
-        // Advanced
+        // Basic Types
+        ParcelDataGrid, // Including arrays // TODO/REMARK-cz: in general, even though this is defined here, front-ends (depending on what type of front-end it is) do not necessarily need to depend on Parcel.DataGrid package
+        ParcelDataGridDataColumn,
+        // BitmapImage, // Not implemented
+        // Advanced (Not implemented)
         Generic,
         BatchJob
     }
@@ -47,6 +53,8 @@ namespace Parcel.Neo.Base.DataTypes
                 return CacheDataType.String;
             else if (type == typeof(DataGrid))
                 return CacheDataType.ParcelDataGrid;
+            else if (type == typeof(DataColumn) || (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))) // The second part deals with nullable
+                return CacheDataType.ParcelDataGridDataColumn;
             else if (type == typeof(bool))
                 return CacheDataType.Boolean;
             else // Object

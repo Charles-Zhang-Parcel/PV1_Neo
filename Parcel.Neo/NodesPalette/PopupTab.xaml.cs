@@ -161,7 +161,7 @@ namespace Parcel.Neo
         }
         private static void RegisterType(Dictionary<string, ToolboxNodeExport[]> toolboxes, string name, Type type)
         {
-            List<ToolboxNodeExport> nodes = [.. GetStaticMethods(type), .. GetInstanceMethods(type)];
+            List<ToolboxNodeExport> nodes = [.. GetInstanceMethods(type), .. GetStaticMethods(type)];
 
             toolboxes[name] = [.. nodes];
         }
@@ -169,7 +169,8 @@ namespace Parcel.Neo
         {
             IEnumerable<MethodInfo> methods = type
                             .GetMethods(BindingFlags.Public | BindingFlags.Static)
-                            .Where(m => m.DeclaringType != typeof(object));
+                            .Where(m => m.DeclaringType != typeof(object))
+                            .OrderBy(t => t.Name);
             foreach (MethodInfo method in methods)
                 yield return new ToolboxNodeExport(method.Name, CoreEngine.Runtime.RuntimeNodeType.Method, method);
         }
@@ -177,7 +178,8 @@ namespace Parcel.Neo
         {
             IEnumerable<MethodInfo> methods = type
                             .GetMethods(BindingFlags.Public | BindingFlags.Instance)
-                            .Where(m => m.DeclaringType != typeof(object));
+                            .Where(m => m.DeclaringType != typeof(object))
+                            .OrderBy(t => t.Name);
             foreach (MethodInfo method in methods)
                 yield return new ToolboxNodeExport(method.Name, CoreEngine.Runtime.RuntimeNodeType.Method, method);
         }

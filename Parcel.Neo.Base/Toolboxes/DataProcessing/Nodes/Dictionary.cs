@@ -82,7 +82,7 @@ namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
                 IDictionary<string, object> dict = expando;
                 dict[definition.Name] = definition.Value;
             }
-            DataGrid dataGrid = new DataGrid(expando);
+            DataGrid dataGrid = new("Dictionary Result", expando);
 
             return new NodeExecutionResult(new NodeMessage($"{dataGrid.RowCount} Rows; {dataGrid.ColumnCount} Columns."), new Dictionary<OutputConnector, object>()
             {

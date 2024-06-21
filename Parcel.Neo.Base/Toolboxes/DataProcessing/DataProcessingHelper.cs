@@ -7,8 +7,6 @@ using System.IO;
 using System.Linq;
 using ExcelDataReader;
 using Parcel.CoreEngine.Helpers;
-using Parcel.Neo.Base.DataTypes;
-using Parcel.Types;
 using Parcel.Types;
 using DataColumn = Parcel.Types.DataColumn;
 using DataTable = System.Data.DataTable;

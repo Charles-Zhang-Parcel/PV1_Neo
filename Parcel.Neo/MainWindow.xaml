@@ -28,14 +28,12 @@
         <converters:NodeMessageTypeToVisibilityConverter x:Key="NodeMessageTypeToVisibilityConverter" />
         <converters:NodeMessageTypeToBrushColorConverter x:Key="NodeMessageTypeToBrushColorConverter" />
         <converters:NodeLocationConverter x:Key="NodeLocationConverter" />
-        <ObjectDataProvider x:Key="DictionaryEntryTypeEntriesFromEnum" MethodName="GetValues"
-                            ObjectType="{x:Type System:Enum}">
+        <ObjectDataProvider x:Key="DictionaryEntryTypeEntriesFromEnum" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
             <ObjectDataProvider.MethodParameters>
                 <x:Type TypeName="dataTypes:DictionaryEntryType"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <ObjectDataProvider x:Key="CacheDataTypeEntriesFromEnum" MethodName="GetValues"
-                            ObjectType="{x:Type System:Enum}">
+        <ObjectDataProvider x:Key="CacheDataTypeEntriesFromEnum" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
             <ObjectDataProvider.MethodParameters>
                 <x:Type TypeName="dataTypes:CacheDataType"/>
             </ObjectDataProvider.MethodParameters>

@@ -1,4 +1,5 @@
-﻿using Parcel.CoreEngine.Runtime;
+﻿using Humanizer;
+using Parcel.CoreEngine.Runtime;
 using Parcel.Neo.Base.DataTypes;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 using System;
@@ -69,7 +70,7 @@ namespace Parcel.Neo.Base.Framework
                             CacheTypeHelper.ConvertToCacheDataType(returnType),
                             objects => Method.Invoke(null, objects))
                         {
-                            InputNames = Method.GetParameters().Select(p => p.Name).ToArray()
+                            InputNames = Method.GetParameters().Select(p => p.Name.Titleize()).ToArray()
                         });
                     else
                         return new AutomaticProcessorNode(new AutomaticNodeDescriptor(Name,
@@ -77,7 +78,7 @@ namespace Parcel.Neo.Base.Framework
                             returnType == typeof(void) ? CacheTypeHelper.ConvertToCacheDataType(Method.DeclaringType) : CacheTypeHelper.ConvertToCacheDataType(returnType),
                             objects => Method.Invoke(objects[0], objects.Skip(1).ToArray()))
                             {
-                                InputNames = [Method.DeclaringType.Name, .. Method.GetParameters().Select(p => p.Name)]
+                                InputNames = [Method.DeclaringType.Name, .. Method.GetParameters().Select(p => p.Name.Titleize())]
                             }); // TODO: Finish implementation; Likely we will require a new custom node descriptor type to handle this kind of behavior))
                 case NodeImplementationType.AutomaticLambda:
                     return new AutomaticProcessorNode(Descriptor);

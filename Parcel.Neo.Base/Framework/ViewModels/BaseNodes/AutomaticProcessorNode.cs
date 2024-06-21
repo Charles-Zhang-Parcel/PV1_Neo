@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Parcel.Types;
 using Parcel.Neo.Base.Serialization;
-using Parcel.Types;
 using Parcel.Neo.Base.DataTypes;
 
 namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
@@ -123,13 +122,16 @@ namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
                     case CacheDataType.ParcelDataGrid:
                         Output.Add(new OutputConnector(typeof(DataGrid)) {Title = preferredTitle ?? "Data"});
                         break;
+                    case CacheDataType.ParcelDataGridDataColumn: // TODO: Pending taking a look at all references to CacheDataType.ParcelDataGrid and consolidate implementation requirements - at the moment it looks like to add a new cache data type it takes way too much code changes - ideally we only need to change two places: the CacheDataType enum, a two-way mapping, and the Preview window itself
+                        Output.Add(new OutputConnector(typeof(DataColumn)) { Title = preferredTitle ?? "Data Column" });
+                        break;
                     case CacheDataType.Generic:
                         Output.Add(new OutputConnector(typeof(object)) { Title = preferredTitle ?? "Entity" });
                         break;
                     case CacheDataType.BatchJob:
                         throw new NotImplementedException();
                     default:
-                        throw new ArgumentOutOfRangeException();
+                        throw new ArgumentException($"Invalid cache data type: {outputType}");
                 }
             }
         }

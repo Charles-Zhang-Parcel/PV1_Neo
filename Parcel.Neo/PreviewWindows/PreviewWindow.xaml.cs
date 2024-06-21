@@ -91,7 +91,6 @@ namespace Parcel.Neo
                 ConnectorCache cache = Node[output];
                 switch (cache.DataType)
                 {
-                    case CacheDataType.Generic:
                     case CacheDataType.Boolean:
                     case CacheDataType.Number:
                     case CacheDataType.String:
@@ -99,13 +98,24 @@ namespace Parcel.Neo
                         InfoGridVisibility = Visibility.Visible;
                         break;
                     case CacheDataType.ParcelDataGrid:
-                        PopulateDataGrid(WpfDataGrid, cache.DataObject as Parcel.Types.DataGrid, out string[] dataGridDataColumns, out List<dynamic> dataGridData);
-                        DataGridDataColumns = dataGridDataColumns;
-                        DataGridData = dataGridData;
-                        DataGridVisibility = Visibility.Visible;
+                        {
+                            PopulateDataGrid(WpfDataGrid, cache.DataObject as Parcel.Types.DataGrid, out string[] dataGridDataColumns, out List<dynamic> dataGridData);
+                            DataGridDataColumns = dataGridDataColumns;
+                            DataGridData = dataGridData;
+                            DataGridVisibility = Visibility.Visible;
+                        }
                         break;
+                    case CacheDataType.ParcelDataGridDataColumn:
+                        {
+                            PopulateDataGrid(WpfDataGrid, new Types.DataGrid("Preview", cache.DataObject as Parcel.Types.DataColumn), out string[] dataGridDataColumns, out List<dynamic> dataGridData);
+                            DataGridDataColumns = dataGridDataColumns;
+                            DataGridData = dataGridData;
+                            DataGridVisibility = Visibility.Visible;
+                        }
+                        break;
+                    case CacheDataType.Generic:
                     default:
-                        TestLabel = "No preview is available for this node.";
+                        TestLabel = $"No preview is available for this node's output ({cache.DataObject})";
                         InfoGridVisibility = Visibility.Visible;
                         break;
                 }

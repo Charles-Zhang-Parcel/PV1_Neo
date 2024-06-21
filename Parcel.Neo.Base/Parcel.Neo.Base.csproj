@@ -10,6 +10,7 @@
       <PackageReference Include="Csv" Version="2.0.93" />
       <PackageReference Include="ExcelDataReader" Version="3.6.0" />
       <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
+      <PackageReference Include="Humanizer.Core" Version="2.14.1" />
       <PackageReference Include="RandomNameGeneratorNG" Version="2.0.2" />
       <PackageReference Include="System.Data.SQLite" Version="1.0.118" />
     </ItemGroup>
