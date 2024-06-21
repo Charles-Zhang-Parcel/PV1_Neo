@@ -45,6 +45,7 @@ namespace Parcel.Neo.Base.Framework
             }
             // Register entire (referenced) assemblies
             RegisterToolbox(toolboxAssemblies, "Generator", Assembly.Load("Parcel.Generators"));
+            RegisterToolbox(toolboxAssemblies, "Plot", Assembly.Load("Parcel.Plots"));
 
             // Index nodes
             Dictionary<string, ToolboxNodeExport[]> toolboxes = IndexToolboxes(toolboxAssemblies);
