@@ -13,6 +13,7 @@ namespace Parcel.Neo.Base.DataTypes
         Boolean
     }
 
+    // TODO: Pending taking a look at all references to CacheDataType.ParcelDataGrid and consolidate implementation requirements - at the moment it looks like to add a new cache data type it takes way too much code changes - ideally we only need to change two places: the CacheDataType enum, a two-way mapping, and the Preview window itself
     // Remark-cz: Do we have to have those? Can we just do raw types? Maybe it's provided just for the sake of front-end (that would make sense because Gospel has something similar?
     // TODO: Pending removing this or moving it entirely to the front-end aka. PreviewWindow. At the moment the GUI (XAML) depends on i because of naive graph input/output definition support - which is quite restricting because it cannot handle arbitrary graph input/output types.
     /// <remarks>

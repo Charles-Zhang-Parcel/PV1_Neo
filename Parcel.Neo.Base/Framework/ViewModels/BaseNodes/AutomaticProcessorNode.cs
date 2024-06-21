@@ -69,73 +69,45 @@ namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
         }
         private void PopulateInputsOutputs()
         {
-            throw new NotImplementedException();
+            Title = NodeTypeName = AutomaticNodeType;
+            for (int index = 0; index < InputTypes.Length; index++)
+            {
+                Type inputType = InputTypes[index];
+                string preferredTitle = InputNames?[index];
+                if (inputType == typeof(bool))
+                    Input.Add(new PrimitiveBooleanInputConnector() { Title = preferredTitle ?? "Bool" });
+                else if (inputType == typeof(string))
+                    Input.Add(new PrimitiveStringInputConnector() { Title = preferredTitle ?? "String" });
+                else if (inputType == typeof(double))
+                    Input.Add(new PrimitiveNumberInputConnector() { Title = preferredTitle ?? "Number" });
+                else if (inputType == typeof(DateTime))
+                    Input.Add(new PrimitiveDateTimeInputConnector() { Title = preferredTitle ?? "Date" });
+                else 
+                    Input.Add(new InputConnector(inputType) { Title = preferredTitle ?? "Input" });
+            }
 
-            //Title = NodeTypeName = AutomaticNodeType;
-            //for (int index = 0; index < InputTypes.Length; index++)
-            //{
-            //    CacheDataType inputType = InputTypes[index];
-            //    string preferredTitle = InputNames?[index];
-            //    switch (inputType)
-            //    {
-            //        case CacheDataType.Boolean:
-            //            Input.Add(new PrimitiveBooleanInputConnector() {Title = preferredTitle ?? "Bool"});
-            //            break;
-            //        case CacheDataType.Number:
-            //            Input.Add(new PrimitiveNumberInputConnector() {Title = preferredTitle ?? "Number"});
-            //            break;
-            //        case CacheDataType.String:
-            //            Input.Add(new PrimitiveStringInputConnector() {Title = preferredTitle ?? "String"});
-            //            break;
-            //        case CacheDataType.DateTime:
-            //            Input.Add(new PrimitiveDateTimeInputConnector() {Title = preferredTitle ?? "Date"});
-            //            break;
-            //        case CacheDataType.ParcelDataGrid:
-            //            Input.Add(new InputConnector(typeof(DataGrid)) {Title = preferredTitle ?? "Data"});
-            //            break;
-            //        case CacheDataType.Generic:
-            //            Input.Add(new InputConnector(typeof(object)) { Title = preferredTitle ?? "Entity" });
-            //            break;
-            //        case CacheDataType.BatchJob:
-            //            throw new NotImplementedException();
-            //        default:
-            //            throw new ArgumentOutOfRangeException();
-            //    }
-            //}
+            for (int index = 0; index < OutputTypes.Length; index++)
+            {
+                Type outputType = OutputTypes[index];
+                string? preferredTitle = OutputNames == null ? GetPreferredTitle(outputType) : OutputNames?[index];
+                Output.Add(new OutputConnector(outputType) { Title = preferredTitle ?? "Result" });
+            }
 
-            //for (int index = 0; index < OutputTypes.Length; index++)
-            //{
-            //    CacheDataType outputType = OutputTypes[index];
-            //    string preferredTitle = OutputNames?[index];
-            //    switch (outputType)
-            //    {
-            //        case CacheDataType.Boolean:
-            //            Output.Add(new OutputConnector(typeof(bool)) {Title = preferredTitle ?? "Truth"});
-            //            break;
-            //        case CacheDataType.Number:
-            //            Output.Add(new OutputConnector(typeof(double)) {Title = preferredTitle ?? "Number"});
-            //            break;
-            //        case CacheDataType.String:
-            //            Output.Add(new OutputConnector(typeof(string)) {Title = preferredTitle ?? "Value"});
-            //            break;
-            //        case CacheDataType.DateTime:
-            //            Output.Add(new OutputConnector(typeof(DateTime)) {Title = preferredTitle ?? "Date"});
-            //            break;
-            //        case CacheDataType.ParcelDataGrid:
-            //            Output.Add(new OutputConnector(typeof(DataGrid)) {Title = preferredTitle ?? "Data"});
-            //            break;
-            //        case CacheDataType.ParcelDataGridDataColumn: // TODO: Pending taking a look at all references to CacheDataType.ParcelDataGrid and consolidate implementation requirements - at the moment it looks like to add a new cache data type it takes way too much code changes - ideally we only need to change two places: the CacheDataType enum, a two-way mapping, and the Preview window itself
-            //            Output.Add(new OutputConnector(typeof(DataColumn)) { Title = preferredTitle ?? "Data Column" });
-            //            break;
-            //        case CacheDataType.Generic:
-            //            Output.Add(new OutputConnector(typeof(object)) { Title = preferredTitle ?? "Entity" });
-            //            break;
-            //        case CacheDataType.BatchJob:
-            //            throw new NotImplementedException();
-            //        default:
-            //            throw new ArgumentException($"Invalid cache data type: {outputType}");
-            //    }
-            //}
+            static string? GetPreferredTitle(Type type)
+            {
+                if (type == typeof(bool))
+                    return "Truth";
+                else if (type == typeof(string))
+                    return "Value";
+                else if (type == typeof(double))
+                    return "Number";
+                else if (type == typeof(DateTime))
+                    return "Date";
+                else if (type == typeof(DataGrid) || type == typeof(DataColumn))
+                    return "Data";
+                else
+                    return null;
+            }
         }
         #endregion
 
