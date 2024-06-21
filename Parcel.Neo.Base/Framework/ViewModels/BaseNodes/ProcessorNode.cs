@@ -102,8 +102,7 @@ namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
 
         #region Routines
         protected abstract NodeExecutionResult Execute();
-        private Dictionary<OutputConnector, ConnectorCache> ProcessorCache { get; } =
-            new Dictionary<OutputConnector, ConnectorCache>();
+        private Dictionary<OutputConnector, ConnectorCache> ProcessorCache { get; } = [];
         #endregion
 
         #region Auto Connect Interface

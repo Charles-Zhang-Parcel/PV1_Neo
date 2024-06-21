@@ -8,7 +8,7 @@ using System.Windows.Input;
 using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
-using Parcel.Neo.Base.DataTypes;
+using Parcel.Types;
 
 namespace Parcel.Neo
 {
@@ -89,40 +89,34 @@ namespace Parcel.Neo
             if (Node.HasCache(output))
             {
                 ConnectorCache cache = Node[output];
-                switch (cache.DataType)
+                if (cache.DataType == typeof(bool) || cache.DataType == typeof(string) || cache.DataType == typeof(double)) 
                 {
-                    case CacheDataType.Boolean:
-                    case CacheDataType.Number:
-                    case CacheDataType.String:
-                        TestLabel = $"{cache.DataObject}";
-                        InfoGridVisibility = Visibility.Visible;
-                        break;
-                    case CacheDataType.ParcelDataGrid:
-                        {
-                            PopulateDataGrid(WpfDataGrid, cache.DataObject as Parcel.Types.DataGrid, out string[] dataGridDataColumns, out List<dynamic> dataGridData);
-                            DataGridDataColumns = dataGridDataColumns;
-                            DataGridData = dataGridData;
-                            DataGridVisibility = Visibility.Visible;
-                        }
-                        break;
-                    case CacheDataType.ParcelDataGridDataColumn:
-                        {
-                            PopulateDataGrid(WpfDataGrid, new Types.DataGrid("Preview", cache.DataObject as Parcel.Types.DataColumn), out string[] dataGridDataColumns, out List<dynamic> dataGridData);
-                            DataGridDataColumns = dataGridDataColumns;
-                            DataGridData = dataGridData;
-                            DataGridVisibility = Visibility.Visible;
-                        }
-                        break;
-                    case CacheDataType.Generic:
-                    default:
-                        TestLabel = $"No preview is available for this node's output ({cache.DataObject})";
-                        InfoGridVisibility = Visibility.Visible;
-                        break;
+                    TestLabel = $"{cache.DataObject}";
+                    InfoGridVisibility = Visibility.Visible;
+                }
+                else if (cache.DataType == typeof(Types.DataGrid))
+                {
+                    PopulateDataGrid(WpfDataGrid, cache.DataObject as Parcel.Types.DataGrid, out string[] dataGridDataColumns, out List<dynamic> dataGridData);
+                    DataGridDataColumns = dataGridDataColumns;
+                    DataGridData = dataGridData;
+                    DataGridVisibility = Visibility.Visible;
+                }
+                else if (cache.DataType == typeof(DataColumn))
+                {
+                    PopulateDataGrid(WpfDataGrid, new Types.DataGrid("Preview", cache.DataObject as Parcel.Types.DataColumn), out string[] dataGridDataColumns, out List<dynamic> dataGridData);
+                    DataGridDataColumns = dataGridDataColumns;
+                    DataGridData = dataGridData;
+                    DataGridVisibility = Visibility.Visible;
+                }
+                else
+                {
+                    TestLabel = $"No preview is available for this node's output ({cache.DataObject})";
+                    InfoGridVisibility = Visibility.Visible;
                 }
             }
         }
 
-        public static void PopulateDataGrid(DataGrid wpfDataGrid, Parcel.Types.DataGrid dataGrid,
+        public static void PopulateDataGrid(System.Windows.Controls.DataGrid wpfDataGrid, Types.DataGrid dataGrid,
             out string[] dataGridDataColumns, out List<dynamic> dataGridData)
         {
             string FormatHeader(string header, string typeName)
@@ -131,7 +125,7 @@ namespace Parcel.Neo
             }
 
             List<dynamic> objects = dataGrid.Rows;
-            Dictionary<string, Parcel.Types.DataGrid.ColumnInfo> columnInfo = dataGrid.GetColumnInfoForDisplay();
+            Dictionary<string, Types.DataGrid.ColumnInfo> columnInfo = dataGrid.GetColumnInfoForDisplay();
 
             // Collect column names
             IEnumerable<IDictionary<string, object>> rows = objects.OfType<IDictionary<string, object>>();
