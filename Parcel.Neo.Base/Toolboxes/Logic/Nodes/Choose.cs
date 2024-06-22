@@ -12,7 +12,7 @@ namespace Parcel.Neo.Base.Toolboxes.Logic.Nodes
     public class Choose : DynamicInputProcessorNode
     {
         #region Node Interface
-        private readonly InputConnector _selectorInput = new PrimitiveNumberInputConnector()
+        private readonly InputConnector _selectorInput = new PrimitiveNumberInputConnector(typeof(double))
         {
             Title = "Selector",
         };

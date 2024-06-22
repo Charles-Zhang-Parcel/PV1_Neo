@@ -4,6 +4,7 @@ using System.Linq;
 using Parcel.Types;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 using Parcel.Neo.Base.DataTypes;
+using System.ComponentModel;
 
 namespace Parcel.Neo.Base.Framework.ViewModels
 {
@@ -45,15 +46,17 @@ namespace Parcel.Neo.Base.Framework.ViewModels
     
     public sealed class PrimitiveNumberInputConnector : PrimitiveInputConnector
     {
-        public PrimitiveNumberInputConnector() : base(typeof(double))
+        public PrimitiveNumberInputConnector(Type type) : base(type)
         {
-            Value = 0.0;
+            if (!type.IsValueType)
+                throw new ArgumentException($"Invalid type for numberi nput: {type.Name}");
+            Value = Activator.CreateInstance(type)!;
         }
         
         public override object Value 
         {  
             get => _defaultDataStorage;
-            set => SetField(ref _defaultDataStorage, value is string s ? double.Parse(s) : value); 
+            set => SetField(ref _defaultDataStorage, value is string s ? TypeDescriptor.GetConverter(DataType).ConvertFromInvariantString(s) : value); 
         }
     }
     
@@ -211,7 +214,7 @@ namespace Parcel.Neo.Base.Framework.ViewModels
             if (Connections.Count > 1)
                 throw new InvalidOperationException("Input connector has more than 1 connection.");
 
-            BaseConnection connection = Connections.SingleOrDefault();
+            BaseConnection? connection = Connections.SingleOrDefault();
             if (typeof(T) == DataType || typeof(T).IsAssignableFrom(DataType))
             {
                 if (connection != null)
@@ -247,11 +250,12 @@ namespace Parcel.Neo.Base.Framework.ViewModels
         #endregion
 
         #region Routines
-        private readonly Dictionary<Type, ConnectorShape> _mappings = new Dictionary<Type, ConnectorShape>()
+        private readonly Dictionary<Type, ConnectorShape> _mappings = new()
         {
             {typeof(bool), ConnectorShape.Triangle},
             {typeof(string), ConnectorShape.Circle},
             {typeof(double), ConnectorShape.Circle},
+            {typeof(int), ConnectorShape.Circle},
             {typeof(DateTime), ConnectorShape.Circle},
             {typeof(DataGrid), ConnectorShape.Square},
             {typeof(ControlFlow), ConnectorShape.RightTriangle},

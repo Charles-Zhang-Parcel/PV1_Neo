@@ -78,11 +78,11 @@ namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
                     Input.Add(new PrimitiveBooleanInputConnector() { Title = preferredTitle ?? "Bool" });
                 else if (inputType == typeof(string))
                     Input.Add(new PrimitiveStringInputConnector() { Title = preferredTitle ?? "String" });
-                else if (inputType == typeof(double))
-                    Input.Add(new PrimitiveNumberInputConnector() { Title = preferredTitle ?? "Number" });
+                else if (IsNumericalType(inputType))
+                    Input.Add(new PrimitiveNumberInputConnector(inputType) { Title = preferredTitle ?? "Number" });
                 else if (inputType == typeof(DateTime))
                     Input.Add(new PrimitiveDateTimeInputConnector() { Title = preferredTitle ?? "Date" });
-                else 
+                else
                     Input.Add(new InputConnector(inputType) { Title = preferredTitle ?? "Input" });
             }
 
@@ -108,6 +108,11 @@ namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
                 else
                     return null;
             }
+
+            static bool IsNumericalType(Type inputType)
+            {
+                return inputType == typeof(double) || inputType == typeof(int);
+            }
         }
         #endregion
 
@@ -122,7 +127,7 @@ namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
         #region Processor Interface
         protected override NodeExecutionResult Execute()
         {
-            Dictionary<OutputConnector, object> cache = new Dictionary<OutputConnector, object>();
+            Dictionary<OutputConnector, object> cache = [];
             
             Func<object[], object[]> marshal = RetrieveCallMarshal();
             object[] outputs = marshal.Invoke(Input.Select(i => i.FetchInputValue<object>()).ToArray());

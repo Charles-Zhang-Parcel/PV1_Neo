@@ -8,7 +8,7 @@ namespace Parcel.Neo.Base.Toolboxes.Math.Nodes
     public class Sin: ProcessorNode
     {
         #region Node Interface
-        private readonly InputConnector _angleInput = new PrimitiveNumberInputConnector()
+        private readonly InputConnector _angleInput = new PrimitiveNumberInputConnector(typeof(double))
         {
             Title = "Angle",
         };

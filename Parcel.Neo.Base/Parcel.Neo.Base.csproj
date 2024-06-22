@@ -19,6 +19,7 @@
       <ProjectReference Include="..\..\..\Parcel_NExT\C#\Parcel.NExT\Packages\Parcel.DataGrid\Parcel.DataGrid.csproj" />
       <ProjectReference Include="..\..\..\Parcel_NExT\C#\Parcel.NExT\Packages\Parcel.Generators\Parcel.Generators.csproj" />
       <ProjectReference Include="..\..\..\Parcel_NExT\C#\Parcel.NExT\Packages\Parcel.Plots\Parcel.Plots.csproj" />
+      <ProjectReference Include="..\..\..\Parcel_NExT\C#\Parcel.NExT\Packages\Parcel.Vector\Parcel.Vector.csproj" />
     </ItemGroup>
 
 </Project>

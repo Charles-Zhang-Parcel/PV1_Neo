@@ -13,7 +13,7 @@ namespace Parcel.Neo.Base.Framework.ViewModels.Primitives
         #endregion
         
         #region Node Interface
-        private readonly OutputConnector _numberOutput = new OutputConnector(typeof(double))
+        private readonly OutputConnector _numberOutput = new(typeof(double))
         {
             Title = "Number"
         }; 

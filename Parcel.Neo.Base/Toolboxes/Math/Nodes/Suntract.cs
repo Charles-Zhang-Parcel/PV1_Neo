@@ -8,11 +8,11 @@ namespace Parcel.Neo.Base.Toolboxes.Math.Nodes
     public class Subtract: ProcessorNode
     {
         #region Node Interface
-        private readonly InputConnector _number1Input = new PrimitiveNumberInputConnector()
+        private readonly InputConnector _number1Input = new PrimitiveNumberInputConnector(typeof(double))
         {
             Title = "Number 1",
         };
-        private readonly InputConnector _number2Input = new PrimitiveNumberInputConnector()
+        private readonly InputConnector _number2Input = new PrimitiveNumberInputConnector(typeof(double))
         {
             Title = "Number 2",
         };

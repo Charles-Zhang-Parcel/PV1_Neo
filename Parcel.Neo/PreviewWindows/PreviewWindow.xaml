@@ -9,6 +9,10 @@
             Height="200" MinWidth="420" SizeToContent="Width"
             DataContext="{Binding RelativeSource={RelativeSource self}}">
     <Grid>
+        <Grid Visibility="{Binding PreviewImageVisibility}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Image x:Name="PreviewImageControl"/>
+        </Grid>
+        
         <Grid Visibility="{Binding InfoGridVisibility}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <ScrollViewer>
                 <TextBlock Text="{Binding TestLabel}" TextWrapping="WrapWithOverflow" FontSize="36"/>

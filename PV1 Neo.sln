@@ -30,6 +30,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parcel.Generators", "..\..\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parcel.Plots", "..\..\Parcel_NExT\C#\Parcel.NExT\Packages\Parcel.Plots\Parcel.Plots.csproj", "{305C61EE-3875-4C69-B527-AEACF58CFB3C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parcel.Vector", "..\..\Parcel_NExT\C#\Parcel.NExT\Packages\Parcel.Vector\Parcel.Vector.csproj", "{6B95ECDB-5B41-481D-9FAD-CB54BB1B39C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,10 @@ Global
 		{305C61EE-3875-4C69-B527-AEACF58CFB3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{305C61EE-3875-4C69-B527-AEACF58CFB3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{305C61EE-3875-4C69-B527-AEACF58CFB3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B95ECDB-5B41-481D-9FAD-CB54BB1B39C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B95ECDB-5B41-481D-9FAD-CB54BB1B39C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B95ECDB-5B41-481D-9FAD-CB54BB1B39C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B95ECDB-5B41-481D-9FAD-CB54BB1B39C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,6 +87,7 @@ Global
 		{7BC94C63-BB8D-4EF4-A2EE-B4155EDF9853} = {48C66019-D9A3-4B7B-8E57-E43E46E3F64A}
 		{55F0BE31-37E6-49A3-AA95-FF9968D6D069} = {3AC0E0B1-BC65-4389-B9D7-1F423F80DF9A}
 		{305C61EE-3875-4C69-B527-AEACF58CFB3C} = {3AC0E0B1-BC65-4389-B9D7-1F423F80DF9A}
+		{6B95ECDB-5B41-481D-9FAD-CB54BB1B39C0} = {3AC0E0B1-BC65-4389-B9D7-1F423F80DF9A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {02467E9F-99F1-4DF1-9F95-B88C4DA6051D}

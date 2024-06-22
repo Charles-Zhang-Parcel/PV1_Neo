@@ -33,7 +33,7 @@ namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
         protected override NodeExecutionResult Execute()
         {
             DataGrid dataGrid = _dataTableInput.FetchInputValue<DataGrid>();
-            DataGrid result = new DataGrid();
+            DataGrid result = new();
             foreach (DataColumn dataColumn in dataGrid.Columns.Where(c => c.Type == typeof(double)))
             {
                 DataColumn newColumn = new DataColumn($"{dataColumn.Header} (Sum)");
