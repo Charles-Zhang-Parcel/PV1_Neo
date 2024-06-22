@@ -26,6 +26,7 @@ namespace Parcel.Neo.Base.Framework
     {
         public string NodeName { get; }
         public Type[] InputTypes { get; }
+        public object?[]? DefaultInputValues { get; set; }
         public Type[] OutputTypes { get; }
         public Func<object[], object[]> CallMarshal { get; }
 
@@ -34,17 +35,19 @@ namespace Parcel.Neo.Base.Framework
         public string[] OutputNames { get; set; }
         #endregion
 
-        public AutomaticNodeDescriptor(string nodeName, Type[] inputTypes, Type[] outputTypes, Func<object[], object[]> callMarshal)
+        public AutomaticNodeDescriptor(string nodeName, Type[] inputTypes, Type[] outputTypes, Func<object[], object[]> callMarshal, object?[]? defaultInputValues = null)
         {
             NodeName = nodeName;
             InputTypes = inputTypes;
             OutputTypes = outputTypes;
+            DefaultInputValues = defaultInputValues;
             CallMarshal = callMarshal;
         }
-        public AutomaticNodeDescriptor(string nodeName, Type[] inputTypes, Type outputType, Func<object[], object> callMarshal)
+        public AutomaticNodeDescriptor(string nodeName, Type[] inputTypes, Type outputType, Func<object[], object> callMarshal, object?[]? defaultInputValues = null)
         {
             NodeName = nodeName;
             InputTypes = inputTypes;
+            DefaultInputValues = defaultInputValues;
             OutputTypes = [outputType];
             CallMarshal = (inputs) => new []{ callMarshal(inputs) };
         }

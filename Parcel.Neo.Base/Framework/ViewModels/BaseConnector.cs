@@ -10,10 +10,8 @@ namespace Parcel.Neo.Base.Framework.ViewModels
 {
     public sealed class PrimitiveBooleanInputConnector : PrimitiveInputConnector
     {
-        public PrimitiveBooleanInputConnector() : base(typeof(bool))
-        {
-            Value = false;
-        }
+        public PrimitiveBooleanInputConnector(bool? defaultValue = null) : base(typeof(bool))
+            => Value = defaultValue ?? false;
 
         public override object Value 
         {  
@@ -24,11 +22,9 @@ namespace Parcel.Neo.Base.Framework.ViewModels
     
     public sealed class PrimitiveDateTimeInputConnector : PrimitiveInputConnector
     {
-        public PrimitiveDateTimeInputConnector() : base(typeof(DateTime))
-        {
-            Value = DateTime.Now.Date;
-        }
-        
+        public PrimitiveDateTimeInputConnector(DateTime? defaultValue = null) : base(typeof(DateTime)) 
+            => Value = defaultValue ?? DateTime.Now.Date;
+
         public override object Value 
         {  
             get => _defaultDataStorage;
@@ -38,19 +34,17 @@ namespace Parcel.Neo.Base.Framework.ViewModels
     
     public sealed class PrimitiveStringInputConnector : PrimitiveInputConnector
     {
-        public PrimitiveStringInputConnector() : base(typeof(string))
-        {
-            Value = string.Empty;
-        }
+        public PrimitiveStringInputConnector(string? defaultValue = null) : base(typeof(string))
+            => Value = defaultValue ?? string.Empty;
     }
     
     public sealed class PrimitiveNumberInputConnector : PrimitiveInputConnector
     {
-        public PrimitiveNumberInputConnector(Type type) : base(type)
+        public PrimitiveNumberInputConnector(Type type, object? defaultValue = null) : base(type)
         {
             if (!type.IsValueType)
                 throw new ArgumentException($"Invalid type for numberi nput: {type.Name}");
-            Value = Activator.CreateInstance(type)!;
+            Value = defaultValue ?? Activator.CreateInstance(type)!;
         }
         
         public override object Value 
@@ -62,39 +56,31 @@ namespace Parcel.Neo.Base.Framework.ViewModels
     
     public abstract class PrimitiveInputConnector : InputConnector
     {
-        public virtual object Value
+        public virtual object? Value
         {
             get => _defaultDataStorage;
             set => SetField(ref _defaultDataStorage, value);
         }
 
-        protected PrimitiveInputConnector(Type dataType) : base(dataType)
-        {
-        }
+        protected PrimitiveInputConnector(Type dataType) : base(dataType) { }
     }
 
     public class InputConnector : BaseConnector
     {
         public InputConnector(Type dataType) : base(dataType)
-        {
-            FlowType = ConnectorFlowType.Input;
-        }
+            => FlowType = ConnectorFlowType.Input;
     }
 
     public class OutputConnector : BaseConnector
     {
         public OutputConnector(Type dataType) : base(dataType)
-        {
-            FlowType = ConnectorFlowType.Output;
-        }
+            => FlowType = ConnectorFlowType.Output;
     }
     
     public class KnotConnector : BaseConnector
     {
         public KnotConnector(Type dataType) : base(dataType)
-        {
-            FlowType = ConnectorFlowType.Knot;
-        }
+            => FlowType = ConnectorFlowType.Knot;
     }
     
     public abstract class BaseConnector: ObservableObject
@@ -147,7 +133,7 @@ namespace Parcel.Neo.Base.Framework.ViewModels
         #region Other Properties
         public ConnectorFlowType FlowType { get; protected set; }
         public int MaxConnections { get; set; } = int.MaxValue;
-        public NotifyObservableCollection<BaseConnection> Connections { get; } = new NotifyObservableCollection<BaseConnection>();
+        public NotifyObservableCollection<BaseConnection> Connections { get; } = [];
         
         public Type DataType { get; set; }
         /// <summary>

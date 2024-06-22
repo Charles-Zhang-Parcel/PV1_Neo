@@ -61,7 +61,8 @@ namespace Parcel.Neo.Base.Framework
                     if (Method.IsStatic)
                         return new AutomaticProcessorNode(new AutomaticNodeDescriptor(Name, parameterTypes, returnType, objects => Method.Invoke(null, objects))
                         {
-                            InputNames = Method.GetParameters().Select(p => p.Name.Titleize()).ToArray()
+                            InputNames = Method.GetParameters().Select(p => p.Name.Titleize()).ToArray(),
+                            DefaultInputValues = Method.GetParameters().Select(p => p.DefaultValue).ToArray()
                         });
                     else
                         return new AutomaticProcessorNode(new AutomaticNodeDescriptor(Name,
@@ -69,7 +70,8 @@ namespace Parcel.Neo.Base.Framework
                             returnType == typeof(void) ? Method.DeclaringType : returnType,
                             objects => Method.Invoke(objects[0], objects.Skip(1).ToArray()))
                             {
-                                InputNames = [Method.DeclaringType.Name, .. Method.GetParameters().Select(p => p.Name.Titleize())]
+                                InputNames = [Method.DeclaringType.Name, .. Method.GetParameters().Select(p => p.Name.Titleize())],
+                                DefaultInputValues = Method.GetParameters().Select(p => p.DefaultValue).ToArray()
                             }); // TODO: Finish implementation; Likely we will require a new custom node descriptor type to handle this kind of behavior))
                 case NodeImplementationType.AutomaticLambda:
                     return new AutomaticProcessorNode(Descriptor);
