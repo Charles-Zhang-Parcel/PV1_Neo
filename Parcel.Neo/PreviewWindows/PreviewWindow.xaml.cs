@@ -103,6 +103,10 @@ namespace Parcel.Neo
                     string address = (cache.DataObject as string).Substring(ImageProtocolIdentifier.Length);
                     PreviewImageVisibility = Visibility.Visible;
                     PreviewImageControl.Source = new BitmapImage(new Uri(address));
+                    
+                    // Automatically adjust preview window size
+                    Width = PreviewImageControl.Source.Width;
+                    Height = PreviewImageControl.Source.Height;
                 }
                 else if (cache.DataType == typeof(bool) || cache.DataType == typeof(string) || cache.DataType == typeof(double))
                 {
@@ -134,10 +138,8 @@ namespace Parcel.Neo
         public static void PopulateDataGrid(System.Windows.Controls.DataGrid wpfDataGrid, Types.DataGrid dataGrid,
             out string[] dataGridDataColumns, out List<dynamic> dataGridData)
         {
-            string FormatHeader(string header, string typeName)
-            {
-                return $"{header} ({typeName})";
-            }
+            static string FormatHeader(string header, string typeName) 
+                => $"{header} ({typeName})";
 
             List<dynamic> objects = dataGrid.Rows;
             Dictionary<string, Types.DataGrid.ColumnInfo> columnInfo = dataGrid.GetColumnInfoForDisplay();
