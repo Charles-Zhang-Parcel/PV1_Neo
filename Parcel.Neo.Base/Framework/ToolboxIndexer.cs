@@ -50,6 +50,7 @@ namespace Parcel.Neo.Base.Framework
             RegisterToolbox(toolboxAssemblies, "Generator", Assembly.Load("Parcel.Generators"));
             RegisterToolbox(toolboxAssemblies, "Vector", Assembly.Load("Parcel.Vector"));
             RegisterToolbox(toolboxAssemblies, "Large Language Model", Assembly.Load("Parcel.LLM"));
+            RegisterToolbox(toolboxAssemblies, "In-Memory Database", Assembly.Load("Parcel.InMemoryDB"));
 
             // Index nodes
             Dictionary<string, ToolboxNodeExport?[]> toolboxes = IndexToolboxes(toolboxAssemblies);
