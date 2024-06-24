@@ -29,6 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icon.png" />
+    <Resource Include="Images\MagnifyingGlass.png" />
   </ItemGroup>
 
   <ItemGroup>
