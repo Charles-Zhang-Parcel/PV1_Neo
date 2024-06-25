@@ -186,10 +186,10 @@ namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
                 {
                     if(!InputConnectorShouldRequireAutoConnection(Input[i])) continue;
 
-                    throw new NotImplementedException();
-                    //Type nodeType = InputTypes[i];
-                    //ToolboxNodeExport toolDef = new ToolboxNodeExport(Input[i].Title, nodeType);
-                    //auto.Add(new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(toolDef, new Vector2D(-100, -50 + (i - 1) * 50), Input[i]));
+                    // TODO: Review and examine this part of logic and see whether we can improve it
+                    Type nodeType = InputTypes[i];
+                    ToolboxNodeExport toolDef = new(Input[i].Title, nodeType);
+                    auto.Add(new Tuple<ToolboxNodeExport, Vector2D, InputConnector>(toolDef, new Vector2D(-100, -50 + (i - 1) * 50), Input[i]));
                 }
                 return [.. auto];
             }

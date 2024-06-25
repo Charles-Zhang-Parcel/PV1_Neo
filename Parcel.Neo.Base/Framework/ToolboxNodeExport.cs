@@ -53,6 +53,7 @@ namespace Parcel.Neo.Base.Framework
             switch (ImplementationType)
             {
                 case NodeImplementationType.OOPNode:
+                    // TODO: We can use automatic node to invoke constructors for types that have constructor
                     return (BaseNode)Activator.CreateInstance(ProcessorNodeType);
                 case NodeImplementationType.MethodInfo:
                     Type[] parameterTypes = Method.GetParameters().Select(p => p.ParameterType).ToArray();
