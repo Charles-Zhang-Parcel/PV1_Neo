@@ -113,7 +113,28 @@ namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
 
             static bool IsNumericalType(Type inputType)
             {
-                return inputType == typeof(double) || inputType == typeof(int);
+                Type checkType = inputType;
+                if (Nullable.GetUnderlyingType(inputType) != null)
+                    // It's nullable
+                    checkType = Nullable.GetUnderlyingType(inputType)!;
+
+                switch (Type.GetTypeCode(checkType))
+                {
+                    case TypeCode.Byte:
+                    case TypeCode.SByte:
+                    case TypeCode.UInt16:
+                    case TypeCode.UInt32:
+                    case TypeCode.UInt64:
+                    case TypeCode.Int16:
+                    case TypeCode.Int32:
+                    case TypeCode.Int64:
+                    case TypeCode.Decimal:
+                    case TypeCode.Double:
+                    case TypeCode.Single:
+                        return true;
+                    default:
+                        return false;
+                }
             }
         }
         #endregion
