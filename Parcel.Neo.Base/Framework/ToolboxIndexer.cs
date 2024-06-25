@@ -14,7 +14,6 @@ using System;
 using System.Linq;
 using System.IO;
 using Humanizer;
-using Parcel.Neo.Base.Framework.ViewModels;
 
 namespace Parcel.Neo.Base.Framework
 {
@@ -51,7 +50,7 @@ namespace Parcel.Neo.Base.Framework
             RegisterToolbox(toolboxAssemblies, "Vector", Assembly.Load("Parcel.Vector"));
             RegisterToolbox(toolboxAssemblies, "Large Language Model", Assembly.Load("Parcel.LLM"));
             RegisterToolbox(toolboxAssemblies, "In-Memory Database", Assembly.Load("Parcel.InMemoryDB"));
-
+            RegisterToolbox(toolboxAssemblies, "Database Application", Assembly.Load("Parcel.InMemoryDB.WebSurveys"));
             // Index nodes
             Dictionary<string, ToolboxNodeExport?[]> toolboxes = IndexToolboxes(toolboxAssemblies);
             // Index new internal toolboxes

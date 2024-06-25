@@ -40,6 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Parcel_NExT\C#\Parcel.NExT\Packages\Parcel.InMemoryDB.WebSurveys\Parcel.InMemoryDB.WebSurveys.csproj" />
     <ProjectReference Include="..\Parcel.Neo.Base\Parcel.Neo.Base.csproj" />
   </ItemGroup>
 
