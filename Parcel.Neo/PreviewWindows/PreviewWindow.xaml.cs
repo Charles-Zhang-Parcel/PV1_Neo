@@ -42,11 +42,11 @@ namespace Parcel.Neo
             get => _previewImageVisibility;
             set => SetField(ref _previewImageVisibility, value);
         }
-        private Visibility _infoGridVisibility = Visibility.Visible;
-        public Visibility InfoGridVisibility
+        private Visibility _stringDisplayVisibility = Visibility.Visible;
+        public Visibility StringDisplayVisibility
         {
-            get => _infoGridVisibility;
-            set => SetField(ref _infoGridVisibility, value);
+            get => _stringDisplayVisibility;
+            set => SetField(ref _stringDisplayVisibility, value);
         }
         private Visibility _dataGridVisibility = Visibility.Visible;
         public Visibility DataGridVisibility
@@ -93,7 +93,7 @@ namespace Parcel.Neo
         private void GeneratePreviewForOutput()
         {
             WindowGrid.Children.Clear();
-            InfoGridVisibility = Visibility.Collapsed;
+            StringDisplayVisibility = Visibility.Collapsed;
             DataGridVisibility = Visibility.Collapsed;
             
             OutputConnector output = Node.MainOutput;
@@ -117,7 +117,7 @@ namespace Parcel.Neo
                 else
                 {
                     TestLabel = $"No preview is available for this node's output ({cache.DataObject})";
-                    InfoGridVisibility = Visibility.Visible;
+                    StringDisplayVisibility = Visibility.Visible;
                 }
             }
         }
@@ -148,7 +148,7 @@ namespace Parcel.Neo
         private void PreviewPrimitives(object data)
         {
             TestLabel = $"{data}";
-            InfoGridVisibility = Visibility.Visible;
+            StringDisplayVisibility = Visibility.Visible;
         }
 
         private void PreviewImage(string address)

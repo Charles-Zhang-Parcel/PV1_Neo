@@ -13,9 +13,9 @@
             <Image x:Name="PreviewImageControl"/>
         </Grid>
         
-        <Grid Visibility="{Binding InfoGridVisibility}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Grid Visibility="{Binding StringDisplayVisibility}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <ScrollViewer>
-                <TextBlock Text="{Binding TestLabel}" TextWrapping="WrapWithOverflow" FontSize="36"/>
+                <TextBox Text="{Binding TestLabel}" TextWrapping="WrapWithOverflow" IsReadOnly="True" AcceptsReturn="True" AcceptsTab="True"/>
             </ScrollViewer>
         </Grid>
         
