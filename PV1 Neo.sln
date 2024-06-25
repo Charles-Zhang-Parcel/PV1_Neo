@@ -38,6 +38,22 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parcel.LLM", "..\..\Parcel_
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parcel.InMemoryDB", "..\..\Parcel_NExT\C#\Parcel.NExT\Packages\Parcel.InMemoryDB\Parcel.InMemoryDB.csproj", "{CB9866C6-4F16-493C-8700-8E0B698997FA}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parcel.InMemoryDB.Integration.DataGrid", "..\..\Parcel_NExT\C#\Parcel.NExT\Packages\Parcel.InMemoryDB.Integration.DataGrid\Parcel.InMemoryDB.Integration.DataGrid.csproj", "{F0C8BDED-4623-4549-B970-BF0A42B4E050}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parcel.InMemoryDB.Integration.MSAnalysisService", "..\..\Parcel_NExT\C#\Parcel.NExT\Packages\Parcel.InMemoryDB.Integration.MSAnalysisService\Parcel.InMemoryDB.Integration.MSAnalysisService.csproj", "{87A7C54A-8B2C-4B94-B6AF-FE386F61C3B5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parcel.InMemoryDB.Integration.ODBC", "..\..\Parcel_NExT\C#\Parcel.NExT\Packages\Parcel.InMemoryDB.Integration.ODBC\Parcel.InMemoryDB.Integration.ODBC.csproj", "{8EFD0FA2-2A0E-4F85-A5C7-E3E7764B45F5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parcel.MSAnalysisService", "..\..\Parcel_NExT\C#\Parcel.NExT\Packages\Parcel.MSAnalysisService\Parcel.MSAnalysisService.csproj", "{1EFACFC0-F5C9-4EB2-8CCB-44E0FB5B4197}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parcel.InMemoryDB.Integration.CLI", "..\..\Parcel_NExT\C#\Parcel.NExT\Packages\Parcel.InMemoryDB.Integration.CLI\Parcel.InMemoryDB.Integration.CLI.csproj", "{3AF8CC38-758D-48F5-95E1-1C299063156D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parcel.CellSet", "..\..\Parcel_NExT\C#\Parcel.NExT\Packages\Parcel.CellSet\Parcel.CellSet.csproj", "{8669E4D7-5195-4383-A6A6-956FB2CFD9A0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parcel.DataTable", "..\..\Parcel_NExT\C#\Parcel.NExT\Packages\Parcel.DataTable\Parcel.DataTable.csproj", "{B4648E72-6950-4A96-B219-7EAB1B2E43BF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parcel.InMemoryDB.Integration", "..\..\Parcel_NExT\C#\Parcel.NExT\Packages\Parcel.InMemoryDB.Integration\Parcel.InMemoryDB.Integration.csproj", "{49085ADF-1DB0-4321-9A55-765FF2ACE373}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +108,38 @@ Global
 		{CB9866C6-4F16-493C-8700-8E0B698997FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB9866C6-4F16-493C-8700-8E0B698997FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB9866C6-4F16-493C-8700-8E0B698997FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0C8BDED-4623-4549-B970-BF0A42B4E050}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0C8BDED-4623-4549-B970-BF0A42B4E050}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0C8BDED-4623-4549-B970-BF0A42B4E050}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0C8BDED-4623-4549-B970-BF0A42B4E050}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87A7C54A-8B2C-4B94-B6AF-FE386F61C3B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87A7C54A-8B2C-4B94-B6AF-FE386F61C3B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87A7C54A-8B2C-4B94-B6AF-FE386F61C3B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87A7C54A-8B2C-4B94-B6AF-FE386F61C3B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EFD0FA2-2A0E-4F85-A5C7-E3E7764B45F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EFD0FA2-2A0E-4F85-A5C7-E3E7764B45F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EFD0FA2-2A0E-4F85-A5C7-E3E7764B45F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EFD0FA2-2A0E-4F85-A5C7-E3E7764B45F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EFACFC0-F5C9-4EB2-8CCB-44E0FB5B4197}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EFACFC0-F5C9-4EB2-8CCB-44E0FB5B4197}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EFACFC0-F5C9-4EB2-8CCB-44E0FB5B4197}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EFACFC0-F5C9-4EB2-8CCB-44E0FB5B4197}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AF8CC38-758D-48F5-95E1-1C299063156D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AF8CC38-758D-48F5-95E1-1C299063156D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AF8CC38-758D-48F5-95E1-1C299063156D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AF8CC38-758D-48F5-95E1-1C299063156D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8669E4D7-5195-4383-A6A6-956FB2CFD9A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8669E4D7-5195-4383-A6A6-956FB2CFD9A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8669E4D7-5195-4383-A6A6-956FB2CFD9A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8669E4D7-5195-4383-A6A6-956FB2CFD9A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4648E72-6950-4A96-B219-7EAB1B2E43BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4648E72-6950-4A96-B219-7EAB1B2E43BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4648E72-6950-4A96-B219-7EAB1B2E43BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4648E72-6950-4A96-B219-7EAB1B2E43BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49085ADF-1DB0-4321-9A55-765FF2ACE373}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49085ADF-1DB0-4321-9A55-765FF2ACE373}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49085ADF-1DB0-4321-9A55-765FF2ACE373}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49085ADF-1DB0-4321-9A55-765FF2ACE373}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,6 +157,14 @@ Global
 		{B7E641F8-4AEE-46F6-B6AF-22AB024649BB} = {48C66019-D9A3-4B7B-8E57-E43E46E3F64A}
 		{20337CDD-4C49-41B4-A6B4-498C3BCC4057} = {3AC0E0B1-BC65-4389-B9D7-1F423F80DF9A}
 		{CB9866C6-4F16-493C-8700-8E0B698997FA} = {3AC0E0B1-BC65-4389-B9D7-1F423F80DF9A}
+		{F0C8BDED-4623-4549-B970-BF0A42B4E050} = {3AC0E0B1-BC65-4389-B9D7-1F423F80DF9A}
+		{87A7C54A-8B2C-4B94-B6AF-FE386F61C3B5} = {3AC0E0B1-BC65-4389-B9D7-1F423F80DF9A}
+		{8EFD0FA2-2A0E-4F85-A5C7-E3E7764B45F5} = {3AC0E0B1-BC65-4389-B9D7-1F423F80DF9A}
+		{1EFACFC0-F5C9-4EB2-8CCB-44E0FB5B4197} = {3AC0E0B1-BC65-4389-B9D7-1F423F80DF9A}
+		{3AF8CC38-758D-48F5-95E1-1C299063156D} = {3AC0E0B1-BC65-4389-B9D7-1F423F80DF9A}
+		{8669E4D7-5195-4383-A6A6-956FB2CFD9A0} = {3AC0E0B1-BC65-4389-B9D7-1F423F80DF9A}
+		{B4648E72-6950-4A96-B219-7EAB1B2E43BF} = {3AC0E0B1-BC65-4389-B9D7-1F423F80DF9A}
+		{49085ADF-1DB0-4321-9A55-765FF2ACE373} = {3AC0E0B1-BC65-4389-B9D7-1F423F80DF9A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {02467E9F-99F1-4DF1-9F95-B88C4DA6051D}

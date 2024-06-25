@@ -61,7 +61,7 @@ namespace Parcel.Neo.Base.Framework
             AddToolbox(toolboxes, "Data Source", new DataSourceToolbox());
             AddToolbox(toolboxes, "File System", new FileSystemToolbox());
             AddToolbox(toolboxes, "Finance", new FinanceToolbox());
-            AddToolbox(toolboxes, "Logic", new LogicToolbox());
+            AddToolbox(toolboxes, "Boolean algebra", new LogicToolbox());
             AddToolbox(toolboxes, "Math", new MathToolbox());
             AddToolbox(toolboxes, "String", new StringToolbox());
             AddToolbox(toolboxes, "Special", new SpecialToolbox());
