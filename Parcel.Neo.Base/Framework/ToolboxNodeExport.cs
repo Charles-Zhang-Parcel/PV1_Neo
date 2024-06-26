@@ -56,23 +56,37 @@ namespace Parcel.Neo.Base.Framework
                     // TODO: We can use automatic node to invoke constructors for types that have constructor
                     return (BaseNode)Activator.CreateInstance(ProcessorNodeType);
                 case NodeImplementationType.MethodInfo:
-                    Type[] parameterTypes = Method.GetParameters().Select(p => p.ParameterType).ToArray();
+                    ParameterInfo[] inputParameters = Method.GetParameters()
+                        .Where(p => !(p.IsOut && p.ParameterType.IsByRef)) // Disregard `out` parameters, keep `ref`
+                        .ToArray(); 
+                    Type[] inputParameterTypes = inputParameters
+                        .Select(p => p.ParameterType)
+                        .ToArray();
+                    string[] inputParameterNames = inputParameters
+                        .Select(p => p.Name.Titleize())
+                        .ToArray();
+                    object?[] inputParameterDefaultValues = inputParameters
+                        .Select(p => p.DefaultValue)
+                        .ToArray();
                     Type returnType = Method.ReturnType;
                     // TODO: Replace with some more suitable implementation (e.g. a custom class specialized in handling those)
+                    // TODO: Deal with out and ref parameters
                     if (Method.IsStatic)
-                        return new AutomaticProcessorNode(new AutomaticNodeDescriptor(Name, parameterTypes, returnType, objects => Method.Invoke(null, objects))
+                        // Static methods
+                        return new AutomaticProcessorNode(new AutomaticNodeDescriptor(Name, inputParameterTypes, returnType, objects => Method.Invoke(null, objects))
                         {
-                            InputNames = Method.GetParameters().Select(p => p.Name.Titleize()).ToArray(),
-                            DefaultInputValues = Method.GetParameters().Select(p => p.DefaultValue).ToArray()
+                            InputNames = inputParameterNames,
+                            DefaultInputValues = inputParameterDefaultValues
                         });
                     else
+                        // Instance methods
                         return new AutomaticProcessorNode(new AutomaticNodeDescriptor(Name,
-                            [Method.DeclaringType, .. parameterTypes],
+                            [Method.DeclaringType, .. inputParameterTypes],
                             returnType == typeof(void) ? Method.DeclaringType : returnType,
                             objects => Method.Invoke(objects[0], objects.Skip(1).ToArray()))
                             {
-                                InputNames = [Method.DeclaringType.Name, .. Method.GetParameters().Select(p => p.Name.Titleize())],
-                                DefaultInputValues = Method.GetParameters().Select(p => p.DefaultValue).ToArray()
+                                InputNames = [Method.DeclaringType.Name, .. inputParameterNames],
+                                DefaultInputValues = inputParameterDefaultValues
                             }); // TODO: Finish implementation; Likely we will require a new custom node descriptor type to handle this kind of behavior))
                 case NodeImplementationType.AutomaticLambda:
                     return new AutomaticProcessorNode(Descriptor);
