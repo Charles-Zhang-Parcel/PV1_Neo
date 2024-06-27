@@ -76,16 +76,10 @@ namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
                 Type inputType = InputTypes[index];
                 object? defaultValue = DefaultInputValues?[index];
                 string preferredTitle = InputNames?[index];
-                if (inputType == typeof(bool))
-                    Input.Add(new PrimitiveBooleanInputConnector(defaultValue != DBNull.Value ? (bool) defaultValue : null) { Title = preferredTitle ?? "Bool" });
-                else if (inputType == typeof(string))
-                    Input.Add(new PrimitiveStringInputConnector(defaultValue != DBNull.Value ? (string)defaultValue : null) { Title = preferredTitle ?? "String" });
-                else if (IsNumericalType(inputType))
-                    Input.Add(new PrimitiveNumberInputConnector(inputType, defaultValue == DBNull.Value ? null : defaultValue) { Title = preferredTitle ?? "Number" });
-                else if (inputType == typeof(DateTime))
-                    Input.Add(new PrimitiveDateTimeInputConnector(defaultValue != DBNull.Value ? (DateTime)defaultValue : null) { Title = preferredTitle ?? "Date" });
-                else
-                    Input.Add(new InputConnector(inputType) { Title = preferredTitle ?? "Input" });
+                if (Nullable.GetUnderlyingType(inputType) != null)
+                    CreateInputPin(Nullable.GetUnderlyingType(inputType), defaultValue, preferredTitle); // TODO: Current implementation has issue making nullable default values as type default rather than null
+                else 
+                    CreateInputPin(inputType, defaultValue, preferredTitle);
             }
 
             for (int index = 0; index < OutputTypes.Length; index++)
@@ -95,6 +89,19 @@ namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
                 Output.Add(new OutputConnector(outputType) { Title = preferredTitle ?? "Result" });
             }
 
+            void CreateInputPin(Type inputType, object? defaultValue, string preferredTitle)
+            {
+                if (inputType == typeof(bool))
+                    Input.Add(new PrimitiveBooleanInputConnector(defaultValue != DBNull.Value ? (bool)defaultValue : null) { Title = preferredTitle ?? "Bool" });
+                else if (inputType == typeof(string))
+                    Input.Add(new PrimitiveStringInputConnector(defaultValue != DBNull.Value ? (string)defaultValue : null) { Title = preferredTitle ?? "String" });
+                else if (IsNumericalType(inputType))
+                    Input.Add(new PrimitiveNumberInputConnector(inputType, defaultValue == DBNull.Value ? null : defaultValue) { Title = preferredTitle ?? "Number" });
+                else if (inputType == typeof(DateTime))
+                    Input.Add(new PrimitiveDateTimeInputConnector(defaultValue != DBNull.Value ? (DateTime)defaultValue : null) { Title = preferredTitle ?? "Date" });
+                else
+                    Input.Add(new InputConnector(inputType) { Title = preferredTitle ?? "Input" });
+            }
             static string? GetPreferredTitle(Type type)
             {
                 if (type == typeof(bool))
@@ -110,7 +117,6 @@ namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
                 else
                     return null;
             }
-
             static bool IsNumericalType(Type inputType)
             {
                 Type checkType = inputType;
