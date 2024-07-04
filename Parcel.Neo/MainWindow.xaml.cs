@@ -171,26 +171,26 @@ namespace Parcel.Neo
         {
             if (!(sender is Button {Tag: ProcessorNode node} button)) return;
 
-            // Auto-Generate
-            if ((node is CSV || node is Excel) && node.ShouldHaveAutoConnection)
-            {
-                OpenFileNode filePathNode = SpawnNode(new ToolboxNodeExport("File Input", typeof(OpenFileNode)),
-                    node.Location + new Vector2D(-200, -60)) as OpenFileNode;
-                Canvas.Schema.TryAddConnection(filePathNode!.MainOutput, node.Input.First());
-
-                OpenFileDialog openFileDialog = new OpenFileDialog() { Title = "Select File to Open" };
-                openFileDialog.Filter = node switch
-                {
-                    CSV _ => "CSV file (*.csv)|*.csv|All types (*.*)|*.*",
-                    Excel _ => "Excel file (*.xlsx)|*.xlsx|All types (*.*)|*.*",
-                    _ => openFileDialog.Filter
-                };
-                if (openFileDialog.ShowDialog() == true)
-                {
-                    filePathNode.Path = openFileDialog.FileName;
-                }
-            }
             // TODO: Somehow recover the following behavior
+            // Auto-Generate
+            //if ((node is CSV || node is Excel) && node.ShouldHaveAutoConnection)
+            //{
+            //    OpenFileNode filePathNode = SpawnNode(new ToolboxNodeExport("File Input", typeof(OpenFileNode)),
+            //        node.Location + new Vector2D(-200, -60)) as OpenFileNode;
+            //    Canvas.Schema.TryAddConnection(filePathNode!.MainOutput, node.Input.First());
+
+            //    OpenFileDialog openFileDialog = new OpenFileDialog() { Title = "Select File to Open" };
+            //    openFileDialog.Filter = node switch
+            //    {
+            //        CSV _ => "CSV file (*.csv)|*.csv|All types (*.*)|*.*",
+            //        Excel _ => "Excel file (*.xlsx)|*.xlsx|All types (*.*)|*.*",
+            //        _ => openFileDialog.Filter
+            //    };
+            //    if (openFileDialog.ShowDialog() == true)
+            //    {
+            //        filePathNode.Path = openFileDialog.FileName;
+            //    }
+            //}
             //if (node is WriteCSV && node.ShouldHaveAutoConnection)
             //{
             //    SaveFileNode filePathNode = SpawnNode(new ToolboxNodeExport("File Path", typeof(SaveFileNode)),

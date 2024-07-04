@@ -60,6 +60,8 @@ namespace Parcel.Neo.Base.Framework
             AddToolbox(toolboxes, "Finance", new FinanceToolbox());
             // Register specific types
             RegisterType(toolboxes, "Data Grid", typeof(Types.DataGrid));
+            RegisterType(toolboxes, "Data Grid", typeof(Parcel.Integration.DataGridIntegration));
+            RegisterType(toolboxes, "Data Grid", typeof(Parcel.Integration.DataProcessingHelper));
             RegisterType(toolboxes, "Math", typeof(Processing.Utilities.Calculator));
             RegisterType(toolboxes, "String Processing", typeof(Parcel.Standard.Types.StringRoutines));
             RegisterType(toolboxes, "Boolean Logic", typeof(Parcel.Standard.Types.BooleanRoutines));

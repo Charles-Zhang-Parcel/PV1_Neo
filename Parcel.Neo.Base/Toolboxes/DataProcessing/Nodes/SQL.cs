@@ -5,6 +5,7 @@ using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 using Parcel.Neo.Base.Serialization;
+using Parcel.Integration;
 
 namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
 {
@@ -49,12 +50,12 @@ namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
                 for (int i = 0; i < count; i++)
                     AddInputs();
             });
-            
-            
-            Editors = new List<PropertyEditor>()
-            {
+
+
+            Editors =
+            [
                 new PropertyEditor("Code", PropertyEditorType.Code, () => _code, o => Code = (string)o)
-            };
+            ];
             
             Title = NodeTypeName = "SQL";
             Output.Add(_dataTableOutput);
@@ -98,23 +99,20 @@ namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
         public override OutputConnector MainOutput => _dataTableOutput;
         protected override NodeExecutionResult Execute()
         {
-            SQLParameter parameter = new SQLParameter()
+            var inputTables = Input.Select(i =>
             {
-                InputTables = Input.Select(i =>
-                {
-                    DatabaseTableInputConnector connector = i as DatabaseTableInputConnector;
-                    var table = connector!.FetchInputValue<DataGrid>();
-                    // table.TableName = connector.TableName;
-                    return table;
-                }).ToArray(),
-                InputTableNames = Input.Select(i => (i as DatabaseTableInputConnector)!.TableName).ToArray(),
-                InputCommand = Code 
-            };
-            DataProcessingHelper.SQL(parameter);
+                DatabaseTableInputConnector connector = i as DatabaseTableInputConnector;
+                var table = connector!.FetchInputValue<DataGrid>();
+                // table.TableName = connector.TableName;
+                return table;
+            }).ToArray();
+            var inputTableNames = Input.Select(i => (i as DatabaseTableInputConnector)!.TableName).ToArray();
 
-            return new NodeExecutionResult(new NodeMessage($"{parameter.OutputTable.RowCount} Rows; {parameter.OutputTable.ColumnCount} Columns."), new Dictionary<OutputConnector, object>()
+            var output = DataProcessingHelper.SQL(inputTables, inputTableNames, Code);
+
+            return new NodeExecutionResult(new NodeMessage($"{output.RowCount} Rows; {output.ColumnCount} Columns."), new Dictionary<OutputConnector, object>()
             {
-                {_dataTableOutput, parameter.OutputTable}
+                {_dataTableOutput, output}
             });
         }
         #endregion
