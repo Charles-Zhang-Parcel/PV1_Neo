@@ -23,8 +23,10 @@
       <ProjectReference Include="..\..\..\Parcel_NExT\C#\Parcel.NExT\Packages\Parcel.InMemoryDB\Parcel.InMemoryDB.csproj" />
       <ProjectReference Include="..\..\..\Parcel_NExT\C#\Parcel.NExT\Packages\Parcel.LLM\Parcel.LLM.csproj" />
       <ProjectReference Include="..\..\..\Parcel_NExT\C#\Parcel.NExT\Packages\Parcel.Plots\Parcel.Plots.csproj" />
+      <ProjectReference Include="..\..\..\Parcel_NExT\C#\Parcel.NExT\Packages\Parcel.REST\Parcel.REST.csproj" />
       <ProjectReference Include="..\..\..\Parcel_NExT\C#\Parcel.NExT\Packages\Parcel.Standard\Parcel.Standard.csproj" />
       <ProjectReference Include="..\..\..\Parcel_NExT\C#\Parcel.NExT\Packages\Parcel.Vector\Parcel.Vector.csproj" />
+      <ProjectReference Include="..\..\..\Parcel_NExT\C#\Parcel.NExT\Packages\Parcel.YahooFinance\Parcel.YahooFinance.csproj" />
     </ItemGroup>
 
 </Project>

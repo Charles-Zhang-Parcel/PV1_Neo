@@ -1,11 +1,8 @@
 ﻿using Parcel.Neo.Base.Toolboxes.Basic;
 using Parcel.Neo.Base.Toolboxes.DataProcessing;
-using Parcel.Neo.Base.Toolboxes.DataSource;
 using Parcel.Neo.Base.Toolboxes.Finance;
-using Parcel.Neo.Base.Toolboxes.Logic;
 using Parcel.Neo.Base.Toolboxes.Math;
 using Parcel.Neo.Base.Toolboxes.Special;
-using Parcel.Neo.Base.Toolboxes.String;
 using Parcel.Toolbox.ControlFlow;
 using System.Collections.Generic;
 using System.Reflection;
@@ -54,17 +51,17 @@ namespace Parcel.Neo.Base.Framework
             RegisterToolbox(toolboxAssemblies, "Database Service", Assembly.Load("Parcel.InMemoryDB.Integration"));
             RegisterToolbox(toolboxAssemblies, "Database Application", Assembly.Load("Parcel.InMemoryDB.WebSurveys"));
             RegisterToolbox(toolboxAssemblies, "File System", Assembly.Load("Parcel.FileSystem"));
+            RegisterToolbox(toolboxAssemblies, "Yahoo Finance", Assembly.Load("Parcel.YahooFinance"));
             // Index nodes
             Dictionary<string, ToolboxNodeExport?[]> toolboxes = IndexToolboxes(toolboxAssemblies);
             // Index new internal toolboxes
+            // AddToolbox(toolboxes, "Boolean algebra", new LogicToolbox()); // Now available in PSL; Pending deciding whether we need dedicated exposure
+            // AddToolbox(toolboxes, "String", new StringToolbox()); // Now available in PSL; Pending deciding whether we need dedicated exposure
             AddToolbox(toolboxes, "Basic", new BasicToolbox());
             AddToolbox(toolboxes, "Control Flow", new ControlFlowToolbox());
             AddToolbox(toolboxes, "Data Processing", new DataProcessingToolbox());
-            AddToolbox(toolboxes, "Data Source", new DataSourceToolbox());
             AddToolbox(toolboxes, "Finance", new FinanceToolbox());
-            AddToolbox(toolboxes, "Boolean algebra", new LogicToolbox());
             AddToolbox(toolboxes, "Math", new MathToolbox());
-            AddToolbox(toolboxes, "String", new StringToolbox());
             AddToolbox(toolboxes, "Special", new SpecialToolbox());
             // Register specific types
             RegisterType(toolboxes, "Data Grid", typeof(Types.DataGrid));
