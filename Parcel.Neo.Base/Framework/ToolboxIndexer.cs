@@ -13,6 +13,7 @@ using System;
 using System.Linq;
 using System.IO;
 using Humanizer;
+using Parcel.CoreEngine.Helpers;
 
 namespace Parcel.Neo.Base.Framework
 {
@@ -187,11 +188,22 @@ namespace Parcel.Neo.Base.Framework
         }
         private static IEnumerable<ToolboxNodeExport?> GetExportNodesFromGenericAssembly(Assembly assembly)
         {
+            // Try get enhanced annotation
+            string xmlDocumentationPath = GetDefaultXMLDocumentationPath(assembly.Location);
+            Dictionary<string, string>? nodeSummary = null;
+            if (File.Exists(assembly.Location) && File.Exists(xmlDocumentationPath))
+            {
+                DocumentationHelper.Documentation documentation = DocumentationHelper.ParseXML(xmlDocumentationPath);
+                nodeSummary = documentation.Members
+                    .Where(m => m.MemberType == DocumentationHelper.MemberType.Member)
+                    .ToDictionary(m => m.Signature, m => m.Summary);
+            }
+
+            // Export nodes from types
             Type[] types = assembly.GetExportedTypes()
                 .Where(t => t.IsAbstract) // TODO: Support instance methods
                 .Where(t => t.Name != "Object")
                 .ToArray();
-
             foreach (Type type in types)
             {
                 MethodInfo[] methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static)
@@ -200,10 +212,30 @@ namespace Parcel.Neo.Base.Framework
                     .ToArray();
 
                 foreach (MethodInfo method in methods)
-                    yield return new ToolboxNodeExport(method.Name, method);
+                {
+                    string? tooltip = null;
+                    string signature = GenerateMethodSignature(method);
+                    nodeSummary?.TryGetValue(signature, out tooltip);
+                    yield return new ToolboxNodeExport(method.Name, method)
+                    {
+                        Tooltip = tooltip
+                    };
+                }
 
                 // Add divider
                 yield return null;
+            }
+
+            static string GetDefaultXMLDocumentationPath(string assemblyLocation)
+            {
+                string filename = Path.GetFileNameWithoutExtension(assemblyLocation);
+                string extension = ".xml";
+                string folder = Path.GetDirectoryName(assemblyLocation);
+                return Path.Combine(folder, filename + extension);
+            }
+            static string GenerateMethodSignature(MethodInfo methodInfo)
+            {
+                return $"M:{methodInfo.DeclaringType.FullName}.{methodInfo.Name}({string.Join(",", methodInfo.GetParameters().Select(p => p.ParameterType.FullName))})";
             }
         }
         #endregion

@@ -1,6 +1,4 @@
-﻿using Humanizer; // TODO: Remove thsi dependency on Parcel.Neo.Base
-using Parcel.Neo.Base.Framework.ViewModels;
-using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
+﻿using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +17,10 @@ namespace Parcel.Neo.Base.Framework
 
         #region Attributes
         public string Name { get; }
+        /// <summary>
+        /// Documentation of node in human-readable text
+        /// </summary>
+        public string? Tooltip { get; set; }
         #endregion
 
         #region Payload Type

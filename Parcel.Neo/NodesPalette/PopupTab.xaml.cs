@@ -65,11 +65,13 @@ namespace Parcel.Neo
         #region Routines
         private void AddMenuItem(ToolboxNodeExport? node, MenuItem toolboxMenu, string toolboxName)
         {
+            // Seperator
             if (node == null)
                 toolboxMenu.Items.Add(new Separator());
+            // Button item
             else
             {
-                MenuItem item = new() { Header = FormatFriendlyNodeName(node.Name), Tag = node };
+                MenuItem item = new() { Header = FormatFriendlyNodeName(node.Name), Tag = node, ToolTip = node.Tooltip };
                 item.Click += NodeMenuItemOnClick;
                 toolboxMenu.Items.Add(item);
                 
