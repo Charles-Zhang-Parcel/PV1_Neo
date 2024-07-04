@@ -9,7 +9,7 @@ namespace Parcel.Neo.Base.Algorithms
     public class ExecutionQueue: IExecutionGraph
     {
         #region Internal State
-        private List<ProcessorNode> Queue { get; set; } = new List<ProcessorNode>();
+        public List<ProcessorNode> Queue { get; private set; } = [];
         #endregion
         
         #region Interface

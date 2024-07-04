@@ -41,5 +41,30 @@ namespace Parcel.Neo.Base.Algorithms
             graph.InitializeGraph(processors);
             graph.ExecuteGraph();
         }
+
+        #region Code Gen (Draft)
+        public static void CompileGraphAOT(string saveFilePath, NodesCanvas canvas)
+        {
+            IEnumerable<ProcessorNode> processors = canvas.Nodes
+                .Where(n => n is ProcessorNode node && node.IsPreview == true)
+                .Select(n => n as ProcessorNode);
+
+            // Generate scripts (a script contains functions and other information, a function contains sections and other information)
+            ExecutionQueue graph = new();
+            graph.InitializeGraph(processors);
+            foreach (ProcessorNode item in graph.Queue)
+            {
+                
+            }
+
+            // Generate code files
+
+            // Initialize C# proejct
+
+            // Compile and validate
+
+            // Copy compiled result to destination path
+        }
+        #endregion
     }
 }

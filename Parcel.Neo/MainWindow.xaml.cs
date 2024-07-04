@@ -258,10 +258,32 @@ namespace Parcel.Neo
         }
         private void ExportExecutableMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            SaveFileDialog saveFileDialog = new()
+            {
+                Title = "Choose Path to Save Executable (Experimental)",
+                AddExtension = true,
+                DefaultExt = ".exe",
+                Filter = "Executables (.exe)|*.exe"
+            };
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string filePath = saveFileDialog.FileName;
+                AlgorithmHelper.CompileGraphAOT(filePath, Canvas);
+            }
         }
 
         private void ExportPythonScriptsMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            OpenFolderDialog folderDialog = new()
+            {
+                Title = "Choose Folder to Save Exported Scripts"
+            };
+
+            if (folderDialog.ShowDialog() == true)
+            {
+                string folderName = folderDialog.FolderName;
+                // Do something with the result
+            }
         }
         private void AboutMenuItem_Click(object sender, RoutedEventArgs e)
         {
