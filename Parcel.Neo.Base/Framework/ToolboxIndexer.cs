@@ -40,7 +40,6 @@ namespace Parcel.Neo.Base.Framework
                 catch (Exception) { continue; }
             }
             // Register entire (referenced) assemblies
-            RegisterToolbox(toolboxAssemblies, "Standard", Assembly.Load("Parcel.Standard"));
             RegisterToolbox(toolboxAssemblies, "Plot", Assembly.Load("Parcel.Plots"));
             RegisterToolbox(toolboxAssemblies, "Generator", Assembly.Load("Parcel.Generators"));
             RegisterToolbox(toolboxAssemblies, "Vector", Assembly.Load("Parcel.Vector"));
@@ -62,6 +61,9 @@ namespace Parcel.Neo.Base.Framework
             // Register specific types
             RegisterType(toolboxes, "Data Grid", typeof(Types.DataGrid));
             RegisterType(toolboxes, "Math", typeof(Processing.Utilities.Calculator));
+            RegisterType(toolboxes, "String Processing", typeof(Parcel.Standard.Types.StringRoutines));
+            RegisterType(toolboxes, "Boolean Logic", typeof(Parcel.Standard.Types.BooleanRoutines));
+            RegisterType(toolboxes, "Boolean Logic", typeof(Parcel.Standard.Types.LogicRoutines));
             // Register specific types - directly borrow from libraries
             RegisterType(toolboxes, "Collections", typeof(System.Linq.Enumerable));
             RegisterType(toolboxes, "Statistics", typeof(MathNet.Numerics.Statistics.Statistics)); // TODO: Might provide selective set of functions instead of everything; Alternative, figure out how to do in-app documentation
