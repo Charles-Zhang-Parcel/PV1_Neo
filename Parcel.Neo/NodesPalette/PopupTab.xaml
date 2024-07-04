@@ -17,7 +17,12 @@
                 <Label Content="Functions" Margin="0" Padding="2" Foreground="White" FontWeight="Bold" FontFamily="Tahoma"/>
             </Border>
         </DockPanel>
-        
+
+        <!---Node Count-->
+        <StackPanel DockPanel.Dock="Bottom" Background="#97945e">
+            <Label x:Name="NodeCountLabel" Content="Nodes: " FontSize="12" Margin="4, 0" Padding="0" Foreground="#142f4b" FontStyle="Italic"/>
+        </StackPanel>
+
         <!--Search-->
         <DockPanel DockPanel.Dock="Top" LastChildFill="True">
             <Image DockPanel.Dock="Left" Width="15" Height="15" Source="/Images/MagnifyingGlass.png" ></Image>
@@ -29,9 +34,9 @@
         <ListBox x:Name="SearchResultsListView" ItemsSource="{Binding SearchResults}" Padding="0,0,0,4"
                   Visibility="{Binding SearchResultsVisibility}" PreviewKeyDown="SearchResultsListView_OnPreviewKeyDown">
             <ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem"> 
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter> 
-                </Style> 
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                </Style>
             </ListBox.ItemContainerStyle>
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -44,7 +49,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        
+
         <!--Default Catagories-->
         <!--TODO: Remove item highlight background; Consider using ItemsContainer directly-->
         <ListView x:Name="ModulesListView" Margin="0" Padding="0,0,0,4" Visibility="{Binding DefaultCategoriesVisibility}" HorizontalAlignment="Stretch">

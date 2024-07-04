@@ -22,6 +22,9 @@ namespace Parcel.Neo
             Dictionary<string, ToolboxNodeExport[]> toolboxes = ToolboxIndexer.Toolboxes;
             PopulateToolboxItems(toolboxes);
 
+            // GUI update
+            NodeCountLabel.Content = $"Total Functions: {_availableNodes.Count}";
+
             // Focus on search bar
             SearchTextBox.Focus();
         }
@@ -102,12 +105,14 @@ namespace Parcel.Neo
             if (!string.IsNullOrWhiteSpace(searchText))
             {
                 DefaultCategoriesVisibility = Visibility.Collapsed;
-                SearchResultsVisibility = Visibility.Visible;    
+                SearchResultsVisibility = Visibility.Visible;
+                NodeCountLabel.Content = $"Found Matches: {SearchResults.Count}";
             }
             else
             {
                 DefaultCategoriesVisibility = Visibility.Visible;
                 SearchResultsVisibility = Visibility.Collapsed;
+                NodeCountLabel.Content = $"Total Functions: {_availableNodes.Count}";
             }
         }
         private void PopulateToolboxItems(Dictionary<string, ToolboxNodeExport[]> toolboxes)
