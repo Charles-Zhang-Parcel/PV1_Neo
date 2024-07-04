@@ -1,7 +1,6 @@
 ﻿using Parcel.Neo.Base.Toolboxes.Basic;
 using Parcel.Neo.Base.Toolboxes.DataProcessing;
 using Parcel.Neo.Base.Toolboxes.Finance;
-using Parcel.Neo.Base.Toolboxes.Math;
 using Parcel.Toolbox.ControlFlow;
 using System.Collections.Generic;
 using System.Reflection;
@@ -60,9 +59,9 @@ namespace Parcel.Neo.Base.Framework
             AddToolbox(toolboxes, "Control Flow", new ControlFlowToolbox());
             AddToolbox(toolboxes, "Data Processing", new DataProcessingToolbox());
             AddToolbox(toolboxes, "Finance", new FinanceToolbox());
-            AddToolbox(toolboxes, "Math", new MathToolbox());
             // Register specific types
             RegisterType(toolboxes, "Data Grid", typeof(Types.DataGrid));
+            RegisterType(toolboxes, "Math", typeof(Processing.Utilities.Calculator));
             // Register specific types - directly borrow from libraries
             RegisterType(toolboxes, "Collections", typeof(System.Linq.Enumerable));
             RegisterType(toolboxes, "Statistics", typeof(MathNet.Numerics.Statistics.Statistics)); // TODO: Might provide selective set of functions instead of everything; Alternative, figure out how to do in-app documentation

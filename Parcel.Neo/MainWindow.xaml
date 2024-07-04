@@ -14,7 +14,6 @@
         xmlns:System="clr-namespace:System;assembly=System.Runtime"
         xmlns:dataTypes="clr-namespace:Parcel.Neo.Base.DataTypes;assembly=Parcel.Neo.Base"
         xmlns:advanced="clr-namespace:Parcel.Neo.Base.Framework.Advanced;assembly=Parcel.Neo.Base"
-        xmlns:nodes1="clr-namespace:Parcel.Neo.Base.Toolboxes.Math.Nodes;assembly=Parcel.Neo.Base"
         xmlns:specialNodes="clr-namespace:Parcel.Neo.Base.Toolboxes.Basic.Nodes;assembly=Parcel.Neo.base"
         mc:Ignorable="d"
         Title="{Binding DynamicTitle}" Height="700" Width="1024"
@@ -511,34 +510,6 @@
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
-
-                                <DataTemplate DataType="{x:Type nodes1:Calculator}">
-                                    <TextBox Text="{Binding Value}"
-                                     MinWidth="100" PreviewKeyDown="PrimitiveInputTextbox_OnPreviewKeyDown_CommandOverride"
-                                     Margin="5 0 0 0" />
-                                </DataTemplate>
-
-                                <DataTemplate DataType="{x:Type nodes1:Expression}">
-                                    <DockPanel LastChildFill="True">
-                                        <TextBox Text="{Binding Value}"
-                                         MinWidth="100" PreviewKeyDown="PrimitiveInputTextbox_OnPreviewKeyDown_CommandOverride"
-                                         Margin="5 0 0 0" DockPanel.Dock="Top" />
-                                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                                            <Button Style="{StaticResource IconButton}"
-                                            Content="{StaticResource PlusIcon}"
-                                            Command="{Binding AddEntryCommand}" />
-                                            <Button Style="{StaticResource IconButton}"
-                                            Content="{StaticResource RemoveKeyIcon}"
-                                            Command="{Binding RemoveEntryCommand}" />
-                                            <TextBlock Foreground="{Binding Message.Type, Converter={StaticResource NodeMessageTypeToBrushColorConverter}}" 
-                                               Margin="0" Padding="0" 
-                                               MaxWidth="256" TextWrapping="WrapWithOverflow"
-                                               Text="{Binding Message.Content}"
-                                               Visibility="{Binding Message.Type, Converter={StaticResource NodeMessageTypeToVisibilityConverter}}">
-                                            </TextBlock>
-                                        </StackPanel>
-                                    </DockPanel>
-                                </DataTemplate>
 
                                 <DataTemplate DataType="{x:Type advanced:GraphInputOutputNodeBase}">
                                     <DataTemplate.Resources>
