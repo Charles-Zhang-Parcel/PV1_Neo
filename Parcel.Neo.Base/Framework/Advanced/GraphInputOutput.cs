@@ -31,7 +31,7 @@ namespace Parcel.Neo.Base.Framework.Advanced
         #endregion
 
         #region Accessor
-        public Type ObjectType => throw new NotImplementedException();
+        public Type ObjectType => typeof(object); // Remark: Do we actually need anything more specific than that (object type)?
         #endregion
     }
 
