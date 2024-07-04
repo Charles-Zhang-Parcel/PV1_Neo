@@ -2,7 +2,6 @@
 using Parcel.Neo.Base.Toolboxes.DataProcessing;
 using Parcel.Neo.Base.Toolboxes.Finance;
 using Parcel.Neo.Base.Toolboxes.Math;
-using Parcel.Neo.Base.Toolboxes.Special;
 using Parcel.Toolbox.ControlFlow;
 using System.Collections.Generic;
 using System.Reflection;
@@ -62,7 +61,6 @@ namespace Parcel.Neo.Base.Framework
             AddToolbox(toolboxes, "Data Processing", new DataProcessingToolbox());
             AddToolbox(toolboxes, "Finance", new FinanceToolbox());
             AddToolbox(toolboxes, "Math", new MathToolbox());
-            AddToolbox(toolboxes, "Special", new SpecialToolbox());
             // Register specific types
             RegisterType(toolboxes, "Data Grid", typeof(Types.DataGrid));
             // Register specific types - directly borrow from libraries

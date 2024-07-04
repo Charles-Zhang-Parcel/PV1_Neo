@@ -15,7 +15,7 @@
         xmlns:dataTypes="clr-namespace:Parcel.Neo.Base.DataTypes;assembly=Parcel.Neo.Base"
         xmlns:advanced="clr-namespace:Parcel.Neo.Base.Framework.Advanced;assembly=Parcel.Neo.Base"
         xmlns:nodes1="clr-namespace:Parcel.Neo.Base.Toolboxes.Math.Nodes;assembly=Parcel.Neo.Base"
-        xmlns:specialNodes="clr-namespace:Parcel.Neo.Base.Toolboxes.Special.Nodes;assembly=Parcel.Neo.base"
+        xmlns:specialNodes="clr-namespace:Parcel.Neo.Base.Toolboxes.Basic.Nodes;assembly=Parcel.Neo.base"
         mc:Ignorable="d"
         Title="{Binding DynamicTitle}" Height="700" Width="1024"
         Background="#1E1E1E"

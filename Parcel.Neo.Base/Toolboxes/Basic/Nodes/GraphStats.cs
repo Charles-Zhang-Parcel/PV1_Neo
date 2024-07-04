@@ -2,7 +2,7 @@
 using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 
-namespace Parcel.Neo.Base.Toolboxes.Special.Nodes
+namespace Parcel.Neo.Base.Toolboxes.Basic.Nodes
 {
     /// <summary>
     /// The property panel of this can have special referencing to Graph-level setting
