@@ -1,0 +1,38 @@
+﻿<Window x:Class="Parcel.Neo.PopupWindows.ExperimentalFeatureWarningWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Warning (Experimental Feature)" SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="LightGray"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="LightGray"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="DarkSlateGray"/>
+            <Setter Property="Width" Value="75"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+    </Window.Resources>
+    <Grid Background="#1E1E1E">
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="8">
+            <DockPanel HorizontalAlignment="Center" LastChildFill="True">
+                <Label DockPanel.Dock="Left" Content="!" Width="64" Margin="12" FontSize="75" FontFamily="Times New Roman" HorizontalContentAlignment="Center" Foreground="DarkRed"/>
+                <Label DockPanel.Dock="Top" Content="This is an experimental feature" FontSize="22" HorizontalAlignment="Center" Margin="0" Padding="0"/>
+                <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" TextAlignment="Center" FontSize="8" MaxWidth="320" TextWrapping="WrapWithOverflow">
+                    You are using an experimental feature. Those demonstrates new concepts but may be removed in the future. Please expect bugs and be aware of potentially incorrect outputs.
+                </TextBlock>
+                <TextBlock DockPanel.Dock="Top" TextWrapping="WrapWithOverflow" MaxWidth="320" HorizontalAlignment="Center" TextAlignment="Center" Name="ContentTextBlock"/>
+            </DockPanel>
+            <StackPanel Orientation="Horizontal" Margin="0, 4" HorizontalAlignment="Center">
+                <Button Content="Continue" Background="DarkKhaki" Click="ContinueButton_Click"/>
+                <Button Content="Exit" Background="DarkGray" Click="ExitButton_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
