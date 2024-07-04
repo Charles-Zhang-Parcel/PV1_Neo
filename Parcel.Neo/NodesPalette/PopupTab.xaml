@@ -45,7 +45,7 @@
             </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Label Content="{Binding}" MouseDown="SearchResultsListViewLabel_OnMouseDown" Background="Transparent"></Label>
+                    <Label Content="{Binding Label}" MouseDown="SearchResultsListViewLabel_OnMouseDown" Background="Transparent" ToolTip="{Binding Tooltip}"></Label>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

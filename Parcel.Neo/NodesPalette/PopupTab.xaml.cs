@@ -31,7 +31,7 @@ namespace Parcel.Neo
 
         #region States
         private Dictionary<ToolboxNodeExport, string> _availableNodes; // From node to toolbox name mapping
-        private Dictionary<string, ToolboxNodeExport> _searchResultLookup;
+        private Dictionary<SearchResult, ToolboxNodeExport> _searchResultLookup;
         #endregion
 
         #region View Properties
@@ -45,8 +45,9 @@ namespace Parcel.Neo
                 UpdateSearch(_searchText);
             }
         }
-        private ObservableCollection<string> _searchResults;
-        public ObservableCollection<string> SearchResults
+        public record SearchResult(string Label, string? Tooltip);
+        private ObservableCollection<SearchResult> _searchResults;
+        public ObservableCollection<SearchResult> SearchResults
         {
             get => _searchResults;
             set => SetField(ref _searchResults, value);
@@ -93,13 +94,14 @@ namespace Parcel.Neo
         private void UpdateSearch(string searchText)
         {
             _searchResultLookup = [];
-            SearchResults = new ObservableCollection<string>(_availableNodes
+            SearchResults = new ObservableCollection<SearchResult>(_availableNodes
                 .Where(n => n.Key.Name.Contains(searchText, StringComparison.CurrentCultureIgnoreCase))
                 .Select(node =>
                 {
                     string key = $"{node.Value} -> {node.Key.Name}";
-                    _searchResultLookup[key] = node.Key;
-                    return key;
+                    SearchResult result = new(key, node.Key.Tooltip);
+                    _searchResultLookup[result] = node.Key;
+                    return result;
                 }));
 
             if (!string.IsNullOrWhiteSpace(searchText))
@@ -166,14 +168,14 @@ namespace Parcel.Neo
         }
         private void SearchResultsListViewLabel_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            ItemSelectedAdditionalCallback(_searchResultLookup[(((Label) sender).Content as string)!]);
+            ItemSelectedAdditionalCallback(_searchResultLookup[(((Label) sender).Content as SearchResult)!]);
             Close();
         }
         private void SearchResultsListView_OnPreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter && SearchResults.Count != 0)
             {
-                ItemSelectedAdditionalCallback(_searchResultLookup[(string)((ListBox) sender).SelectedItem ?? SearchResults.First()]);
+                ItemSelectedAdditionalCallback(_searchResultLookup[(SearchResult)((ListBox) sender).SelectedItem ?? SearchResults.First()]);
                 Close();
                 e.Handled = true;
             }
