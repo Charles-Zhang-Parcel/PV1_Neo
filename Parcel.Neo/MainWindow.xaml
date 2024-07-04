@@ -364,34 +364,41 @@
                 </Style>
             </Menu.Resources>
             <MenuItem Header="File">
-                <MenuItem Header="Open..."/>
-                <MenuItem Header="Save"/>
-                <MenuItem Header="Save As..."/>
-                <Separator/>
-                <MenuItem Header="Import..." ToolTip="Import and insert a document into current graph."/>
+                <MenuItem Header="Open..." Visibility="Collapsed"/>
+                <MenuItem Header="Save" Visibility="Collapsed"/>
+                <MenuItem Header="Save As..." Visibility="Collapsed"/>
+                <Separator Visibility="Collapsed"/>
+                <MenuItem Header="Import..." ToolTip="Import and insert a document into current graph." Visibility="Collapsed"/>
+                <MenuItem Header="Export" ToolTip="Export graph into various formats.">
+                    <MenuItem Header="PDF" Visibility="Collapsed"/>
+                    <MenuItem Header="Markdown" Visibility="Collapsed"/>
+                    <MenuItem Header="PNG" Visibility="Collapsed"/>
+                    <MenuItem Header="Executable..." Click="ExportExecutableMenuItem_Click"/>
+                    <MenuItem Header="Python Script..." Click="ExportPythonScriptsMenuItem_Click"/>
+                </MenuItem>
                 <Separator/>
                 <MenuItem Header="Close"/>
             </MenuItem>
-            <MenuItem Header="Edit">
+            <MenuItem Header="Edit" Visibility="Collapsed">
                 <MenuItem Header="Select All (Ctrl+A)"/>
             </MenuItem>
-            <MenuItem Header="Document">
+            <MenuItem Header="Document" Visibility="Collapsed">
                 <MenuItem Header="Add Graph"/>
                 <Separator/>
                 <MenuItem Name="GoToGraphMenu" Header="Go to Graph">
                     <MenuItem Header="Default (Main) (F1)"/>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="View">
+            <MenuItem Header="View" Visibility="Collapsed">
                 <MenuItem Header="Show Nodes Tray" IsCheckable="True" IsChecked="False"/>
             </MenuItem>
-            <MenuItem Header="Package">
+            <MenuItem Header="Package" Visibility="Collapsed">
                 <MenuItem Header="Import"/>
             </MenuItem>
             <MenuItem Header="Help">
-                <MenuItem Header="Manual"/>
-                <MenuItem Header="Shortcuts"/>
-                <Separator HorizontalAlignment="Stretch"/>
+                <MenuItem Header="Manual" Visibility="Collapsed"/>
+                <MenuItem Header="Shortcuts" Visibility="Collapsed"/>
+                <Separator Visibility="Collapsed"/>
                 <MenuItem Header="About" Click="AboutMenuItem_Click"/>
             </MenuItem>
         </Menu>

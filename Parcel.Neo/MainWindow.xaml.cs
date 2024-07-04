@@ -232,7 +232,7 @@ namespace Parcel.Neo
                 Canvas.Save(GetAutoSavePath(CurrentFilePath));
             
             node.IsPreview = true;
-            if (!(node is GraphReferenceNode reference) || _graphPreviewWindows.ContainsKey(reference) || _previewWindows.ContainsKey(reference))  // For graph reference we really don't want to execute it during preview the first time
+            if (node is not GraphReferenceNode reference || _graphPreviewWindows.ContainsKey(reference) || _previewWindows.ContainsKey(reference))  // For graph reference we really don't want to execute it during preview the first time
                 ExecuteAll();
             SpawnPreviewWindow(node);
 
@@ -255,6 +255,13 @@ namespace Parcel.Neo
                 
                 e.Handled = true;
             }
+        }
+        private void ExportExecutableMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void ExportPythonScriptsMenuItem_Click(object sender, RoutedEventArgs e)
+        {
         }
         private void AboutMenuItem_Click(object sender, RoutedEventArgs e)
         {
