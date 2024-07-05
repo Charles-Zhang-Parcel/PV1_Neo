@@ -18,9 +18,9 @@ namespace Parcel.Neo.Base.Toolboxes.Basic
             new("String", typeof(StringNode)),
             new("Boolean", typeof(BooleanNode)),
             new("DateTime", typeof(DateTimeNode)),
-            new("Text", typeof(object)),
+            // new("Text", typeof(object)),
             new("File", typeof(OpenFileNode)),
-            new("Save File", typeof(object)),
+            // new("Save File", typeof(object)),
             // new("Array", typeof(object)), // Generic array representation of all above types, CANNOT have mixed types
             null, // Divisor line // Advanced Types
             new("Data Table", typeof(DataTable)), // DataTable or matrix initializer
@@ -30,7 +30,7 @@ namespace Parcel.Neo.Base.Toolboxes.Basic
             new("Graph Input", typeof(GraphInput)),
             new("Graph Output", typeof(GraphOutput)),
             new("Graph Reference", typeof(GraphReferenceNode)),
-            new("Sub Graph", typeof(object)),
+            // new("Sub Graph", typeof(object)),
             null, // Divisor Line // Special (or consider moving them into "Annotation")
             // Special - Specialized Graph Visualization
             new("Graph Stats", typeof(GraphStats)),
