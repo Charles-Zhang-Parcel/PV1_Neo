@@ -7,9 +7,9 @@ using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 using Parcel.Neo.Base.Serialization;
 using Parcel.Integration;
 
-namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
+namespace Parcel.Neo.Base.Toolboxes.Basic.Nodes
 {
-    public class DatabaseTableInputConnector: InputConnector
+    public class DatabaseTableInputConnector : InputConnector
     {
         #region Properties
         private string _tableName = "New Key";
@@ -28,8 +28,8 @@ namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
         }
         #endregion
     }
-    
-    public class SQL: DynamicInputProcessorNode, INodeProperty
+
+    public class SQL : DynamicInputProcessorNode, INodeProperty
     {
         #region Node Interface
         private readonly OutputConnector _dataTableOutput = new OutputConnector(typeof(DataGrid))
@@ -56,12 +56,12 @@ namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
             [
                 new PropertyEditor("Code", PropertyEditorType.Code, () => _code, o => Code = (string)o)
             ];
-            
+
             Title = NodeTypeName = "SQL";
             Output.Add(_dataTableOutput);
-            
+
             AddInputs();
-            
+
             AddEntryCommand = new RequeryCommand(
                 AddInputs,
                 () => true);
@@ -94,7 +94,7 @@ namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
             Input.RemoveAt(Input.Count - 1);
         }
         #endregion
-        
+
         #region Processor Interface
         public override OutputConnector MainOutput => _dataTableOutput;
         protected override NodeExecutionResult Execute()
@@ -116,7 +116,7 @@ namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
             });
         }
         #endregion
-        
+
         #region Serialization
         protected override Dictionary<string, NodeSerializationRoutine> ProcessorNodeMemberSerialization { get; }
         protected override NodeSerializationRoutine VariantInputConnectorsSerialization { get; }

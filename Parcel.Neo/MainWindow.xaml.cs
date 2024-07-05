@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,7 +12,6 @@ using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 using Parcel.Neo.Base.Framework.ViewModels.Primitives;
 using Parcel.Neo.Base.Toolboxes.Basic.Nodes;
-using Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes;
 using Parcel.Neo.PopupWindows;
 using BaseConnection = Parcel.Neo.Base.Framework.ViewModels.BaseConnection;
 using Parcel.Neo.Base.DataTypes;

@@ -10,7 +10,6 @@
         xmlns:baseNodes="clr-namespace:Parcel.Neo.Base.Framework.ViewModels.BaseNodes;assembly=Parcel.Neo.Base"
         xmlns:primitives="clr-namespace:Parcel.Neo.Base.Framework.ViewModels.Primitives;assembly=Parcel.Neo.Base"
         xmlns:converters="clr-namespace:Parcel.Neo.Converters"
-        xmlns:nodes="clr-namespace:Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes;assembly=Parcel.Neo.Base"
         xmlns:System="clr-namespace:System;assembly=System.Runtime"
         xmlns:dataTypes="clr-namespace:Parcel.Neo.Base.DataTypes;assembly=Parcel.Neo.Base"
         xmlns:advanced="clr-namespace:Parcel.Neo.Base.Framework.Advanced;assembly=Parcel.Neo.Base"
@@ -304,10 +303,10 @@
                     <DataTemplate DataType="{x:Type viewModels:BaseConnector}">
                         <nodify:NodeInput/>
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type nodes:DatabaseTableInputConnector}">
+                    <DataTemplate DataType="{x:Type specialNodes:DatabaseTableInputConnector}">
                         <nodify:NodeInput>
                             <nodify:NodeInput.HeaderTemplate>
-                                <DataTemplate DataType="{x:Type nodes:DatabaseTableInputConnector}">
+                                <DataTemplate DataType="{x:Type specialNodes:DatabaseTableInputConnector}">
                                     <StackPanel Orientation="Horizontal" DataContext="{Binding Path=DataContext, 
                                                     RelativeSource={RelativeSource AncestorType={x:Type nodify:NodeInput},Mode=FindAncestor}}">
                                         <TextBlock Text="{Binding Title}"
@@ -545,7 +544,7 @@
                                     </DockPanel>
                                 </DataTemplate>
 
-                                <DataTemplate DataType="{x:Type nodes:Dictionary}">
+                                <DataTemplate DataType="{x:Type specialNodes:Dictionary}">
                                     <DataTemplate.Resources>
                                         <Style TargetType="TextBox">
                                             <Setter Property="VerticalAlignment" Value="Center"></Setter>
@@ -567,7 +566,7 @@
                                                 </Style>
                                             </ListView.ItemContainerStyle>
                                             <ListView.ItemTemplate>
-                                                <DataTemplate DataType="{x:Type nodes:DictionaryEntryDefinition}">
+                                                <DataTemplate DataType="{x:Type specialNodes:DictionaryEntryDefinition}">
                                                     <DockPanel LastChildFill="True" MinWidth="150">
                                                         <TextBox Text="{Binding Name}" PreviewKeyDown="PrimitiveInputTextbox_OnPreviewKeyDown_CommandOverride"></TextBox>
                                                         <ComboBox ItemsSource="{Binding Source={StaticResource DictionaryEntryTypeEntriesFromEnum}}"
@@ -580,7 +579,7 @@
                                     </DockPanel>
                                 </DataTemplate>
 
-                                <DataTemplate DataType="{x:Type nodes:DataTable}">
+                                <DataTemplate DataType="{x:Type specialNodes:DataTable}">
                                     <DataTemplate.Resources>
                                         <Style TargetType="TextBox">
                                             <Setter Property="VerticalAlignment" Value="Center"></Setter>
@@ -602,7 +601,7 @@
                                                 </Style>
                                             </ListView.ItemContainerStyle>
                                             <ListView.ItemTemplate>
-                                                <DataTemplate DataType="{x:Type nodes:DataTableFieldDefinition}">
+                                                <DataTemplate DataType="{x:Type specialNodes:DataTableFieldDefinition}">
                                                     <DockPanel LastChildFill="True" MinWidth="150">
                                                         <TextBox Text="{Binding Name}" PreviewKeyDown="PrimitiveInputTextbox_OnPreviewKeyDown_CommandOverride"></TextBox>
                                                         <ComboBox ItemsSource="{Binding Source={StaticResource DictionaryEntryTypeEntriesFromEnum}}"

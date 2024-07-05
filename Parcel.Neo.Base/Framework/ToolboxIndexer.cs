@@ -1,5 +1,4 @@
 ﻿using Parcel.Neo.Base.Toolboxes.Basic;
-using Parcel.Neo.Base.Toolboxes.DataProcessing;
 using Parcel.Toolbox.ControlFlow;
 using System.Collections.Generic;
 using System.Reflection;
@@ -55,7 +54,6 @@ namespace Parcel.Neo.Base.Framework
             // AddToolbox(toolboxes, "String", new StringToolbox()); // Now available in PSL; Pending deciding whether we need dedicated exposure
             AddToolbox(toolboxes, "Basic", new BasicToolbox());
             AddToolbox(toolboxes, "Control Flow", new ControlFlowToolbox());
-            AddToolbox(toolboxes, "Data Processing", new DataProcessingToolbox());
             // Register specific types
             RegisterType(toolboxes, "Data Grid", typeof(Types.DataGrid));
             RegisterType(toolboxes, "Data Grid", typeof(Types.DataGridOperationsHelper));

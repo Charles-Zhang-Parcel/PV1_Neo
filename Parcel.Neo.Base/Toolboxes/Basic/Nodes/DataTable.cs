@@ -9,7 +9,7 @@ using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 using Parcel.Neo.Base.DataTypes;
 
-namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
+namespace Parcel.Neo.Base.Toolboxes.Basic.Nodes
 {
     /// <summary>
     /// TODO: Editing for Data Table node is not working yet at this moment due to a transform as Expando object during presentation
@@ -114,7 +114,7 @@ namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
             // Populate data
             if (Data != null)
             {
-                for (int col = 0; col < System.Math.Min(Data.Length, Definitions.Count); col++)
+                for (int col = 0; col < Math.Min(Data.Length, Definitions.Count); col++)
                     for (int row = 0; row < Data[col].Length; row++)
                         dataGrid.Columns[col].Add(Data[col][row]);
             }

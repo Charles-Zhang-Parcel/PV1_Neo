@@ -22,6 +22,10 @@ namespace Parcel.Neo.Base.Toolboxes.Basic
             new("File", typeof(OpenFileNode)),
             new("Save File", typeof(object)),
             // new("Array", typeof(object)), // Generic array representation of all above types, CANNOT have mixed types
+            null, // Divisor line // Advanced Types
+            new("Data Table", typeof(DataTable)), // DataTable or matrix initializer
+            new("Dictionary", typeof(Dictionary)),
+            new("SQL Query", typeof(SQL)),
             null, // Divisor line // Graph Modularization
             new("Graph Input", typeof(GraphInput)),
             new("Graph Output", typeof(GraphOutput)),

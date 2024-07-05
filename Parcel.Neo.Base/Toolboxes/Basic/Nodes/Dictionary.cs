@@ -9,7 +9,7 @@ using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 using Parcel.Neo.Base.DataTypes;
 
-namespace Parcel.Neo.Base.Toolboxes.DataProcessing.Nodes
+namespace Parcel.Neo.Base.Toolboxes.Basic.Nodes
 {
     public class DictionaryEntryDefinition : ObservableObject
     {
