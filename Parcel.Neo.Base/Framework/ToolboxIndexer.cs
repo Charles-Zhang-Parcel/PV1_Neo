@@ -1,5 +1,4 @@
 ﻿using Parcel.Neo.Base.Toolboxes.Basic;
-using Parcel.Toolbox.ControlFlow;
 using System.Collections.Generic;
 using System.Reflection;
 using System;
@@ -47,27 +46,26 @@ namespace Parcel.Neo.Base.Framework
             RegisterToolbox(toolboxAssemblies, "Database Application", Assembly.Load("Parcel.InMemoryDB.WebSurveys"));
             RegisterToolbox(toolboxAssemblies, "File System", Assembly.Load("Parcel.FileSystem"));
             RegisterToolbox(toolboxAssemblies, "Yahoo Finance", Assembly.Load("Parcel.YahooFinance"));
-            // Index nodes
+            
+            // Index specific nodes
             Dictionary<string, ToolboxNodeExport?[]> toolboxes = IndexToolboxes(toolboxAssemblies);
-            // Index new internal toolboxes
-            // AddToolbox(toolboxes, "Boolean algebra", new LogicToolbox()); // Now available in PSL; Pending deciding whether we need dedicated exposure
-            // AddToolbox(toolboxes, "String", new StringToolbox()); // Now available in PSL; Pending deciding whether we need dedicated exposure
+            // Register front-end specific toolboxes (In general we try to eliminate those, or to say the least standardization effort is needed to make sure those are understood across implementations
             AddToolbox(toolboxes, "Basic", new BasicToolbox());
-            AddToolbox(toolboxes, "Control Flow", new ControlFlowToolbox());
-            // Register specific types
+            // Register specific types - Parcel Standard
             RegisterType(toolboxes, "Data Grid", typeof(Types.DataGrid));
             RegisterType(toolboxes, "Data Grid", typeof(Types.DataGridOperationsHelper));
-            RegisterType(toolboxes, "Data Grid", typeof(Parcel.Integration.DataGridIntegration));
-            RegisterType(toolboxes, "Data Grid", typeof(Parcel.Integration.DataProcessingHelper));
+            RegisterType(toolboxes, "Data Grid", typeof(Integration.DataGridIntegration));
+            RegisterType(toolboxes, "Data Grid", typeof(Integration.DataProcessingHelper));
             RegisterType(toolboxes, "Math", typeof(Processing.Utilities.Calculator));
-            RegisterType(toolboxes, "String Processing", typeof(Parcel.Standard.Types.StringRoutines));
-            RegisterType(toolboxes, "Boolean Logic", typeof(Parcel.Standard.Types.BooleanRoutines));
-            RegisterType(toolboxes, "Boolean Logic", typeof(Parcel.Standard.Types.LogicRoutines));
+            RegisterType(toolboxes, "String Processing", typeof(Standard.Types.StringRoutines));
+            RegisterType(toolboxes, "Boolean Logic", typeof(Standard.Types.BooleanRoutines));
+            RegisterType(toolboxes, "Boolean Logic", typeof(Standard.Types.LogicRoutines));
             // Register specific types - directly borrow from libraries
-            RegisterType(toolboxes, "Collections", typeof(System.Linq.Enumerable));
+            RegisterType(toolboxes, "Collections", typeof(Enumerable));
             RegisterType(toolboxes, "Statistics", typeof(MathNet.Numerics.Statistics.Statistics)); // TODO: Might provide selective set of functions instead of everything; Alternative, figure out how to do in-app documentation
             RegisterType(toolboxes, "Statistics", typeof(MathNet.Numerics.Statistics.Correlation));
             RegisterType(toolboxes, "String Processing", typeof(InflectorExtensions));
+            // Remark: Notice that boolean algebra and String are available in PSL - Pending deciding whether we need dedicated exposure
 
             return toolboxes;
         }
