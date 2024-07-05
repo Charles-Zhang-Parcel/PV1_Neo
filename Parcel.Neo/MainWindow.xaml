@@ -373,7 +373,7 @@
                     <MenuItem Header="PNG" Visibility="Collapsed"/>
                     <MenuItem Header="Executable..." Click="ExportExecutableMenuItem_Click"/>
                     <MenuItem Header="C# Project..." Visibility="Collapsed"/>
-                    <MenuItem Header="Pure Script(s) (Pure 2)..." Visibility="Collapsed"/>
+                    <MenuItem Header="Pure Script(s) (Pure 2)..." Click="ExportPureScriptsMenuItem_Click"/>
                     <MenuItem Header="Python Script(s)..." Visibility="Collapsed"/>
                 </MenuItem>
                 <Separator/>

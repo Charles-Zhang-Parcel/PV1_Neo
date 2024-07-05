@@ -287,7 +287,24 @@ namespace Parcel.Neo
                 AlgorithmHelper.CompileGraphAOT(filePath, Canvas);
             }
         }
+        private void ExportPureScriptsMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            ExperimentalFeatureWarningWindow warning = new();
+            if (!warning.ShowDialog() == true)
+                return;
 
+            OpenFolderDialog folderDialog = new()
+            {
+                Title = "Choose Folder to Save Exported Scripts"
+            };
+
+            if (folderDialog.ShowDialog() == true)
+            {
+                string folderName = folderDialog.FolderName;
+                string mainScriptFilename = $"{System.IO.Path.GetFileNameWithoutExtension(CurrentFilePath)}.cs";
+                AlgorithmHelper.GenerateGraphScripts(folderName, mainScriptFilename, Canvas);
+            }
+        }
         private void ExportPythonScriptsMenuItem_Click(object sender, RoutedEventArgs e)
         {
             OpenFolderDialog folderDialog = new()

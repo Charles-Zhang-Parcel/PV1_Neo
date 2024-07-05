@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
 
@@ -64,6 +66,39 @@ namespace Parcel.Neo.Base.Algorithms
             // Compile and validate
 
             // Copy compiled result to destination path
+        }
+        public static void GenerateGraphScripts(string folderPath, string mainScriptFilename, NodesCanvas canvas)
+        {
+            IEnumerable<ProcessorNode> processors = canvas.Nodes
+                .Where(n => n is ProcessorNode node && node.IsPreview == true)
+                .Select(n => n as ProcessorNode);
+
+            // Generate scripts (a script contains functions and other information, a function contains sections and other information)
+            ExecutionQueue graph = new();
+            graph.InitializeGraph(processors);
+            foreach (ProcessorNode item in graph.Queue)
+            {
+                // Deal with package functions (with the exception of lambda functions, which we will deprecate soon))
+                if (item is AutomaticProcessorNode autoNode)
+                {
+
+                }
+                // Deal with front-end implemented nodes
+                else
+                {
+
+                }
+            }
+
+            // Create output folder if not exist
+            Directory.CreateDirectory(folderPath);
+
+            // Generate code files
+            StringBuilder mainScriptBuilder = new();
+            string mainScript = mainScriptBuilder.ToString().TrimEnd();
+            File.WriteAllText(mainScriptFilename, mainScript);
+
+            // TODO: Implement generating other script files
         }
         #endregion
     }
