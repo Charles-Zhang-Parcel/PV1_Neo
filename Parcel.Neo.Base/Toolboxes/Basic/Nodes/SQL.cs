@@ -29,10 +29,15 @@ namespace Parcel.Neo.Base.Toolboxes.Basic.Nodes
         #endregion
     }
 
+    /// <remarks>
+    /// To replace such explicit definition of node, we need two infrastructure updates:
+    /// 1. Allow coercion or at least automatic array input handling on automatic nodes
+    /// 2. Allow automatic property editors based on function argument attribute
+    /// </remarks>
     public class SQL : DynamicInputProcessorNode, INodeProperty
     {
         #region Node Interface
-        private readonly OutputConnector _dataTableOutput = new OutputConnector(typeof(DataGrid))
+        private readonly OutputConnector _dataTableOutput = new(typeof(DataGrid))
         {
             Title = "Result"
         };
@@ -99,16 +104,16 @@ namespace Parcel.Neo.Base.Toolboxes.Basic.Nodes
         public override OutputConnector MainOutput => _dataTableOutput;
         protected override NodeExecutionResult Execute()
         {
-            var inputTables = Input.Select(i =>
+            DataGrid[] inputTables = Input.Select(i =>
             {
                 DatabaseTableInputConnector connector = i as DatabaseTableInputConnector;
                 var table = connector!.FetchInputValue<DataGrid>();
                 // table.TableName = connector.TableName;
                 return table;
             }).ToArray();
-            var inputTableNames = Input.Select(i => (i as DatabaseTableInputConnector)!.TableName).ToArray();
+            string[] inputTableNames = Input.Select(i => (i as DatabaseTableInputConnector)!.TableName).ToArray();
+            DataGrid output = DataProcessingHelper.SQL(inputTables, inputTableNames, Code);
 
-            var output = DataProcessingHelper.SQL(inputTables, inputTableNames, Code);
 
             return new NodeExecutionResult(new NodeMessage($"{output.RowCount} Rows; {output.ColumnCount} Columns."), new Dictionary<OutputConnector, object>()
             {
