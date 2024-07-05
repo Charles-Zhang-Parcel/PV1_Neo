@@ -372,7 +372,9 @@
                     <MenuItem Header="Markdown" Visibility="Collapsed"/>
                     <MenuItem Header="PNG" Visibility="Collapsed"/>
                     <MenuItem Header="Executable..." Click="ExportExecutableMenuItem_Click"/>
-                    <MenuItem Header="Python Script..." Click="ExportPythonScriptsMenuItem_Click"/>
+                    <MenuItem Header="C# Project..." Visibility="Collapsed"/>
+                    <MenuItem Header="Pure Script(s) (Pure 2)..." Visibility="Collapsed"/>
+                    <MenuItem Header="Python Script(s)..." Visibility="Collapsed"/>
                 </MenuItem>
                 <Separator/>
                 <MenuItem Header="Close"/>
@@ -387,8 +389,9 @@
                     <MenuItem Header="Default (Main) (F1)"/>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="View" Visibility="Collapsed">
-                <MenuItem Header="Show Nodes Tray" IsCheckable="True" IsChecked="False"/>
+            <MenuItem Header="View">
+                <MenuItem Header="Console" Click="ToggleConsoleWindowMenuItem_Click"/>
+                <MenuItem Header="Show Nodes Tray" IsCheckable="True" IsChecked="False" Visibility="Collapsed"/>
             </MenuItem>
             <MenuItem Header="Package" Visibility="Collapsed">
                 <MenuItem Header="Import"/>

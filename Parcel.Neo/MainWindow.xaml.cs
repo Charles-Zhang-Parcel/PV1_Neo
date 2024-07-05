@@ -206,7 +206,7 @@ namespace Parcel.Neo
             {
                 foreach (Tuple<ToolboxNodeExport,Vector2D,InputConnector> generateNode in autoConnect.AutoPopulatedConnectionNodes)
                 {
-                    BaseNode temp = SpawnNode(generateNode.Item1, node.Location + generateNode.Item2);
+                    BaseNode temp = SpawnNode(generateNode.Item1, node.Location + generateNode.Item2); // TODO: Notice this can cause problems to function arguments like string[]
                     if(temp is IMainOutputNode outputNode)
                         Canvas.Schema.TryAddConnection(outputNode.MainOutput, generateNode.Item3);
                 }
@@ -252,6 +252,20 @@ namespace Parcel.Neo
                 });
                 
                 e.Handled = true;
+            }
+        }
+        private bool _consoleIsOpen;
+        private void ToggleConsoleWindowMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (_consoleIsOpen)
+            {
+                FreeConsole();
+                _consoleIsOpen = false;
+            }
+            else
+            {
+                AllocConsole();
+                _consoleIsOpen = true;
             }
         }
         private void ExportExecutableMenuItem_Click(object sender, RoutedEventArgs e)
@@ -489,6 +503,12 @@ namespace Parcel.Neo
 
             return rect;
         }
+
+        [DllImport("Kernel32")]
+        public static extern void AllocConsole();
+
+        [DllImport("Kernel32")]
+        public static extern void FreeConsole();
         #endregion
     }
 }

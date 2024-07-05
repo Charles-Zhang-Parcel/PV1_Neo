@@ -5,7 +5,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Humanizer;
 using Parcel.Neo.Base.Framework;
 
 namespace Parcel.Neo
@@ -75,20 +74,11 @@ namespace Parcel.Neo
             // Button item
             else
             {
-                MenuItem item = new() { Header = FormatFriendlyNodeName(node.Name), Tag = node, ToolTip = node.Tooltip };
+                MenuItem item = new() { Header = $"{node.Name}({node.ArgumentsList})", Tag = node, ToolTip = node.Tooltip };
                 item.Click += NodeMenuItemOnClick;
                 toolboxMenu.Items.Add(item);
                 
                 _availableNodes.Add(node, toolboxName);
-            }
-
-            static string FormatFriendlyNodeName(string originalName)
-            {
-                string formatted = originalName.Titleize();
-                string[] words = formatted.Split(' ');
-                if (words.First() == "Get" || words.First() == "Generate") // Remove redundancy in name to make it look cleaner
-                    return string.Join(" ", words.Skip(1));
-                return formatted;
             }
         }
         private void UpdateSearch(string searchText)

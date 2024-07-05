@@ -27,6 +27,7 @@ namespace Parcel.Neo
             RequeryCommand.CommandManager = wrapper;
             RequeryCommand.CommandManager = wrapper;
 
+            // Start the app
             var app = new App();
             app.InitializeComponent();
             app.Run();

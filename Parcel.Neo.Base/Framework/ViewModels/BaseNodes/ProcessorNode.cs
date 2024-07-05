@@ -57,8 +57,8 @@ namespace Parcel.Neo.Base.Framework.ViewModels.BaseNodes
         #endregion
 
         #region Connectors
-        public NotifyObservableCollection<InputConnector> Input { get; } = new NotifyObservableCollection<InputConnector>();
-        public NotifyObservableCollection<OutputConnector> Output { get; } = new NotifyObservableCollection<OutputConnector>();
+        public NotifyObservableCollection<InputConnector> Input { get; } = [];
+        public NotifyObservableCollection<OutputConnector> Output { get; } = [];
         #endregion
 
         #region Interface

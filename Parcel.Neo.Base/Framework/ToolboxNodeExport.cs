@@ -10,13 +10,33 @@ namespace Parcel.Neo.Base.Framework
     {
         private enum NodeImplementationType
         {
-            OOPNode,
+            PV1NativeFrontendImplementedGraphNode,
             MethodInfo,
             AutomaticLambda
         }
 
         #region Attributes
         public string Name { get; }
+        public string ArgumentsList
+        {
+            get
+            {
+                switch (ImplementationType)
+                {
+                    case NodeImplementationType.PV1NativeFrontendImplementedGraphNode:
+                        var baseNode = (BaseNode)Activator.CreateInstance(ProcessorNodeType);
+                        if (baseNode is ProcessorNode processor)
+                            return string.Join(", ", processor.Input.Select(i => i.Title));
+                        else return string.Empty;
+                    case NodeImplementationType.MethodInfo: 
+                        return string.Join(", ", Method.GetParameters().Select(p => (Nullable.GetUnderlyingType(p.ParameterType) != null ? $"{p.Name}?" : p.Name)));
+                    case NodeImplementationType.AutomaticLambda:
+                        return string.Join(", ", Descriptor.InputNames ?? []);
+                    default:
+                        throw new ArgumentOutOfRangeException($"Unrecognized implementation type: {ImplementationType}");
+                }
+            }
+        }
         /// <summary>
         /// Documentation of node in human-readable text
         /// </summary>
@@ -47,7 +67,7 @@ namespace Parcel.Neo.Base.Framework
         {
             Name = name;
             ProcessorNodeType = type;
-            ImplementationType = NodeImplementationType.OOPNode;
+            ImplementationType = NodeImplementationType.PV1NativeFrontendImplementedGraphNode;
         }
         #endregion
 
@@ -56,7 +76,7 @@ namespace Parcel.Neo.Base.Framework
         {
             switch (ImplementationType)
             {
-                case NodeImplementationType.OOPNode:
+                case NodeImplementationType.PV1NativeFrontendImplementedGraphNode:
                     // TODO: We can use automatic node to invoke constructors for types that have constructor
                     return (BaseNode)Activator.CreateInstance(ProcessorNodeType);
                 case NodeImplementationType.MethodInfo:
