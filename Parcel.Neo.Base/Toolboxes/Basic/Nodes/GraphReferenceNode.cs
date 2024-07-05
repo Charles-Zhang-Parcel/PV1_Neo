@@ -55,8 +55,7 @@ namespace Parcel.Neo.Base.Toolboxes.Basic.Nodes
                     .Where(n => n is GraphInput).OfType<GraphInput>()
                     .SelectMany(i => i.Definitions))
                 {
-                    Dictionary<string, GraphInputOutputDefinition> unique =
-                        new Dictionary<string, GraphInputOutputDefinition>();
+                    Dictionary<string, GraphInputOutputDefinition> unique = [];
                     if (!unique.ContainsKey(definition.Name))
                     {
                         unique[definition.Name] = definition;
@@ -70,8 +69,7 @@ namespace Parcel.Neo.Base.Toolboxes.Basic.Nodes
                     .Where(n => n is GraphOutput).OfType<GraphOutput>()
                     .SelectMany(i => i.Definitions))
                 {
-                    Dictionary<string, GraphInputOutputDefinition> unique =
-                        new Dictionary<string, GraphInputOutputDefinition>();
+                    Dictionary<string, GraphInputOutputDefinition> unique = [];
                     if (!unique.ContainsKey(definition.Name))
                     {
                         unique[definition.Name] = definition;
