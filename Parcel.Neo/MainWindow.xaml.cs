@@ -256,6 +256,10 @@ namespace Parcel.Neo
         }
         private void ExportExecutableMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            ExperimentalFeatureWarningWindow warning = new();
+            if (!warning.ShowDialog() == true)
+                return;
+
             SaveFileDialog saveFileDialog = new()
             {
                 Title = "Choose Path to Save Executable (Experimental)",

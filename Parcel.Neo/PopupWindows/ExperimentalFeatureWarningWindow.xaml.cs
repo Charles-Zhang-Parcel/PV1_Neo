@@ -1,15 +1,14 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 
 namespace Parcel.Neo.PopupWindows
 {
     public partial class ExperimentalFeatureWarningWindow : Window
     {
         #region Construction
-        public ExperimentalFeatureWarningWindow(string message)
+        public ExperimentalFeatureWarningWindow()
         {
             InitializeComponent();
-
-            ContentTextBlock.Text = message;
         }
         #endregion
 
@@ -21,6 +20,14 @@ namespace Parcel.Neo.PopupWindows
         private void ContinueButton_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = true;
+        }
+        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri)
+            {
+                UseShellExecute = true
+            });
+            e.Handled = true;
         }
         #endregion
     }
