@@ -81,6 +81,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parcel.DataAnalytics.Integr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parcel.Calculator", "..\..\Parcel_NExT\C#\Parcel.NExT\Packages\Parcel.Calculator\Parcel.Calculator.csproj", "{DE30F5C9-32B7-4A2D-8E8B-67E19A9C4947}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parcel.Pipeline", "..\..\Parcel_NExT\C#\Parcel.NExT\Packages\Parcel.Pipeline\Parcel.Pipeline.csproj", "{896FC073-8678-4085-ACDA-EE584B513FB9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -227,6 +229,10 @@ Global
 		{DE30F5C9-32B7-4A2D-8E8B-67E19A9C4947}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE30F5C9-32B7-4A2D-8E8B-67E19A9C4947}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE30F5C9-32B7-4A2D-8E8B-67E19A9C4947}.Release|Any CPU.Build.0 = Release|Any CPU
+		{896FC073-8678-4085-ACDA-EE584B513FB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{896FC073-8678-4085-ACDA-EE584B513FB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{896FC073-8678-4085-ACDA-EE584B513FB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{896FC073-8678-4085-ACDA-EE584B513FB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -267,6 +273,7 @@ Global
 		{A7CABB54-61B5-4429-8FFD-B8B5EEDF1BED} = {3AC0E0B1-BC65-4389-B9D7-1F423F80DF9A}
 		{AA82D904-953B-4A6D-9BF5-00E4AD50C3A1} = {3AC0E0B1-BC65-4389-B9D7-1F423F80DF9A}
 		{DE30F5C9-32B7-4A2D-8E8B-67E19A9C4947} = {3AC0E0B1-BC65-4389-B9D7-1F423F80DF9A}
+		{896FC073-8678-4085-ACDA-EE584B513FB9} = {3AC0E0B1-BC65-4389-B9D7-1F423F80DF9A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {02467E9F-99F1-4DF1-9F95-B88C4DA6051D}
