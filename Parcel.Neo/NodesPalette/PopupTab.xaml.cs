@@ -88,7 +88,7 @@ namespace Parcel.Neo
                 .Where(n => n.Key.Name.Contains(searchText, StringComparison.CurrentCultureIgnoreCase))
                 .Select(node =>
                 {
-                    string key = $"{node.Value} -> {node.Key.Name}";
+                    string key = $"{node.Value} -> {node.Key.Name} ({node.Key.ArgumentsList})";
                     SearchResult result = new(key, node.Key.Tooltip);
                     _searchResultLookup[result] = node.Key;
                     return result;
