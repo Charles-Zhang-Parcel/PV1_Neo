@@ -185,6 +185,10 @@ namespace Parcel.Neo
                 e.Handled = true;
             }
         }
+        private void NodesWindow_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Close();
+        }
         #endregion
     }
 }

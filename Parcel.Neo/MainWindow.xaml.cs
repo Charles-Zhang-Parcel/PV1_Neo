@@ -416,7 +416,6 @@ namespace Parcel.Neo
                 }
             }
             popupTab.ItemSelectedAdditionalCallback += CreateNodeFromSelectedSearchItem;
-            popupTab.MouseLeave += delegate { popupTab.Close(); };  // ISSUE: This will cause Closed event being called before the OnClick event
             popupTab.Show();
         }
         private void OpenCanvas()

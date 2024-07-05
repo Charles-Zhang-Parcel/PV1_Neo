@@ -8,7 +8,7 @@
                   WindowStyle="None" ResizeMode="NoResize"
                   Title="Tools" Height="300" SizeToContent="WidthAndHeight"
                   PreviewKeyDown="PopupTab_OnPreviewKeyDown"
-                  MouseDown="PopupTab_OnMouseDown"
+                  MouseDown="PopupTab_OnMouseDown" MouseLeave="NodesWindow_MouseLeave"
                   DataContext="{Binding RelativeSource={RelativeSource self}}">
     <DockPanel LastChildFill="True">
         <!--Decorator Frame-->
