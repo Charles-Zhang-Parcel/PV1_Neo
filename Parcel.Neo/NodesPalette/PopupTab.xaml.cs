@@ -150,7 +150,7 @@ namespace Parcel.Neo
         #region GUI Events
         private void PopupTab_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            // TODO: Why do we have this?
+            // TODO: Why do we have this? // Remark: It's so that it's possible to drag-move the popup panel when clicking on the title bar. Not super useful though.
             DragMove();
         }
         private void PopupTab_OnPreviewKeyDown(object sender, KeyEventArgs e)
@@ -168,7 +168,7 @@ namespace Parcel.Neo
         }
         private void SearchResultsListViewLabel_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            ItemSelectedAdditionalCallback(_searchResultLookup[(((Label) sender).Content as SearchResult)!]);
+            ItemSelectedAdditionalCallback(_searchResultLookup[(((Label) sender).DataContext as SearchResult)!]);
             Close();
         }
         private void SearchResultsListView_OnPreviewKeyDown(object sender, KeyEventArgs e)
