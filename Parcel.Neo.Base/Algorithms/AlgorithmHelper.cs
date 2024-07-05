@@ -78,7 +78,8 @@ namespace Parcel.Neo.Base.Algorithms
             graph.InitializeGraph(processors);
             foreach (ProcessorNode item in graph.Queue)
             {
-                // Deal with package functions (with the exception of lambda functions, which we will deprecate soon))
+                // Deal with package functions
+                // Remark-cz: notice as of PV1 Neo we no longer have c#-lambda impelemented nodes; Everything is eitehr completely front-end implemented as ProcessorNode or it's C# defined in packages
                 if (item is AutomaticProcessorNode autoNode)
                 {
 

@@ -11,8 +11,7 @@ namespace Parcel.Neo.Base.Framework
         private enum NodeImplementationType
         {
             PV1NativeFrontendImplementedGraphNode,
-            MethodInfo,
-            AutomaticLambda
+            MethodInfo
         }
 
         #region Attributes
@@ -30,8 +29,6 @@ namespace Parcel.Neo.Base.Framework
                         else return string.Empty;
                     case NodeImplementationType.MethodInfo: 
                         return string.Join(", ", Method.GetParameters().Select(p => (Nullable.GetUnderlyingType(p.ParameterType) != null ? $"{p.Name}?" : p.Name)));
-                    case NodeImplementationType.AutomaticLambda:
-                        return string.Join(", ", Descriptor.InputNames ?? []);
                     default:
                         throw new ArgumentOutOfRangeException($"Unrecognized implementation type: {ImplementationType}");
                 }
@@ -46,7 +43,6 @@ namespace Parcel.Neo.Base.Framework
         #region Payload Type
         private NodeImplementationType ImplementationType { get; }
         private MethodInfo Method { get; }
-        private AutomaticNodeDescriptor Descriptor { get; }
         private Type ProcessorNodeType { get; }
         #endregion
 
@@ -56,12 +52,6 @@ namespace Parcel.Neo.Base.Framework
             Name = name;
             Method = method;
             ImplementationType = NodeImplementationType.MethodInfo;
-        }
-        public ToolboxNodeExport(string name, AutomaticNodeDescriptor descriptor)
-        {
-            Name = name;
-            Descriptor = descriptor;
-            ImplementationType = NodeImplementationType.AutomaticLambda;
         }
         public ToolboxNodeExport(string name, Type type)
         {
@@ -129,8 +119,6 @@ namespace Parcel.Neo.Base.Framework
                         OutputNames = [.. nodeOutputTypes.Select(t => t.Item2)],
                         DefaultInputValues = [.. nodeInputTypes.Select(t => t.Item3)]
                     });
-                case NodeImplementationType.AutomaticLambda:
-                    return new AutomaticProcessorNode(Descriptor);
                 default:
                     throw new ApplicationException("Invalid implementation type.");
             }

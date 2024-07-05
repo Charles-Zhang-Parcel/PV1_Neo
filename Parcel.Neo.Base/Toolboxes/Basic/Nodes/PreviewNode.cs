@@ -2,18 +2,17 @@
 using Parcel.Neo.Base.Framework;
 using Parcel.Neo.Base.Framework.ViewModels;
 using Parcel.Neo.Base.Framework.ViewModels.BaseNodes;
-using Parcel.Neo.Base.DataTypes;
 
 namespace Parcel.Neo.Base.Toolboxes.Basic.Nodes
 {
     public class PreviewNode : ProcessorNode
     {
         #region Node Interface
-        private readonly InputConnector _objectInput = new InputConnector(typeof(object))
+        private readonly InputConnector _objectInput = new(typeof(object))
         {
             Title = "Object",
         };
-        private readonly OutputConnector _objectOutput = new OutputConnector(typeof(object))
+        private readonly OutputConnector _objectOutput = new(typeof(object))
         {
             Title = "Object",
         };
