@@ -270,7 +270,7 @@ namespace Parcel.Neo
         }
         private void ExportExecutableMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            ExperimentalFeatureWarningWindow warning = new();
+            ExperimentalFeatureWarningWindow warning = new() { Owner = this };
             if (!warning.ShowDialog() == true)
                 return;
 
@@ -285,11 +285,16 @@ namespace Parcel.Neo
             {
                 string filePath = saveFileDialog.FileName;
                 AlgorithmHelper.CompileGraphAOT(filePath, Canvas);
+
+                // TODO: Show output file in file explorer after done
             }
         }
         private void ExportPureScriptsMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            ExperimentalFeatureWarningWindow warning = new();
+            // Remark: Notice exporting like this will NOT cause the graph to be executed (thus avoiding any potential execution-time errors but also means we won't check whether the script will work during runtime - including empty input/invalid parameters check)
+            // The recommendation here (to the user) is to run and make sure things runs before exporting
+
+            ExperimentalFeatureWarningWindow warning = new() { Owner = this };
             if (!warning.ShowDialog() == true)
                 return;
 
@@ -303,10 +308,16 @@ namespace Parcel.Neo
                 string folderName = folderDialog.FolderName;
                 string mainScriptFilename = $"{System.IO.Path.GetFileNameWithoutExtension(CurrentFilePath)}.cs";
                 AlgorithmHelper.GenerateGraphScripts(folderName, mainScriptFilename, Canvas);
+
+                // TODO: Open output folder in file explorer after done
             }
         }
         private void ExportPythonScriptsMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            ExperimentalFeatureWarningWindow warning = new() { Owner = this };
+            if (!warning.ShowDialog() == true)
+                return;
+
             OpenFolderDialog folderDialog = new()
             {
                 Title = "Choose Folder to Save Exported Scripts"
